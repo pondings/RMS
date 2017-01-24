@@ -10,9 +10,10 @@ import UIKit
 
 protocol SearchNavBarDelegate {
     func cancleBtnClicked()
+    func searchTextDidChange(text : String)
 }
 
-class SearchNavBar: UIView {
+class SearchNavBar: UIView,UISearchBarDelegate {
 
     var delegate : SearchNavBarDelegate?
     
@@ -35,9 +36,14 @@ class SearchNavBar: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        searchBox.delegate = self
         self.addSubview(searchBox)
         self.addSubview(cancleBtn)
         customize()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        delegate?.searchTextDidChange(text: searchBar.text!)
     }
     
     private func customize(){
@@ -51,7 +57,7 @@ class SearchNavBar: UIView {
             if let searchIcon = textFieldInsideSearchBar.leftView as? UIImageView {
                 searchIcon.image = searchIcon.image?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
                 searchIcon.tintColor = UIColor.white
-                searchIcon.alpha = 0.7
+                searchIcon.alpha = 0.5
             }
             if let clearButton = textFieldInsideSearchBar.value(forKey: "clearButton") as? UIButton {
                 clearButton.setImage(clearButton.imageView?.image?.withRenderingMode(.alwaysTemplate), for: .normal)

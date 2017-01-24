@@ -213,10 +213,10 @@
             </objects>
             <point key="canvasLocation" x="-761" y="725"/>
         </scene>
-        <!--Main Restaurant-->
+        <!--MainRestaurant-->
         <scene sceneID="fRY-ZL-mc3">
             <objects>
-                <collectionViewController id="1DZ-Rg-MTN" customClass="MainRestaurant" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="MainRestaurant" title="MainRestaurant" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1DZ-Rg-MTN" customClass="MainRestaurant" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="ku4-zC-7r5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -254,7 +254,7 @@
         <!--Main Promotion-->
         <scene sceneID="aac-1h-L75">
             <objects>
-                <collectionViewController id="SJw-W8-LCE" customClass="MainPromotion" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="MainPromotion" useStoryboardIdentifierAsRestorationIdentifier="YES" id="SJw-W8-LCE" customClass="MainPromotion" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="fer-5M-IiJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -332,7 +332,7 @@
         <!--Main Most View-->
         <scene sceneID="T8P-NC-OX9">
             <objects>
-                <collectionViewController id="tdM-TX-qdP" customClass="MainMostView" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="MainMostView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tdM-TX-qdP" customClass="MainMostView" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="auy-Ya-fhq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

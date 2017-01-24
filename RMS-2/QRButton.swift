@@ -9,7 +9,13 @@
 import UIKit
 import Material
 
+protocol QRButtonDelegate {
+    func qrBtnClicked(sender : UIButton)
+}
+
 class QRButton: UIButton {
+    
+    var delegate : QRButtonDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,6 +27,7 @@ class QRButton: UIButton {
     
     func qrBtnClicked(_ sender : UIButton){
         print("QR Button Clicked!")
+        delegate?.qrBtnClicked(sender: sender)
         sender.transform = CGAffineTransform.init(scaleX: 0.7, y: 0.7)
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 0, options: .allowUserInteraction, animations: {
             sender.transform = .identity

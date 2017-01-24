@@ -28,8 +28,12 @@ class MainPromotion: MainRestaurant {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CollectionViewContentCell
-        cell.configureCell(pro: Restaurants.init(proDict: restaurantList[indexPath.row]))
+        cell.configureCell(pro: Restaurants.init(proDict: restaurantList![indexPath.row]))
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return restaurantList.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

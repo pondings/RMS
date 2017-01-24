@@ -11,16 +11,26 @@ import Alamofire
 
 class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLayout,CollectionViewDelegate {
     
-    
     var urlPath : String = "Restaurant"
     var restaurantList : [Dictionary<String,AnyObject>]! = []
+    var restaurantFiltered : [Dictionary<String,AnyObject>]! = []
     let interactor = Interactor()
+    enum state {
+        case notFoundContent
+    }
+    
     private var lastContentOffset : CGFloat = 0.0
+    
+    lazy var emptyDataView: EmptyData = {
+        let vw = EmptyData.init(frame: CGRect.init(origin: self.view.frame.origin, size: self.view.frame.size))
+        return vw
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configAlamofire {
             self.collectionView?.reloadData()
+            self.emptyDataView.removeFromSuperview()
         }
     }
     
@@ -29,11 +39,22 @@ class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLay
         tabBarItem.selectedImage = tabBarItem.image?.tint(with: .white)
     }
     
+    func showEmptyData(state : state){
+        switch state {
+        case .notFoundContent:
+            emptyDataView.emptyState(state: .notFoundContent)
+            view.addSubview(emptyDataView)
+        default:
+            break
+        }
+    }
+    
     func configAlamofire(downloadComplete : @escaping DowloadComplete){
         Alamofire.request("\(_urlBase)\(urlPath)").responseJSON { response in
             if(response.result.isFailure) { return }
             let data = response.result.value as! [String:AnyObject]
             self.restaurantList.removeAll()
+            self.restaurantFiltered.removeAll()
             for item in data.values {
                 self.restaurantList.append(item as! Dictionary<String,AnyObject>)
             }

@@ -32,3 +32,28 @@ class BottomPresent: NSObject,UIViewControllerAnimatedTransitioning {
     }
     
 }
+
+class NavBarPresent: NSObject,UIViewControllerAnimatedTransitioning {
+    
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return 1
+    }
+    
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        guard
+            let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from),
+            let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
+        else {return}
+        let container = transitionContext.containerView
+        let toFrame = toVC.view.frame
+        toVC.view.frame = CGRect.init(origin: CGPoint.init(x: -toFrame.width, y: toFrame.origin.y), size: toFrame.size)
+        container.addSubview(toVC.view)
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+            fromVC.view.alpha = 0.5
+            toVC.view.frame = CGRect.init(origin: CGPoint.init(x: 0, y: 0), size: toFrame.size)
+        }, completion: {_ in
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        })
+    }
+    
+}

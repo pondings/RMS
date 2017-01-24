@@ -9,9 +9,10 @@
 import UIKit
 import Material
 
-class MainTabBarCtrl: UITabBarController,CommonNavBarDelegate,SearchNavBarDelegate {
+class MainTabBarCtrl: UITabBarController,CommonNavBarDelegate,SearchNavBarDelegate,UITabBarControllerDelegate {
     
-    private var isSearchMode : Bool = false
+    var isSearch : Bool = false
+    var previousViewCntroller : UIViewController? = nil
     
     lazy var navBar : UINavigationBar = (self.navigationController?.navigationBar)!
     lazy var bottomBarFrame : CGRect = self.tabBar.frame
@@ -45,21 +46,38 @@ class MainTabBarCtrl: UITabBarController,CommonNavBarDelegate,SearchNavBarDelega
         return vw
     }()
     
+    lazy var searchDetail: SearchDetail = {
+        let size = CGSize.init(width: self.view.frame.width, height: (self.view.frame.height - (self.tabBar.height + self.navBar.height)) - 8)
+        let point = CGPoint.init(x: -self.view.frame.width, y: self.navBar.height + 8)
+        let vw = SearchDetail.init(frame: CGRect.init(origin: point, size: size))
+        return vw
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(lightBlueView)
-        self.tabBar.barTintColor = Color.lightBlue.base
+        self.delegate = self
+        view.addSubview(lightBlueView)
+        tabBar.barTintColor = Color.lightBlue.base
         navBar.addSubview(commonNavBar)
-        self.view.backgroundColor = .white
-        self.view.addSubview(qrBtn)
+        view.backgroundColor = .white
+        view.addSubview(qrBtn)
         NotificationCenter.default.addObserver(self, selector: #selector(hideQRBtn(notification:)), name: Notification.Name("hideQR"), object: nil)
+    }
+    
+    func searchTextDidChange(text: String) {
+        view.addSubview(searchDetail)
+        searchDetail.searchForResraurant(text : "Hellow world")
+        previousViewCntroller = nil
+        UIView.animate(withDuration: 0.5, animations: {
+            self.searchDetail.frame = CGRect.init(origin: CGPoint.init(x: 0, y: self.navBar.frame.height + 8), size: self.searchDetail.frame.size)
+        })
     }
     
     func hideQRBtn(notification : Notification){
         let state = notification.object as! Bool
         if(state){
             UIView.animate(withDuration: 1, animations: {
-                 self.qrBtn.transform = CGAffineTransform.init(scaleX: 0.01, y: 0.01)
+                 self.qrBtn.transform = CGAffineTransform.init(scaleX: 0.0001, y: 0.0001)
             }, completion: nil)
         }else{
             self.qrBtn.isHidden = false
@@ -71,7 +89,20 @@ class MainTabBarCtrl: UITabBarController,CommonNavBarDelegate,SearchNavBarDelega
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         item.selectedImage = item.image?.tint(with: Color.white)
+        UIView.transition(from: searchNavBar, to: commonNavBar, duration: 0.5, options: .transitionCrossDissolve, completion: nil)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.searchDetail.frame = CGRect.init(origin: CGPoint.init(x: -self.view.frame.width, y: self.navBar.frame.height + 8), size: self.searchDetail.frame.size)
+        })
     }
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if(viewController == previousViewCntroller){
+            let VC = viewController as? UICollectionViewController
+            VC?.collectionView?.scrollToItem(at: IndexPath.init(row: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: true)
+        }
+        previousViewCntroller = viewController
+    }
+    
     
     func searchBtnClicked() {
         UIView.transition(from: commonNavBar, to: searchNavBar, duration: 0.5, options: .transitionCrossDissolve, completion: nil)
@@ -83,6 +114,10 @@ class MainTabBarCtrl: UITabBarController,CommonNavBarDelegate,SearchNavBarDelega
     
     func cancleBtnClicked() {
         UIView.transition(from: searchNavBar, to: commonNavBar, duration: 0.5, options: .transitionCrossDissolve, completion: nil)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.searchDetail.frame = CGRect.init(origin: CGPoint.init(x: -self.view.frame.width, y: self.navBar.frame.height + 8), size: self.searchDetail.frame.size)
+        })
+        searchNavBar.searchBox.text = ""
     }
     
 }

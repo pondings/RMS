@@ -10,6 +10,7 @@
 		2A642E4C4422C69A42C85AFD /* Pods_RMS_2UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 546F1FFC9A3BEF5BDAD64F46 /* Pods_RMS_2UITests.framework */; };
 		7A409DFB8B11550CAFEAD735 /* Pods_RMS_2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889923463F59D82A27116EBB /* Pods_RMS_2Tests.framework */; };
 		AA047B7FAC5647AAF9E54769 /* Pods_RMS_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B35ABF1D62086FCF63C5F3 /* Pods_RMS_2.framework */; };
+		EA14C3D71E373E280006734E /* SearchDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14C3D61E373E280006734E /* SearchDetail.swift */; };
 		EA8150AE1E360609002CA64E /* PresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8150AD1E360609002CA64E /* PresentAnimator.swift */; };
 		EA8150B01E360614002CA64E /* DismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8150AF1E360614002CA64E /* DismissAnimator.swift */; };
 		EA8150B21E36063D002CA64E /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8150B11E36063D002CA64E /* Interactor.swift */; };
@@ -61,6 +62,7 @@
 		889923463F59D82A27116EBB /* Pods_RMS_2Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RMS_2Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		946B5CDFAA9E140AB2DF8705 /* Pods-RMS-2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RMS-2Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RMS-2Tests/Pods-RMS-2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D3F59A5B99F49D2CD4255E28 /* Pods-RMS-2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RMS-2UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RMS-2UITests/Pods-RMS-2UITests.debug.xcconfig"; sourceTree = "<group>"; };
+		EA14C3D61E373E280006734E /* SearchDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchDetail.swift; sourceTree = "<group>"; };
 		EA8150AD1E360609002CA64E /* PresentAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentAnimator.swift; sourceTree = "<group>"; };
 		EA8150AF1E360614002CA64E /* DismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissAnimator.swift; sourceTree = "<group>"; };
 		EA8150B11E36063D002CA64E /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				EAAB3D351E35D2550073F44E /* RestaurantDetail.swift */,
+				EA14C3D61E373E280006734E /* SearchDetail.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				EAAB3D311E35B6A60073F44E /* CollectionViewContentCell.swift in Sources */,
 				EAF9F0911E30B5E20077FE4F /* AppDelegate.swift in Sources */,
 				EA8150B21E36063D002CA64E /* Interactor.swift in Sources */,
+				EA14C3D71E373E280006734E /* SearchDetail.swift in Sources */,
 				EA8150AE1E360609002CA64E /* PresentAnimator.swift in Sources */,
 				EA8150B01E360614002CA64E /* DismissAnimator.swift in Sources */,
 				EAA850871E30BF1400395858 /* MainNavbarCtrl.swift in Sources */,
@@ -726,6 +730,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC2FB03496E411E2E1EA0A08 /* Pods-RMS-2.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = DL969UDUMZ;
 				INFOPLIST_FILE = "RMS-2/Info.plist";
@@ -740,6 +745,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C023375CABA66B566EC0BD0 /* Pods-RMS-2.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = DL969UDUMZ;
 				INFOPLIST_FILE = "RMS-2/Info.plist";

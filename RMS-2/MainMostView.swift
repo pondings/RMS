@@ -9,6 +9,10 @@
 import UIKit
 
 class MainMostView: UICollectionViewController {
+    internal func didSearch(text: String) {
+        print("2")
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
