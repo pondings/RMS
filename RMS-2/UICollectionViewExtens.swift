@@ -28,6 +28,7 @@ extension CollectionViewDelegate where Self : UIViewController {
             //Hide Navbar
         }
         NotificationCenter.default.post(name: Notification.Name("dsNavBar"), object: dismiss)
+        NotificationCenter.default.post(name: Notification.Name("hideQR"), object: dismiss)
         hideBottomBar(hidden: dismiss, animate: true)
     }
     

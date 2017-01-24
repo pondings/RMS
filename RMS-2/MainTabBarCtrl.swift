@@ -52,6 +52,21 @@ class MainTabBarCtrl: UITabBarController,CommonNavBarDelegate,SearchNavBarDelega
         navBar.addSubview(commonNavBar)
         self.view.backgroundColor = .white
         self.view.addSubview(qrBtn)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideQRBtn(notification:)), name: Notification.Name("hideQR"), object: nil)
+    }
+    
+    func hideQRBtn(notification : Notification){
+        let state = notification.object as! Bool
+        if(state){
+            UIView.animate(withDuration: 1, animations: {
+                 self.qrBtn.transform = CGAffineTransform.init(scaleX: 0.01, y: 0.01)
+            }, completion: nil)
+        }else{
+            self.qrBtn.isHidden = false
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 3, options: .allowAnimatedContent, animations: {
+                self.qrBtn.transform = .identity
+            }, completion: nil)
+        }
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
