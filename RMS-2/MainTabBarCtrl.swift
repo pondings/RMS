@@ -46,13 +46,6 @@ class MainTabBarCtrl: UITabBarController,CommonNavBarDelegate,SearchNavBarDelega
         return vw
     }()
     
-    lazy var searchDetail: SearchDetail = {
-        let size = CGSize.init(width: self.view.frame.width, height: (self.view.frame.height - (self.tabBar.height + self.navBar.height)) - 8)
-        let point = CGPoint.init(x: -self.view.frame.width, y: self.navBar.height + 8)
-        let vw = SearchDetail.init(frame: CGRect.init(origin: point, size: size))
-        return vw
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
@@ -65,12 +58,7 @@ class MainTabBarCtrl: UITabBarController,CommonNavBarDelegate,SearchNavBarDelega
     }
     
     func searchTextDidChange(text: String) {
-        view.addSubview(searchDetail)
-        searchDetail.searchForResraurant(text : "Hellow world")
         previousViewCntroller = nil
-        UIView.animate(withDuration: 0.5, animations: {
-            self.searchDetail.frame = CGRect.init(origin: CGPoint.init(x: 0, y: self.navBar.frame.height + 8), size: self.searchDetail.frame.size)
-        })
     }
     
     func hideQRBtn(notification : Notification){
@@ -90,9 +78,6 @@ class MainTabBarCtrl: UITabBarController,CommonNavBarDelegate,SearchNavBarDelega
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         item.selectedImage = item.image?.tint(with: Color.white)
         UIView.transition(from: searchNavBar, to: commonNavBar, duration: 0.5, options: .transitionCrossDissolve, completion: nil)
-        UIView.animate(withDuration: 0.5, animations: {
-            self.searchDetail.frame = CGRect.init(origin: CGPoint.init(x: -self.view.frame.width, y: self.navBar.frame.height + 8), size: self.searchDetail.frame.size)
-        })
     }
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
@@ -114,9 +99,6 @@ class MainTabBarCtrl: UITabBarController,CommonNavBarDelegate,SearchNavBarDelega
     
     func cancleBtnClicked() {
         UIView.transition(from: searchNavBar, to: commonNavBar, duration: 0.5, options: .transitionCrossDissolve, completion: nil)
-        UIView.animate(withDuration: 0.5, animations: {
-            self.searchDetail.frame = CGRect.init(origin: CGPoint.init(x: -self.view.frame.width, y: self.navBar.frame.height + 8), size: self.searchDetail.frame.size)
-        })
         searchNavBar.searchBox.text = ""
     }
     
