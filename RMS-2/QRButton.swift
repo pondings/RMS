@@ -34,6 +34,12 @@ class QRButton: UIButton {
         }, completion: nil)
     }
     
+    func hideSelf(isHidden : Bool){
+        if(isHidden) {
+            UIView.animate(withDuration: 0.5, animations: { self.x = UIScreen.main.bounds.width }, completion: nil)
+        }else { UIView.animate(withDuration: 0.5, animations: { self.x = (UIScreen.main.bounds.width - self.width) - 8 }) }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

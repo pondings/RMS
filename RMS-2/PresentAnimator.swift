@@ -33,27 +33,25 @@ class BottomPresent: NSObject,UIViewControllerAnimatedTransitioning {
     
 }
 
-class NavBarPresent: NSObject,UIViewControllerAnimatedTransitioning {
+class LeftPresent: NSObject,UIViewControllerAnimatedTransitioning {
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 1
+        return 0.5
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard
-            let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from),
-            let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
+            let fromVC = transitionContext.viewController(forKey: .from),
+            let toVC = transitionContext.viewController(forKey: .to)
         else {return}
         let container = transitionContext.containerView
-        let toFrame = toVC.view.frame
-        toVC.view.frame = CGRect.init(origin: CGPoint.init(x: -toFrame.width, y: toFrame.origin.y), size: toFrame.size)
+        let toVCOrigin = CGPoint.init(x: UIScreen.main.bounds.width, y: 0)
+        toVC.view.frame = CGRect.init(origin: toVCOrigin, size: toVC.view.frame.size)
         container.addSubview(toVC.view)
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
             fromVC.view.alpha = 0.5
-            toVC.view.frame = CGRect.init(origin: CGPoint.init(x: 0, y: 0), size: toFrame.size)
-        }, completion: {_ in
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        })
+            toVC.view.frame = CGRect.init(origin: CGPoint.init(x: 0, y: 0), size: toVC.view.frame.size)
+        }, completion: {_ in transitionContext.completeTransition(!transitionContext.transitionWasCancelled)})
     }
     
 }

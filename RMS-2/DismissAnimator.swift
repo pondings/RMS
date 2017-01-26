@@ -31,3 +31,27 @@ class PullDownDismiss: NSObject,UIViewControllerAnimatedTransitioning {
     }
     
 }
+
+class LeftEdgeDismiss: NSObject,UIViewControllerAnimatedTransitioning {
+    
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return 0.5
+    }
+    
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        guard
+            let fromVC = transitionContext.viewController(forKey: .from),
+            let toVC = transitionContext.viewController(forKey: .to)
+        else {return}
+        let container = transitionContext.containerView
+        container.insertSubview(toVC.view, belowSubview: fromVC.view)
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+            let point = CGPoint.init(x: UIScreen.main.bounds.width, y: 0)
+            fromVC.view.frame = CGRect.init(origin: point, size: fromVC.view.frame.size)
+            toVC.view.alpha = 1
+        }, completion: {_ in
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        })
+    }
+    
+}

@@ -36,7 +36,7 @@ class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     override func viewDidAppear(_ animated: Bool) {
         NotificationCenter.default.post(name: Notification.Name("navTitle"), object: "Restaurant")
-        tabBarItem.selectedImage = tabBarItem.image?.tint(with: .white)
+        navigationController?.tabBarItem.selectedImage = navigationController?.tabBarItem.image?.tint(with: .white)
     }
     
     func showEmptyData(state : state){

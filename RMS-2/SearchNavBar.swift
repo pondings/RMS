@@ -8,9 +8,9 @@
 
 import UIKit
 
-protocol SearchNavBarDelegate {
-    func cancleBtnClicked()
-    func searchTextDidChange(text : String)
+@objc protocol SearchNavBarDelegate {
+    @objc optional func cancleBtnClicked()
+    @objc optional func searchBarDidEnter(text : String)
 }
 
 class SearchNavBar: UIView,UISearchBarDelegate {
@@ -43,7 +43,7 @@ class SearchNavBar: UIView,UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        delegate?.searchTextDidChange(text: searchBar.text!)
+        delegate?.searchBarDidEnter!(text: searchBar.text!)
     }
     
     private func customize(){
@@ -73,7 +73,7 @@ class SearchNavBar: UIView,UISearchBarDelegate {
     }
     
     func cancleBtnClicked(){
-        delegate?.cancleBtnClicked()
+        delegate?.cancleBtnClicked!()
     }
 
 }
