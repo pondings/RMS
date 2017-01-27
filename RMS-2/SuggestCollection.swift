@@ -10,9 +10,15 @@ import UIKit
 import Material
 import Font_Awesome_Swift
 
-class SuggestCollection: UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+@objc protocol SuggestMenuDelegate {
+    @objc optional func didSelectedMunu(at index : Int)
+}
 
+class SuggestCollection: UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    
+    var delegate : SuggestMenuDelegate?
     let menuList = ["Recomend","Nearby","Facebook","Twitter","Apple"]
+    var xPositionOfCell : Array<Int> = []
     
     lazy var whiteView: UIView = {
         let size = CGSize.init(width: (self.width * 0.25), height: 5)
@@ -57,6 +63,7 @@ class SuggestCollection: UIView,UICollectionViewDelegate,UICollectionViewDataSou
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SuggestCollectionCell
         cell.configureCell(title: menuList[indexPath.row])
         cell.frame.origin.y = 4
+        if(!xPositionOfCell.contains(Int(cell.frame.origin.x))) { xPositionOfCell.append(Int(cell.frame.origin.x)) }
         return cell
     }
     
@@ -65,15 +72,21 @@ class SuggestCollection: UIView,UICollectionViewDelegate,UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        configureWhiteView(index: indexPath.row)
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.transform = CGAffineTransform.init(scaleX: 0.7, y: 0.7)
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 6, options: .allowUserInteraction, animations: {
+            cell?.transform = .identity
+        }, completion: nil)
+        delegate?.didSelectedMunu!(at: indexPath.row)
     }
     
     func configureWhiteView(index : Int){
-        let cell = menuCollection.cellForItem(at: IndexPath.init(row: index, section: 0))
-        UIView.animate(withDuration: 0.5, animations: {
-            self.whiteView.frame.origin.x = (cell?.x)!
-        })
+        let indexPath = IndexPath.init(row: index, section: 0)
+        menuCollection.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        _ = menuCollection.cellForItem(at: indexPath)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .allowUserInteraction, animations: {
+            self.whiteView.frame.origin.x = CGFloat(self.xPositionOfCell[index])
+        }, completion: nil)
     }
 }
 

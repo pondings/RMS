@@ -307,10 +307,28 @@
             </objects>
             <point key="canvasLocation" x="-868" y="725"/>
         </scene>
-        <!--View Controller-->
+        <!--RecommendPT-->
+        <scene sceneID="tvY-9t-TvQ">
+            <objects>
+                <viewController storyboardIdentifier="Recommend_PT" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RCz-Qs-VBM" customClass="Recommend_PT" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4q0-f4-P2S"/>
+                        <viewControllerLayoutGuide type="bottom" id="6rH-Wj-fTu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="YCs-TW-2uW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hBh-JD-RFf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3298" y="-1437"/>
+        </scene>
+        <!--NearbyPT-->
         <scene sceneID="Vjk-tD-Jf3">
             <objects>
-                <viewController id="Ff8-bO-yOJ" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Nearby_PT" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ff8-bO-yOJ" customClass="Nearby_PT" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="U9k-st-UZ4"/>
                         <viewControllerLayoutGuide type="bottom" id="sej-bc-RhN"/>
@@ -325,10 +343,50 @@
             </objects>
             <point key="canvasLocation" x="-2506" y="-1437"/>
         </scene>
+        <!--Reader-->
+        <scene sceneID="TUG-qV-YdJ">
+            <objects>
+                <viewController storyboardIdentifier="QRReader" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nah-kJ-EkI" customClass="QRReader" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aMW-Nv-KfV"/>
+                        <viewControllerLayoutGuide type="bottom" id="rGZ-lb-0gT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LOA-WP-qVt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eAt-eV-nQM">
+                                <rect key="frame" x="16" y="28" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="Nmz-TJ-tBK"/>
+                                    <constraint firstAttribute="height" constant="24" id="iP5-mn-8tR"/>
+                                </constraints>
+                                <state key="normal">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismissSelf:" destination="nah-kJ-EkI" eventType="touchUpInside" id="AWW-Hy-u6e"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eAt-eV-nQM" firstAttribute="leading" secondItem="LOA-WP-qVt" secondAttribute="leadingMargin" id="luF-KM-97g"/>
+                            <constraint firstItem="eAt-eV-nQM" firstAttribute="top" secondItem="aMW-Nv-KfV" secondAttribute="bottom" constant="8" id="xxa-3s-Una"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backBtn" destination="eAt-eV-nQM" id="36o-6S-01y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vLb-AG-nLN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2506" y="-783"/>
+        </scene>
         <!--Main Tab Bar Ctrl-->
         <scene sceneID="Brt-rp-wDI">
             <objects>
-                <tabBarController hidesBottomBarWhenPushed="YES" id="ckP-tJ-kME" customClass="MainTabBarCtrl" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="ckP-tJ-kME" customClass="MainTabBarCtrl" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="f2v-yh-01F"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="sWz-Tu-J97">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
@@ -341,16 +399,18 @@
                         <segue destination="9db-pr-ZEk" kind="relationship" relationship="viewControllers" id="iuH-N6-zJc"/>
                         <segue destination="nsl-T3-MKD" kind="relationship" relationship="viewControllers" id="53a-7F-bMO"/>
                         <segue destination="89K-im-Ecz" kind="relationship" relationship="viewControllers" id="lzq-3U-XNI"/>
+                        <segue destination="nah-kJ-EkI" kind="showDetail" identifier="QRReader" id="WVk-0F-99e"/>
+                        <segue destination="q8w-tf-ZuR" kind="showDetail" identifier="MainOrder" id="tTY-BS-7ti"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XcA-Ly-4iL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1700" y="-783"/>
         </scene>
-        <!--View Controller-->
+        <!--FacebookPT-->
         <scene sceneID="PNv-4l-hTh">
             <objects>
-                <viewController id="UOD-bE-O0x" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Facebook_PT" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UOD-bE-O0x" customClass="Facebook_PT" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="x6q-tZ-4jy"/>
                         <viewControllerLayoutGuide type="bottom" id="OQI-kn-bvc"/>
@@ -365,10 +425,10 @@
             </objects>
             <point key="canvasLocation" x="-1700" y="-1437"/>
         </scene>
-        <!--View Controller-->
+        <!--TwitterPT-->
         <scene sceneID="pMN-Dt-QFG">
             <objects>
-                <viewController id="vFa-qM-Bwt" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Twitter_PT" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vFa-qM-Bwt" customClass="Twitter_PT" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hdf-N2-Axk"/>
                         <viewControllerLayoutGuide type="bottom" id="VCH-8i-dkG"/>
@@ -382,6 +442,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uP9-xJ-0W5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-868" y="-1437"/>
+        </scene>
+        <!--ApplePT-->
+        <scene sceneID="fJQ-VR-WLx">
+            <objects>
+                <viewController storyboardIdentifier="Apple_PT" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1Oq-uL-TTe" customClass="Apple_PT" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="EUI-jf-38V"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZRF-FY-YLK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="14F-eM-HLY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rMu-5r-wzw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-159" y="-1437"/>
+        </scene>
+        <!--Main Order-->
+        <scene sceneID="F4D-74-6Pq">
+            <objects>
+                <viewController id="F0k-Ui-O7B" customClass="MainOrder" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1J7-3g-G70"/>
+                        <viewControllerLayoutGuide type="bottom" id="oJK-8c-psp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="U5o-hK-XOa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M8s-L7-DTs">
+                                <rect key="frame" x="164" y="318.5" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="test:" destination="F0k-Ui-O7B" eventType="touchUpInside" id="IrT-Mr-PpX"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="M8s-L7-DTs" firstAttribute="centerX" secondItem="U5o-hK-XOa" secondAttribute="centerX" id="BGx-De-4V4"/>
+                            <constraint firstItem="M8s-L7-DTs" firstAttribute="centerY" secondItem="U5o-hK-XOa" secondAttribute="centerY" id="Riw-Yw-1QJ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="gGi-l3-pv6"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="88l-04-lD1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="525.60000000000002" y="-783.05847076461771"/>
         </scene>
         <!--Main Most View-->
         <scene sceneID="T8P-NC-OX9">
@@ -414,7 +524,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="N52-Pq-SZ6"/>
                     <connections>
-                        <segue destination="0el-RC-Dtx" kind="showDetail" id="JzN-rS-Xj8"/>
+                        <segue destination="0el-RC-Dtx" kind="showDetail" identifier="Detail" id="JzN-rS-Xj8"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="esM-e7-e9M" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -481,6 +591,24 @@
             </objects>
             <point key="canvasLocation" x="-868" y="-18"/>
         </scene>
+        <!--Order Nav Bar Ctrl-->
+        <scene sceneID="jfc-yu-jpB">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="q8w-tf-ZuR" customClass="OrderNavBarCtrl" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="IGd-dd-Kyi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="F0k-Ui-O7B" kind="relationship" relationship="rootViewController" id="YOa-IP-5Ml"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ydp-sj-b9N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-868" y="-783.05847076461771"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ic_local_offer" width="24" height="24"/>
@@ -488,7 +616,7 @@
         <image name="ic_thumb_up" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="JzN-rS-Xj8"/>
         <segue reference="h6i-qQ-zj3"/>
+        <segue reference="JzN-rS-Xj8"/>
     </inferredMetricsTieBreakers>
 </document>

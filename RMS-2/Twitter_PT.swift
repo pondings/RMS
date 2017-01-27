@@ -1,5 +1,5 @@
 //
-//  Facebook_PT.swift
+//  Twitter_PT.swift
 //  RMS-2
 //
 //  Created by Pondz on 1/26/2560 BE.
@@ -10,7 +10,7 @@ import UIKit
 import Font_Awesome_Swift
 import Material
 
-class Facebook_PT: UIViewController {
+class Twitter_PT: UIViewController {
 
     lazy var imageView: UIImageView = {
         let width = self.view.frame.width * 0.4
@@ -30,7 +30,7 @@ class Facebook_PT: UIViewController {
     }
     
     func configureImageView(){
-        imageView.setFAIconWithName(icon: FAType.FAFacebook, textColor: .white)
+        imageView.setFAIconWithName(icon: FAType.FATwitter, textColor: .white)
         self.view.addSubview(imageView)
     }
 }

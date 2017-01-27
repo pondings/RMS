@@ -34,7 +34,7 @@ class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLay
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.post(name: Notification.Name("navTitle"), object: "Restaurant")
         navigationController?.tabBarItem.selectedImage = navigationController?.tabBarItem.image?.tint(with: .white)
     }

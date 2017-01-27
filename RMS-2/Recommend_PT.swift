@@ -7,29 +7,109 @@
 //
 
 import UIKit
+import Font_Awesome_Swift
+import Alamofire
+import Material
 
-class Recommend_PT: UIViewController {
+class Recommend_PT: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
+    private var restaurantList : [Dictionary<String,AnyObject>]! = []
+    
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let frame = CGRect.init(origin: CGPoint.init(x: 5, y: 0), size: self.view.frame.size)
+        let cv = UICollectionView.init(frame: frame, collectionViewLayout: layout)
+        cv.delegate = self
+        cv.dataSource = self
+        cv.backgroundColor = Color.grey.lighten1
+        cv.keyboardDismissMode = .onDrag
+        cv.register(Recommend_PTCollectionCell.self, forCellWithReuseIdentifier: "Cell")
+        return cv
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.view.backgroundColor = Color.grey.lighten1
     }
     
+    override func viewWillAppear(_ animated: Bool) {
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
+    
+    override func viewDidAppear(_ animated: Bool) {
+        collectionView.frame.size.height = self.view.frame.height
+        collectionView.frame.size.width = self.view.frame.width - 10
+        self.view.addSubview(collectionView)
+        configureAlamofire {
+            self.collectionView.reloadData()
+        }
+    }
+    
+    private func configureAlamofire(downloadComplete : @escaping DowloadComplete){
+        Alamofire.request("\(_urlBase)Restaurant").responseJSON{ response in
+            if(response.result.isFailure) {return}
+            let data = response.result.value as! [String:AnyObject]
+            self.restaurantList.removeAll()
+            for item in data.values{
+                self.restaurantList.append(item as! Dictionary<String,AnyObject>)
+            }
+            downloadComplete()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return restaurantList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! Recommend_PTCollectionCell
+        cell.configureCell(res: Restaurants.init(restDict: restaurantList[indexPath.row]))
+        cell.frame.origin.x = 4
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize.init(width: self.view.frame.width - 18, height: self.view.frame.height * 0.2)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
+    }
+}
 
+class Recommend_PTCollectionCell: UICollectionViewCell {
+    
+    lazy var imageView: UIImageView = {
+        let size = CGSize.init(width: self.frame.width * 0.4, height: self.frame.height)
+        let origin = CGPoint.init(x: 0, y: 0)
+        let iv = UIImageView.init(frame: CGRect.init(origin: origin, size: size))
+        iv.layer.cornerRadius = 8
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    func configureCell(res : Restaurants){
+        self.backgroundColor = .white
+        self.cornerRadius = 8
+        configureImageView(url: res.img!)
+    }
+    
+    private func configureImageView(url : String){
+        let urlString = url
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { (data,response,error) in
+            if error != nil {
+                print("Failed fetching image:", error!)
+                return
+            }
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                print("Not a proper HTTPURLResponse or statusCode")
+                return
+            }
+            DispatchQueue.main.async {
+                self.imageView.image = UIImage(data: data!)
+            }
+        }.resume()
+        self.addSubview(imageView)
+    }
 }

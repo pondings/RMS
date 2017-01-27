@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Font_Awesome_Swift
 
-protocol CommonNavBarDelegate {
-    func searchBtnClicked()
-    func moreBtnClicked()
+@objc protocol CommonNavBarDelegate {
+    @objc optional func searchBtnClicked()
+    @objc optional func moreBtnClicked()
+    @objc optional func backButtonClicked()
 }
 
 class CommonNavBar: UIView {
@@ -45,12 +47,32 @@ class CommonNavBar: UIView {
         return lb
     }()
     
+    lazy var backBtn: UIButton = {
+        let size = CGSize.init(width: 24, height: 24)
+        let origin = CGPoint.init(x: 8, y: (self.frame.height / 2) - 12)
+        let btn = UIButton.init(frame: CGRect.init(origin: origin, size: size))
+        btn.isHidden = true
+        btn.setFAIcon(icon: FAType.FAChevronLeft, forState: .normal)
+        btn.setFATitleColor(color: .white)
+        btn.addTarget(self, action: #selector(backBtnClicked), for: .touchUpInside)
+        return btn
+    }()
+    
+    var showBackButton : Bool {
+        get {
+            return self.backBtn.isHidden
+        }set {
+            self.backBtn.isHidden = newValue
+        }
+    }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(moreBtn)
         self.addSubview(searchBtn)
         self.addSubview(titleLB)
+        self.addSubview(backBtn)
         NotificationCenter.default.addObserver(self, selector: #selector(title4NavBar(notification:)), name: Notification.Name("navTitle"), object: nil)
     }
     
@@ -63,12 +85,16 @@ class CommonNavBar: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func backBtnClicked(){
+        delegate?.backButtonClicked!()
+    }
+    
     func searchBtnClicked(){
-        delegate?.searchBtnClicked()
+        delegate?.searchBtnClicked!()
     }
     
     func moreBtnClicked(){
-        delegate?.moreBtnClicked()
+        delegate?.moreBtnClicked!()
     }
     
 }

@@ -7,29 +7,32 @@
 //
 
 import UIKit
+import Font_Awesome_Swift
+import Material
+
 
 class Nearby_PT: UIViewController {
 
+    lazy var imageView: UIImageView = {
+        let width = self.view.frame.width * 0.4
+        let size = CGSize.init(width: width, height: width)
+        let origin = CGPoint.init(x: ((self.view.frame.width / 2) - (width / 2)), y: ((self.view.frame.height / 2) - (size.height / 2)))
+        let iv = UIImageView.init(frame: CGRect.init(origin: origin , size: size))
+        return iv
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.view.backgroundColor = Color.blue
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        configureImageView()
     }
-    */
+    
+    func configureImageView(){
+        imageView.setFAIconWithName(icon: FAType.FALocationArrow, textColor: .white)
+        self.view.addSubview(imageView)
+    }
 
 }

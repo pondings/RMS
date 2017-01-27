@@ -9,10 +9,11 @@
 import UIKit
 import Material
 
-class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate {
+class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDelegate,QRReaderDelegate {
     
     var isSearch : Bool = false
     var previousViewCntroller : UIViewController? = nil
+    var interactor = Interactor()
     
     lazy var bottomBarFrame : CGRect = self.tabBar.frame
     lazy var viewFrame : CGRect = self.view.frame
@@ -23,6 +24,8 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate {
         return vw
     }()
     
+    lazy var mainNavBar : MainNavbarCtrl = self.navigationController as! MainNavbarCtrl
+    
     lazy var qrBtn: QRButton = {
         let height : CGFloat = 60
         let width : CGFloat = 60
@@ -30,23 +33,28 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate {
         let yPosition : CGFloat = (self.viewFrame.height - 68) - self.bottomBarFrame.height
         let btn = QRButton.init(frame: CGRect.init(x: xPosition, y: yPosition, width: height, height: width))
         btn.layer.cornerRadius = 30
+        btn.delegate = self
         return btn
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.delegate = self
+        delegate = self
         view.addSubview(lightBlueView)
         tabBar.barTintColor = Color.lightBlue.base
         view.backgroundColor = .white
-        self.view.addSubview(qrBtn)
+        view.addSubview(qrBtn)
         NotificationCenter.default.addObserver(self, selector: #selector(hideQRBtn(notification:)), name: Notification.Name("hideQR"), object: nil)
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         item.selectedImage = item.image?.tint(with: Color.white)
-        let NAV = self.selectedViewController as? MainNavbarCtrl
-        NAV?.cancleBtnClicked()
+//        let NAV = self.selectedViewController as? MainNavbarCtrl
+//        let VC = NAV?.childViewControllers[0] as? UICollectionViewController
+    }
+    
+    func isFoundQRCode(qrCode: String) {
+        performSegue(withIdentifier: "MainOrder", sender: nil)
     }
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
@@ -61,6 +69,43 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate {
     func hideQRBtn(notification : Notification){
         let state = notification.object as! Bool
         qrBtn.hideSelf(isHidden: state)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "QRReader") {
+            if let destination = segue.destination as? QRReader{
+                destination.interactor = interactor
+                destination.transitioningDelegate = self
+                destination.delegate = self
+            }
+        }else if(segue.identifier == "MainOrder") {
+            if let destination = segue.destination as? OrderNavBarCtrl{
+                destination.transitioningDelegate = self
+                destination.interactor = interactor
+            }
+        }
+    }
+    
+}
+
+extension MainTabBarCtrl : UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if presented is OrderNavBarCtrl {
+            return PushToLeft()
+        }
+        return QRReaderPresent()
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if dismissed is OrderNavBarCtrl {
+            return PullToRight()
+        }
+        return QRReaderDismiss()
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor.hasStart ? interactor : nil
     }
     
 }
