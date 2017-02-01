@@ -11,7 +11,7 @@ import Font_Awesome_Swift
 import Alamofire
 import Material
 
-class Recommend_PT: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class Recommend_PT: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DataManagentDelegate {
 
     private var restaurantList : [Dictionary<String,AnyObject>]! = []
     
@@ -40,21 +40,10 @@ class Recommend_PT: UIViewController,UICollectionViewDelegate,UICollectionViewDa
         collectionView.frame.size.height = self.view.frame.height
         collectionView.frame.size.width = self.view.frame.width - 10
         self.view.addSubview(collectionView)
-        configureAlamofire {
+        configureAlamoFire(path: "Restaurant", downloadComplete: { result in
+            self.restaurantList = result
             self.collectionView.reloadData()
-        }
-    }
-    
-    private func configureAlamofire(downloadComplete : @escaping DowloadComplete){
-        Alamofire.request("\(_urlBase)Restaurant").responseJSON{ response in
-            if(response.result.isFailure) {return}
-            let data = response.result.value as! [String:AnyObject]
-            self.restaurantList.removeAll()
-            for item in data.values{
-                self.restaurantList.append(item as! Dictionary<String,AnyObject>)
-            }
-            downloadComplete()
-        }
+        })
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

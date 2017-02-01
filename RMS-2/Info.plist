@@ -43,5 +43,10 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>Wanna be.</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

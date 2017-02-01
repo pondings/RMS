@@ -40,10 +40,6 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate {
         navigationBar.barTintColor = Color.lightBlue.base
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.post(name: Notification.Name("navTitle"), object: "Order Test Application")
-    }
-    
     func backButtonClicked() {
         self.dismiss(animated: true, completion: nil)
     }

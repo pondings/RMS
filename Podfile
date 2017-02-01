@@ -9,6 +9,8 @@ target 'RMS-2' do
 	pod 'Alamofire', '~> 4.3'
 	pod 'Material', '~> 2.0'
 	pod 'Font-Awesome-Swift', '~> 1.5.3'
+	pod 'Firebase/Core'
+	pod 'Firebase/Database'
   target 'RMS-2Tests' do
     inherit! :search_paths
     # Pods for testing

@@ -10,9 +10,14 @@ import Foundation
 import UIKit
 import MapKit
 
-typealias DowloadComplete = () -> ()
+typealias DowloadContentComplete = ([Dictionary<String,AnyObject>]) -> ()
+typealias DowloadImgComplete = ([String]) -> ()
 let statusBar = UIApplication.shared.value(forKey: "statusBar") as! UIView
 var _urlBase = "http://35.165.196.27:3000/"
+enum state {
+    case notFoundContent
+    case connectonError
+}
 
 func prepareToOpenMap(latitude : String,longtitude : String,title : String){
     let lat : NSString = latitude as NSString
@@ -28,4 +33,10 @@ func prepareToOpenMap(latitude : String,longtitude : String,title : String){
     let mapItem = MKMapItem(placemark: placemark)
     mapItem.name = "\(title)"
     mapItem.openInMaps(launchOptions: options)
+}
+
+extension String {
+    var digits: String {
+        return components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+    }
 }

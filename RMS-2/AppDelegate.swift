@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Material
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        statusBar.backgroundColor = Color.lightBlue.base
 //        statusBar.tintColor = Color.lightBlue.base
 //        statusBar.isHidden = true
+        FIRApp.configure()
         return true
     }
 

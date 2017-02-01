@@ -41,7 +41,7 @@ class CommonNavBar: UIView {
         let yPosition = (self.frame.height / 2) - 12
         let xPosition = (self.frame.width / 2 ) - 100
         let lb = UILabel.init(frame: CGRect.init(x: xPosition, y: yPosition, width: 200, height: 24))
-        lb.text = "Test Application"
+        lb.text = ""
         lb.textColor = .white
         lb.textAlignment = .center
         return lb

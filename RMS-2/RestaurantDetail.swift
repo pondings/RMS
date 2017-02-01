@@ -8,15 +8,17 @@
 
 import UIKit
 import Font_Awesome_Swift
+import Alamofire
 
 
-class RestaurantDetail: UIViewController {
+class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
+    @IBOutlet weak var collectionView: UICollectionView!
     var restaurant : Restaurants!
     var interactor : Interactor? = nil
+    private var imgList : [String]! = []
     
     @IBOutlet weak var backBtn : UIButton!
-    @IBOutlet weak var imageView : UIImageView!
     @IBOutlet weak var titleLb : UILabel!
     @IBOutlet weak var descLb : UILabel!
     @IBOutlet weak var firstLineBtn: UIButton!
@@ -28,20 +30,34 @@ class RestaurantDetail: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureAlamofire(dowloadComlete: { _ in
+            self.collectionView.reloadData()
+        })
         customize()
-        configureImageView(url: restaurant.img!)
         configureTitleLb(title: restaurant.title!)
         configureDescLb(desc: restaurant.desc!)
     }
     
     private func customize(){
-        backBtn.setFAIcon(icon: FAType.FAAngleLeft, forState: .normal)
+        backBtn.setFAIcon(icon: FAType.FAChevronLeft, forState: .normal)
         firstLineBtn.setFAIcon(icon: FAType.FAMapMarker, forState: .normal)
         secondLineBtn.setFAIcon(icon: FAType.FAClockO, forState: .normal)
         thirdLineBtn.setFAIcon(icon: FAType.FAPhone, forState: .normal)
         firstLineBtn.setFATitleColor(color: .black, forState: .normal)
         secondLineBtn.setFATitleColor(color: .black, forState: .normal)
         thirdLineBtn.setFATitleColor(color: .black, forState: .normal)
+        
+    }
+    
+    private func configureAlamofire(dowloadComlete : @escaping DowloadImgComplete){
+        Alamofire.request("\(_urlBase)Menu").responseJSON{ response in
+            if(response.result.isFailure) {return}
+            let data = response.result.value as! [String:AnyObject]
+            for item in data.values {
+                self.imgList.append(item["menu_img"] as! String)
+            }
+            dowloadComlete(self.imgList)
+        }
     }
     
     private func configureDescLb(desc : String){
@@ -53,22 +69,22 @@ class RestaurantDetail: UIViewController {
         titleLb.text = title
     }
     
-    private func configureImageView(url : String){
-        let urlString = url
-        guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { (data,response,error) in
-            if error != nil {
-                print("Failed fetching image:", error!)
-                return
-            }
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                print("Not a proper HTTPURLResponse or statusCode")
-                return
-            }
-            DispatchQueue.main.async {
-                self.imageView.image = UIImage(data: data!)
-            }
-        }.resume()
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imgList.count + 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! RestaurantDetailCell
+        cell.configureCell(url: (indexPath.row == 0 ? restaurant.img! : imgList[indexPath.row - 1]))
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize.init(width: self.view.frame.width, height: collectionView.frame.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
     
     @IBAction func openMap(_ sender: UIButton) {
@@ -114,4 +130,28 @@ class RestaurantDetail: UIViewController {
             break
         }
     }
+}
+
+class RestaurantDetailCell: UICollectionViewCell {
+    
+    @IBOutlet weak var imageView : UIImageView!
+    
+    func configureCell(url : String) {
+        let urlString = url
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { (data,response,error) in
+            if error != nil {
+                print("Failed fetching image:", error!)
+                return
+            }
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                print("Not a proper HTTPURLResponse or statusCode")
+                return
+            }
+            DispatchQueue.main.async {
+                self.imageView.image = UIImage(data: data!)
+            }
+        }.resume()
+    }
+    
 }

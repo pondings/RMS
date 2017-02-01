@@ -8,14 +8,15 @@
 
 import UIKit
 import Material
+import Alamofire
 
-protocol EmptyViewDelegate {
-    func refreshBtnClicked()
+@objc protocol DataManagentDelegate {
+    @objc optional func showConnectionError(emptyData : UIView)
 }
 
-class EmptyData: UIView {
+class DataManagent: UIView {
     
-    var delegate : EmptyViewDelegate?
+    var delegate : DataManagentDelegate?
     
     lazy var refreshBtn: UIButton = {
         let width = self.frame.width * 0.4
@@ -59,15 +60,20 @@ class EmptyData: UIView {
         self.backgroundColor = Color.grey.lighten1
     }
     
-    func emptyState(state : state){
+    func emptyState(state : state) {
         switch state {
         case .notFoundContent:
             configureImageView(img: "hungry")
             configureTitle(title: "Not found anything")
             configureRefreshBtn(btn: "Close")
+        case .connectonError:
+            configureImageView(img: "hungry")
+            configureTitle(title: "Connection Error")
+            configureRefreshBtn(btn: "Reload again!")
         default:
             break
         }
+        
     }
     
     func refreshBtnClicked(_ sender : UIButton){
@@ -75,7 +81,7 @@ class EmptyData: UIView {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: .allowUserInteraction, animations: {
             sender.transform = .identity
         }, completion: nil)
-        delegate?.refreshBtnClicked()
+//        delegate?.refreshBtnClicked()
     }
     
     private func configureRefreshBtn(btn : String) {
@@ -97,4 +103,37 @@ class EmptyData: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+}
+
+extension DataManagentDelegate where Self : UICollectionViewDataSource {
+    func configureAlamoFire(path : String,downloadComplete : @escaping DowloadContentComplete){
+        Alamofire.request("\(_urlBase)\(path)").responseJSON { response in
+            if(response.result.isFailure) { self.connectionError() ; return }
+            var dict : [Dictionary<String,AnyObject>]! = []
+            let data = response.result.value as! [String:AnyObject]
+            for item in data.values{
+                dict.append(item as! Dictionary<String,AnyObject>)
+            }
+            downloadComplete(dict)
+        }
+    }
+    
+    func connectionError(){
+        
+    }
+}
+
+extension DataManagentDelegate where Self : UITableViewDataSource {
+    func configureAlamoFire(path : String,downloadComplete : @escaping DowloadContentComplete){
+        Alamofire.request("\(_urlBase)\(path)").responseJSON { response in
+            var dict : [Dictionary<String,AnyObject>]! = []
+            let data = response.result.value as! [String:AnyObject]
+            for item in data.values{
+                dict.append(item as! Dictionary<String,AnyObject>)
+            }
+            downloadComplete(dict)
+        }
+    }
+    
+    
 }

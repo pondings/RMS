@@ -13,7 +13,7 @@ protocol CollectionViewDelegate {
     func didScroll(last : CGFloat,yPosition : CGFloat,contentHeight : CGFloat,cvHeight : CGFloat)
 }
 
-extension CollectionViewDelegate where Self : UIViewController {
+extension CollectionViewDelegate where Self : UICollectionViewController {
     
     func didScroll(last : CGFloat,yPosition : CGFloat,contentHeight : CGFloat,cvHeight : CGFloat){
         var dismiss = true
@@ -29,7 +29,7 @@ extension CollectionViewDelegate where Self : UIViewController {
         }
         NotificationCenter.default.post(name: Notification.Name("dsNavBar"), object: dismiss)
         NotificationCenter.default.post(name: Notification.Name("hideQR"), object: dismiss)
-        hideBottomBar(hidden: dismiss, animate: true)
+//        hideBottomBar(hidden: dismiss, animate: true)
     }
     
     func hideBottomBar(hidden : Bool,animate : Bool){

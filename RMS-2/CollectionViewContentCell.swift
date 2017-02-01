@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CollectionViewContentCell: UICollectionViewCell {
+class RestaurantListCell: UICollectionViewCell {
     
     lazy var image: UIImageView = {
         let height = self.frame.height * 0.6
@@ -65,7 +65,7 @@ class CollectionViewContentCell: UICollectionViewCell {
     func configureCell(res : Restaurants){
         self.backgroundColor = .white
         self.layer.cornerRadius = 8
-        configreImage(url: res.img!)
+//        configreImage(url: res.img!)
         configureTitle(title: res.title!)
         configureBookmark()
         configureDesc(desc: res.desc!)
@@ -76,7 +76,7 @@ class CollectionViewContentCell: UICollectionViewCell {
     func configureCell(pro : Restaurants){
         self.backgroundColor = .white
         self.layer.cornerRadius = 8
-        configreImage(url: pro.img!)
+//        configreImage(url: pro.img!)
         configureTitle(title: pro.title!)
         configureBookmark()
         configureDesc(desc: pro.desc!)
@@ -118,7 +118,12 @@ class CollectionViewContentCell: UICollectionViewCell {
         print("Open map!")
     }
     
-    private func configreImage(url : String){
+    func configreImage(image : UIImage){
+        self.image.image = image
+        self.addSubview(self.image)
+    }
+    
+    func configureImage(url : String) {
         let urlString = url
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { (data,response,error) in
@@ -133,8 +138,8 @@ class CollectionViewContentCell: UICollectionViewCell {
             DispatchQueue.main.async {
                 self.image.image = UIImage(data: data!)
             }
-            }.resume()
-        self.addSubview(image)
+        }.resume()
+        self.addSubview(self.image)
     }
     
 }

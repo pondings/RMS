@@ -54,12 +54,12 @@ class QRReader: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
         view.layer.addSublayer(videoPreviewLayer!)
         captureSession?.startRunning()
         view.bringSubview(toFront: backBtn)
+        if(qrCodeFrameView == nil) { print("Cannot access to camera"); return }
         view.addSubview(qrCodeFrameView!)
         view.bringSubview(toFront: qrCodeFrameView!)
     }
     
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
-        
         if metadataObjects == nil || metadataObjects.count == 0{
             qrCodeFrameView?.frame = CGRect.zero
             return
