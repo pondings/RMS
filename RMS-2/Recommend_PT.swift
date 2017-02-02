@@ -40,10 +40,10 @@ class Recommend_PT: UIViewController,UICollectionViewDelegate,UICollectionViewDa
         collectionView.frame.size.height = self.view.frame.height
         collectionView.frame.size.width = self.view.frame.width - 10
         self.view.addSubview(collectionView)
-        configureAlamoFire(path: "Restaurant", downloadComplete: { result in
-            self.restaurantList = result
-            self.collectionView.reloadData()
-        })
+//        configureAlamoFire(path: "Restaurant", downloadComplete: { result in
+//            self.restaurantList = result
+//            self.collectionView.reloadData()
+//        })
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

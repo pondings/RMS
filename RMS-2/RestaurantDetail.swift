@@ -11,7 +11,7 @@ import Font_Awesome_Swift
 import Alamofire
 
 
-class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DataManagentDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     var restaurant : Restaurants!
@@ -30,7 +30,8 @@ class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureAlamofire(dowloadComlete: { _ in
+        configureAlamofire(path: "Menu", dowloadComlete: { result in
+            self.imgList = result
             self.collectionView.reloadData()
         })
         customize()
@@ -48,17 +49,7 @@ class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionVi
         thirdLineBtn.setFATitleColor(color: .black, forState: .normal)
         
     }
-    
-    private func configureAlamofire(dowloadComlete : @escaping DowloadImgComplete){
-        Alamofire.request("\(_urlBase)Menu").responseJSON{ response in
-            if(response.result.isFailure) {return}
-            let data = response.result.value as! [String:AnyObject]
-            for item in data.values {
-                self.imgList.append(item["menu_img"] as! String)
-            }
-            dowloadComlete(self.imgList)
-        }
-    }
+
     
     private func configureDescLb(desc : String){
         descLb.text = desc

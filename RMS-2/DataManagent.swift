@@ -12,6 +12,7 @@ import Alamofire
 
 @objc protocol DataManagentDelegate {
     @objc optional func showConnectionError(emptyData : UIView)
+    @objc optional func reloadVC()
 }
 
 class DataManagent: UIView {
@@ -106,6 +107,7 @@ class DataManagent: UIView {
 }
 
 extension DataManagentDelegate where Self : UICollectionViewDataSource {
+    
     func configureAlamoFire(path : String,downloadComplete : @escaping DowloadContentComplete){
         Alamofire.request("\(_urlBase)\(path)").responseJSON { response in
             if(response.result.isFailure) { self.connectionError() ; return }
@@ -118,14 +120,55 @@ extension DataManagentDelegate where Self : UICollectionViewDataSource {
         }
     }
     
-    func connectionError(){
-        
+    func configureAlamofire(path : String,dowloadComlete : @escaping DowloadImgComplete){
+        Alamofire.request("\(_urlBase)\(path)").responseJSON{ response in
+            if(response.result.isFailure) {return}
+            var urlArr : [String]! = []
+            let data = response.result.value as! [String:AnyObject]
+            for item in data.values {
+                urlArr.append(item["menu_img"] as! String)
+            }
+            
+            dowloadComlete(urlArr)
+        }
     }
+    
+    func connectionError(){
+        let size = CGSize.init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        let origin = CGPoint.init(x: 0, y: 0)
+        let emptyData = DataManagent.init(frame: CGRect.init(origin: origin, size: size))
+        emptyData.emptyState(state: .connectonError)
+        showConnectionError!(emptyData: emptyData)
+    }
+    
+    func emptyData() -> UIView {
+        let size = CGSize.init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        let origin = CGPoint.init(x: 0, y: 0)
+        let emptyData = DataManagent.init(frame: CGRect.init(origin: origin, size: size))
+        emptyData.emptyState(state: .emptyData)
+        return emptyData
+    }
+}
+
+extension UICollectionViewController : DataManagentDelegate{
+    
+    func showConnectionError(emptyData: UIView) {
+        view.addSubview(emptyData)
+    }
+    
+    func reloadVC() {
+        collectionView?.reloadData()
+        if(collectionView?.numberOfItems(inSection: 0) == 0){
+            view.addSubview(emptyData())
+        }
+    }
+    
 }
 
 extension DataManagentDelegate where Self : UITableViewDataSource {
     func configureAlamoFire(path : String,downloadComplete : @escaping DowloadContentComplete){
         Alamofire.request("\(_urlBase)\(path)").responseJSON { response in
+            if(response.result.isFailure) {return}
             var dict : [Dictionary<String,AnyObject>]! = []
             let data = response.result.value as! [String:AnyObject]
             for item in data.values{
@@ -134,6 +177,4 @@ extension DataManagentDelegate where Self : UITableViewDataSource {
             downloadComplete(dict)
         }
     }
-    
-    
 }

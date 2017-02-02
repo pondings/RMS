@@ -11,6 +11,7 @@ target 'RMS-2' do
 	pod 'Font-Awesome-Swift', '~> 1.5.3'
 	pod 'Firebase/Core'
 	pod 'Firebase/Database'
+	pod 'SKPhotoBrowser'
   target 'RMS-2Tests' do
     inherit! :search_paths
     # Pods for testing

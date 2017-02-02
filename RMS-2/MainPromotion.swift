@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import Material
 
-class MainPromotion: UICollectionViewController,UICollectionViewDelegateFlowLayout,CollectionViewDelegate,DataManagentDelegate {
+class MainPromotion: UICollectionViewController,UICollectionViewDelegateFlowLayout,CollectionViewDelegate {
     
     private let urlPath = "Promotion"
     private var promotionList : [Dictionary<String,AnyObject>]! = []
@@ -25,7 +25,7 @@ class MainPromotion: UICollectionViewController,UICollectionViewDelegateFlowLayo
     override func viewWillAppear(_ animated: Bool) {
         configureAlamoFire(path: urlPath, downloadComplete: { result in
             self.promotionList = result
-            self.collectionView?.reloadData()
+            self.reloadVC()
             self.storeImageCache(promotionList: self.promotionList)
         })
     }

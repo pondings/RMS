@@ -16,7 +16,7 @@ protocol OrderMenuDelegate {
 
 class OrderMenu: UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
 
-    private let menu = ["menu","order","ic_local_offer","album","feedback"]
+    private let menu = ["menu","order","album","ic_local_offer","feedback"]
     private let title4Navbar = ["Menu List","Me Order","Photo"]
     var delegate : OrderMenuDelegate?
     
@@ -75,7 +75,7 @@ class OrderMenu: UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICo
             cell?.imageView.image = cell?.imageView.image?.tint(with: Color.grey.lighten1)
         }
         let cell = collectionView.cellForItem(at: indexPath) as? OrderMenuCell
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             self.whiteView.frame.origin.x = (cell?.frame.origin.x)!
             cell?.imageView.image = cell?.imageView.image?.tint(with: .white)
         })

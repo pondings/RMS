@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLayout,CollectionViewDelegate,DataManagentDelegate {
+class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLayout,CollectionViewDelegate {
     
     private let urlPath : String = "Restaurant"
     private var restaurantList : [Dictionary<String,AnyObject>]! = []
@@ -23,7 +23,7 @@ class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLay
         super.viewDidLoad()
         configureAlamoFire(path: urlPath, downloadComplete: { result in
             self.restaurantList = result
-            self.collectionView?.reloadData()
+            self.reloadVC()
             self.storeImageCache(resDict: self.restaurantList)
         })
     }

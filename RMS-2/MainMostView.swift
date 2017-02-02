@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayout,CollectionViewDelegate,DataManagentDelegate {
+class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayout,CollectionViewDelegate {
 
     private var mostViewList : [Dictionary<String,AnyObject>]! = []
     private var imageCache : [Dictionary<String,UIImage>]! = []
@@ -21,7 +21,7 @@ class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayou
         super.viewDidLoad()
         configureAlamoFire(path: urlPath, downloadComplete: { result in
             self.mostViewList = result
-            self.collectionView?.reloadData()
+            self.reloadVC()
             self.storeImageCache(mostViewList: self.mostViewList)
         })
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Material
 
 class RestaurantListCell: UICollectionViewCell {
     
@@ -24,14 +25,16 @@ class RestaurantListCell: UICollectionViewCell {
         return lb
     }()
     
-    lazy var bookmarkBtn: UIButton = {
+    lazy var bookmarkBtn: FlatButton = {
         let xPosition = self.title.frame.maxX
         let yPosition = self.image.frame.maxY + 8
         let width = self.frame.width * 0.1
         let height = self.frame.height * 0.1
-        let btn = UIButton.init(frame: CGRect.init(x: xPosition, y: yPosition, width: width, height: height))
+        let btn = FlatButton.init(frame: CGRect.init(x: xPosition, y: yPosition, width: width, height: height))
         btn.tintColor = .black
         btn.alpha = 0.5
+        btn.pulseColor = .blue
+        btn.cornerRadius = height / 2
         btn.setImage(UIImage.init(named: "bookmark")?.withRenderingMode(.alwaysTemplate), for: .normal)
         return btn
     }()
@@ -51,13 +54,15 @@ class RestaurantListCell: UICollectionViewCell {
         return lb
     }()
     
-    lazy var subBtn: UIButton = {
+    lazy var subBtn: FlatButton = {
         let yPosition = self.desc.frame.maxY
         let height = self.frame.height * 0.1
         let width = height
-        let btn = UIButton.init(frame: CGRect.init(x: 0, y: yPosition, width: width, height: height))
+        let btn = FlatButton.init(frame: CGRect.init(x: 0, y: yPosition, width: width, height: height))
         btn.tintColor = .black
         btn.alpha = 0.5
+        btn.cornerRadius = height / 2
+        btn.pulseColor = .blue
         btn.addTarget(self, action: #selector(subBtnClicked(_:)), for: .touchUpInside)
         return btn
     }()

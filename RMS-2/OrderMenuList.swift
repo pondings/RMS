@@ -29,12 +29,6 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         customize()
-//        configureAlamofire {_ in 
-//            self.tableView.beginUpdates()
-//            self.tableView.reloadData()
-//            self.tableView.endUpdates()
-//            self.oldIndexPath = 3
-//        }
         configureAlamoFire(path: "Menu", downloadComplete: { result in
             for item in result {
                 if((item["suggestion"] as? Bool) != nil && item["suggestion"] as! Bool) {self.suggestMenu.append(item)}
@@ -52,22 +46,6 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
         tableView.contentInset.bottom = 20
         tableView.contentInset.top = 8
     }
-    
-//    private func configureAlamofire(competed : @escaping DowloadContentComplete){
-//        Alamofire.request("\(_urlBase)Menu").responseJSON { response in
-//            if(response.result.isFailure) { return }
-//            let data = response.result.value as! [[String:AnyObject]]
-//            for item in data {
-//                if((item["suggestion"] as? Bool) != nil && item["suggestion"] as! Bool) {
-//                    self.suggestMenu.append(item)
-//                }else {
-//                    self.popularMenu.append(item)
-//                }
-//                
-//            }
-//            competed(self.suggestMenu)
-//        }
-//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MenuTableViewCell

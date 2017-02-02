@@ -88,10 +88,12 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Font-Awesome-Swift/Font_Awesome_Swift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/GoogleToolboxForMac/GoogleToolboxForMac.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Material/Material.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SKPhotoBrowser/SKPhotoBrowser.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Font-Awesome-Swift/Font_Awesome_Swift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/GoogleToolboxForMac/GoogleToolboxForMac.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Material/Material.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SKPhotoBrowser/SKPhotoBrowser.framework"
 fi

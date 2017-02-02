@@ -17,7 +17,6 @@
 		EA5FEDE21E39DDCC00682C31 /* SuggestCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5FEDE11E39DDCC00682C31 /* SuggestCollection.swift */; };
 		EA5FEDE41E39FC5400682C31 /* Twitter_PT.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5FEDE31E39FC5400682C31 /* Twitter_PT.swift */; };
 		EA5FEDE61E39FC6400682C31 /* Apple_PT.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5FEDE51E39FC6400682C31 /* Apple_PT.swift */; };
-		EA6980641E404D3F00455F95 /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6980631E404D3F00455F95 /* Stepper.swift */; };
 		EA8150AE1E360609002CA64E /* PresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8150AD1E360609002CA64E /* PresentAnimator.swift */; };
 		EA8150B01E360614002CA64E /* DismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8150AF1E360614002CA64E /* DismissAnimator.swift */; };
 		EA8150B21E36063D002CA64E /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8150B11E36063D002CA64E /* Interactor.swift */; };
@@ -84,7 +83,6 @@
 		EA5FEDE11E39DDCC00682C31 /* SuggestCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestCollection.swift; sourceTree = "<group>"; };
 		EA5FEDE31E39FC5400682C31 /* Twitter_PT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Twitter_PT.swift; sourceTree = "<group>"; };
 		EA5FEDE51E39FC6400682C31 /* Apple_PT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Apple_PT.swift; sourceTree = "<group>"; };
-		EA6980631E404D3F00455F95 /* Stepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stepper.swift; sourceTree = "<group>"; };
 		EA8150AD1E360609002CA64E /* PresentAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentAnimator.swift; sourceTree = "<group>"; };
 		EA8150AF1E360614002CA64E /* DismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissAnimator.swift; sourceTree = "<group>"; };
 		EA8150B11E36063D002CA64E /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
@@ -313,7 +311,6 @@
 			children = (
 				EAA850901E30DA0B00395858 /* Helper */,
 				EAA850881E30C33500395858 /* SupportUI */,
-				EA6980631E404D3F00455F95 /* Stepper.swift */,
 				EAA850861E30BF1400395858 /* MainNavbarCtrl.swift */,
 				EAA8508C1E30CE3700395858 /* CommonNavBar.swift */,
 				EAA8508E1E30D2B700395858 /* SearchNavBar.swift */,
@@ -664,7 +661,6 @@
 				EA5FEDDD1E39DD3100682C31 /* Nearby_PT.swift in Sources */,
 				EAF9F0931E30B5E20077FE4F /* MainRestaurant.swift in Sources */,
 				EAAB3D311E35B6A60073F44E /* CollectionViewContentCell.swift in Sources */,
-				EA6980641E404D3F00455F95 /* Stepper.swift in Sources */,
 				EAF9F0911E30B5E20077FE4F /* AppDelegate.swift in Sources */,
 				EA8150B21E36063D002CA64E /* Interactor.swift in Sources */,
 				EAD79B021E3B0D6D000063F3 /* QRReader.swift in Sources */,
