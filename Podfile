@@ -12,6 +12,10 @@ target 'RMS-2' do
 	pod 'Firebase/Core'
 	pod 'Firebase/Database'
 	pod 'SKPhotoBrowser'
+	pod 'FacebookCore'
+	pod 'FacebookLogin'
+	pod 'FacebookShare'
+	pod 'SideMenu'
   target 'RMS-2Tests' do
     inherit! :search_paths
     # Pods for testing

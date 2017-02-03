@@ -8,6 +8,8 @@
 
 import UIKit
 import Material
+import FacebookLogin
+import FBSDKLoginKit
 
 protocol QRButtonDelegate {
     func qrBtnClicked(sender : UIButton)
@@ -32,7 +34,9 @@ class QRButton: UIButton {
     }
     
     func qrBtnClicked(_ sender : UIButton){
-        delegate?.qrBtnClicked(sender: sender)
+//        delegate?.qrBtnClicked(sender: sender)
+        let logout = LoginManager()
+        logout.logOut()
     }
     
     func hideSelf(isHidden : Bool){

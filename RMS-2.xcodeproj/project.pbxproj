@@ -17,6 +17,7 @@
 		EA5FEDE21E39DDCC00682C31 /* SuggestCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5FEDE11E39DDCC00682C31 /* SuggestCollection.swift */; };
 		EA5FEDE41E39FC5400682C31 /* Twitter_PT.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5FEDE31E39FC5400682C31 /* Twitter_PT.swift */; };
 		EA5FEDE61E39FC6400682C31 /* Apple_PT.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5FEDE51E39FC6400682C31 /* Apple_PT.swift */; };
+		EA6B85FA1E44802500F538B9 /* AuthenicationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B85F91E44802500F538B9 /* AuthenicationVC.swift */; };
 		EA8150AE1E360609002CA64E /* PresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8150AD1E360609002CA64E /* PresentAnimator.swift */; };
 		EA8150B01E360614002CA64E /* DismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8150AF1E360614002CA64E /* DismissAnimator.swift */; };
 		EA8150B21E36063D002CA64E /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8150B11E36063D002CA64E /* Interactor.swift */; };
@@ -83,6 +84,7 @@
 		EA5FEDE11E39DDCC00682C31 /* SuggestCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestCollection.swift; sourceTree = "<group>"; };
 		EA5FEDE31E39FC5400682C31 /* Twitter_PT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Twitter_PT.swift; sourceTree = "<group>"; };
 		EA5FEDE51E39FC6400682C31 /* Apple_PT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Apple_PT.swift; sourceTree = "<group>"; };
+		EA6B85F91E44802500F538B9 /* AuthenicationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenicationVC.swift; sourceTree = "<group>"; };
 		EA8150AD1E360609002CA64E /* PresentAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentAnimator.swift; sourceTree = "<group>"; };
 		EA8150AF1E360614002CA64E /* DismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissAnimator.swift; sourceTree = "<group>"; };
 		EA8150B11E36063D002CA64E /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
@@ -166,6 +168,13 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		EA2F92381E448B9D00BACE08 /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = SideMenu;
+			sourceTree = "<group>";
+		};
 		EA5FEDD91E39DC7D00682C31 /* Partials */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA850891E30C34D00395858 /* MainController */,
+				EA6B85F91E44802500F538B9 /* AuthenicationVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -207,6 +217,13 @@
 		EAA850881E30C33500395858 /* SupportUI */ = {
 			isa = PBXGroup;
 			children = (
+				EA2F92381E448B9D00BACE08 /* SideMenu */,
+				EAA850861E30BF1400395858 /* MainNavbarCtrl.swift */,
+				EAA8508C1E30CE3700395858 /* CommonNavBar.swift */,
+				EAA8508E1E30D2B700395858 /* SearchNavBar.swift */,
+				EAAB3D321E35BC660073F44E /* QRButton.swift */,
+				EAD79B011E3B0D6D000063F3 /* QRReader.swift */,
+				EA8150B31E36066D002CA64E /* DataManagent.swift */,
 				EA8150AC1E3605D6002CA64E /* Animation */,
 				EAD79B061E3B509D000063F3 /* Order */,
 				EA5FEDE01E39DDBE00682C31 /* SearchDetail */,
@@ -311,12 +328,6 @@
 			children = (
 				EAA850901E30DA0B00395858 /* Helper */,
 				EAA850881E30C33500395858 /* SupportUI */,
-				EAA850861E30BF1400395858 /* MainNavbarCtrl.swift */,
-				EAA8508C1E30CE3700395858 /* CommonNavBar.swift */,
-				EAA8508E1E30D2B700395858 /* SearchNavBar.swift */,
-				EAAB3D321E35BC660073F44E /* QRButton.swift */,
-				EAD79B011E3B0D6D000063F3 /* QRReader.swift */,
-				EA8150B31E36066D002CA64E /* DataManagent.swift */,
 				EAA850851E30BC6B00395858 /* Controller */,
 				EAA850931E30DC4500395858 /* Model */,
 				EAF9F0941E30B5E20077FE4F /* Main.storyboard */,
@@ -663,6 +674,7 @@
 				EAAB3D311E35B6A60073F44E /* CollectionViewContentCell.swift in Sources */,
 				EAF9F0911E30B5E20077FE4F /* AppDelegate.swift in Sources */,
 				EA8150B21E36063D002CA64E /* Interactor.swift in Sources */,
+				EA6B85FA1E44802500F538B9 /* AuthenicationVC.swift in Sources */,
 				EAD79B021E3B0D6D000063F3 /* QRReader.swift in Sources */,
 				EA14C3D71E373E280006734E /* SearchDetail.swift in Sources */,
 				EA8150AE1E360609002CA64E /* PresentAnimator.swift in Sources */,

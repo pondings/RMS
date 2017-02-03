@@ -8,6 +8,7 @@
 
 import UIKit
 import Material
+import FBSDKLoginKit
 
 class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDelegate,QRReaderDelegate {
     

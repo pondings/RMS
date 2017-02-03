@@ -45,7 +45,7 @@ class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDe
     }
     
     func moreBtnClicked() {
-        
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

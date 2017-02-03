@@ -32,7 +32,8 @@ class CommonNavBar: UIView {
         let yPosition = (self.frame.height / 2) - 12
         let xPosition = (self.frame.width) - 34
         let btn = UIButton.init(frame: CGRect.init(x: xPosition, y: yPosition, width: 24, height: 24))
-        btn.setImage(UIImage.init(named: "ic_more_vert")?.tint(with: .white), for: .normal)
+        btn.setFAIcon(icon: .FAAlignRight, forState: .normal)
+        btn.setFATitleColor(color: .white)
         btn.addTarget(self, action: #selector(moreBtnClicked), for: .touchUpInside)
         return btn
     }()
@@ -65,7 +66,6 @@ class CommonNavBar: UIView {
             self.backBtn.isHidden = newValue
         }
     }
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
