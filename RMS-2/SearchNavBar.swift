@@ -19,18 +19,17 @@ class SearchNavBar: UIView,UISearchBarDelegate {
     var delegate : SearchNavBarDelegate?
     
     lazy var searchBox: UISearchBar = {
-        let width = (self.frame.width - self.cancleBtn.frame.width) - 16
-        let sb = UISearchBar.init(frame: CGRect.init(x: self.cancleBtn.frame.maxX, y: 0, width: width, height: self.frame.height))
+        let width = (self.frame.width * 0.8) - 8
+        let sb = UISearchBar.init(frame: CGRect.init(x: 8, y: 0, width: width, height: self.frame.height))
         sb.searchBarStyle = .minimal
         sb.placeholder = "Search.."
-        return sb
-    }()
+        return sb    }()
     
     lazy var cancleBtn: UIButton = {
-        let width = CGFloat(24)
-        let btn = UIButton.init(frame: CGRect.init(x: 8, y: (self.frame.height / 2) - 12, width: width, height: width))
-        btn.setFAIcon(icon: FAType.FAChevronLeft, forState: .normal)
-        btn.setFATitleColor(color: .white, forState: .normal)
+        let width = (self.frame.width * 0.2)
+        let btn = UIButton.init(frame: CGRect.init(x: self.searchBox.frame.maxX, y: 0, width: width, height: self.frame.height))
+        btn.setTitle("Cancle", for: .normal)
+        btn.setTitleColor(UIColor.white, for: .normal)
         btn.addTarget(self, action: #selector(cancleBtnClicked), for: .touchUpInside)
         return btn
     }()

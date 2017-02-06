@@ -14,8 +14,7 @@ target 'RMS-2' do
 	pod 'SKPhotoBrowser'
 	pod 'FacebookCore'
 	pod 'FacebookLogin'
-	pod 'FacebookShare'
-	pod 'SideMenu'
+	pod "AFMActionSheet"
   target 'RMS-2Tests' do
     inherit! :search_paths
     # Pods for testing

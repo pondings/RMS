@@ -34,9 +34,7 @@ class QRButton: UIButton {
     }
     
     func qrBtnClicked(_ sender : UIButton){
-//        delegate?.qrBtnClicked(sender: sender)
-        let logout = LoginManager()
-        logout.logOut()
+        delegate?.qrBtnClicked(sender: sender)
     }
     
     func hideSelf(isHidden : Bool){

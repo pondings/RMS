@@ -9,8 +9,14 @@
 import UIKit
 import Material
 import FBSDKLoginKit
+import AFMActionSheet
+import FacebookLogin
 
 class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDelegate,QRReaderDelegate {
+    
+    @IBOutlet weak var titleView : UIView!
+    @IBOutlet weak var imageView : UIImageView!
+    @IBOutlet weak var nameLb : UILabel!
     
     var isSearch : Bool = false
     var previousViewCntroller : UIViewController? = nil
@@ -25,7 +31,7 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
         return vw
     }()
     
-    lazy var mainNavBar : MainNavbarCtrl = self.navigationController as! MainNavbarCtrl
+    
     
     lazy var qrBtn: QRButton = {
         let height : CGFloat = 60
@@ -46,6 +52,7 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
         view.backgroundColor = .white
         view.addSubview(qrBtn)
         NotificationCenter.default.addObserver(self, selector: #selector(hideQRBtn(notification:)), name: Notification.Name("hideQR"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(moreBtnClicked), name: Notification.Name("activeActionSheet"), object: nil)
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -62,6 +69,7 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
         if(viewController == previousViewCntroller){
             let NAV = viewController as? MainNavbarCtrl
             let VC = NAV?.topViewController as? UICollectionViewController
+            if((VC?.collectionView?.numberOfItems(inSection: 0))! < 1) {return}
             VC?.collectionView?.scrollToItem(at: IndexPath.init(row: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: true)
         }
         previousViewCntroller = viewController
@@ -87,6 +95,62 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
         }
     }
     
+    func moreBtnClicked() {
+        configureActionSheetView()
+        let actionSheet = AFMActionSheetController.init(style: .actionSheet, transitioningDelegate: AFMActionSheetTransitioningDelegate())
+        
+        var authen : String! = "เข้าสู่ระบบ"
+        if(FBSDKAccessToken.current() != nil) { actionSheet.add(title: self.titleView) ; authen = "ออกจากระบบ" }
+        let action1 = AFMAction.init(title: "ตั้งค่า", handler: nil)
+        let action2 = AFMAction.init(title: "เกี่ยวกับ", handler: nil)
+        let action3 = AFMAction.init(title: authen, handler: { _ in self.logout() })
+        let close = AFMAction.init(title: "ยกเลิก", handler: nil)
+        
+        actionSheet.add(action1)
+        actionSheet.add(action2)
+        actionSheet.add(action3)
+        actionSheet.add(cancelling: close)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    internal func configureActionSheetView(){
+        let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, picture.type(large)"])
+        request?.start(completionHandler: { (connection, result, error) in
+            guard
+                let info = result as? NSDictionary,
+                let picture = info.value(forKey: "picture") as? NSDictionary,
+                let data = picture.value(forKey: "data") as? NSDictionary,
+                let url = data.value(forKey: "url") as? String
+            else {return}
+            self.configureActionSheetImageView(url: url)
+            self.configureActionSheetName(name: info.value(forKey: "name") as! String)
+        })
+    }
+    
+    private func configureActionSheetImageView(url : String){
+        let urlString = url
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { (data,response,error) in
+            if error != nil {return}
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {return}
+            DispatchQueue.main.async {self.imageView.image = UIImage(data: data!)}
+        }.resume()
+        imageView.layer.cornerRadius = imageView.frame.width / 2
+        imageView.layer.masksToBounds = true
+    }
+    
+    private func configureActionSheetName(name : String){
+        nameLb.text = name
+        nameLb.sizeToFit()
+    }
+    
+    private func logout() {
+        let logout = LoginManager()
+        logout.logOut()
+        self.performSegue(withIdentifier: "AuthenicationVC", sender: nil)
+    }
+    
 }
 
 extension MainTabBarCtrl : UIViewControllerTransitioningDelegate {
@@ -108,5 +172,4 @@ extension MainTabBarCtrl : UIViewControllerTransitioningDelegate {
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return interactor.hasStart ? interactor : nil
     }
-    
 }

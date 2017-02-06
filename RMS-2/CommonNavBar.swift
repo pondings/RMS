@@ -32,7 +32,7 @@ class CommonNavBar: UIView {
         let yPosition = (self.frame.height / 2) - 12
         let xPosition = (self.frame.width) - 34
         let btn = UIButton.init(frame: CGRect.init(x: xPosition, y: yPosition, width: 24, height: 24))
-        btn.setFAIcon(icon: .FAAlignRight, forState: .normal)
+        btn.setFAIcon(icon: .FABars, forState: .normal)
         btn.setFATitleColor(color: .white)
         btn.addTarget(self, action: #selector(moreBtnClicked), for: .touchUpInside)
         return btn

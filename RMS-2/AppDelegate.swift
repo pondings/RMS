@@ -23,14 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        if (FBSDKAccessToken.current() != nil) {
-            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let initialViewControlleripad : UIViewController = storyboard.instantiateViewController(withIdentifier: "MainTabBarCtrl") as! UITabBarController
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = initialViewControlleripad
-            self.window?.makeKeyAndVisible()
-        } else {
-        }
+        if (FBSDKAccessToken.current() != nil) {}
         FIRApp.configure()
         return true
     }

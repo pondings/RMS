@@ -70,7 +70,6 @@ class RestaurantListCell: UICollectionViewCell {
     func configureCell(res : Restaurants){
         self.backgroundColor = .white
         self.layer.cornerRadius = 8
-//        configreImage(url: res.img!)
         configureTitle(title: res.title!)
         configureBookmark()
         configureDesc(desc: res.desc!)
@@ -81,7 +80,6 @@ class RestaurantListCell: UICollectionViewCell {
     func configureCell(pro : Restaurants){
         self.backgroundColor = .white
         self.layer.cornerRadius = 8
-//        configreImage(url: pro.img!)
         configureTitle(title: pro.title!)
         configureBookmark()
         configureDesc(desc: pro.desc!)

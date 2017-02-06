@@ -10,8 +10,11 @@ import UIKit
 import Font_Awesome_Swift
 import Material
 import FacebookLogin
+import FBSDKLoginKit
 
 class AuthenicationVC: UIViewController {
+    
+    @IBOutlet weak var dismissBtn: UIButton!
 
     lazy var fbLoginBtn: UIButton = {
         let size = CGSize.init(width: self.view.frame.width / 2, height: self.view.frame.height * 0.05)
@@ -29,6 +32,14 @@ class AuthenicationVC: UIViewController {
         super.viewDidLoad()
         view.addSubview(fbLoginBtn)
         view.backgroundColor = Color.lightBlue.base
+        dismissBtn.setFAIcon(icon: .FAChevronDown, forState: .normal)
+        dismissBtn.setFATitleColor(color: .white)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if(FBSDKAccessToken.current() != nil) {
+            self.present(MainTabBarCtrl(), animated: true, completion: nil)
+        }
     }
     
     internal func loginWithFB(){
@@ -40,9 +51,16 @@ class AuthenicationVC: UIViewController {
             case .cancelled:
                 print("User cancelled login.")
             case .success( _, _, _):
-                self.performSegue(withIdentifier: "MainTabBarCtrl", sender: nil)
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }
-
+    
+    @IBAction func dismissSelf(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+        MainTabBarCtrl().configureActionSheetView()
+    }
+    
 }
+
+

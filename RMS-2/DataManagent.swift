@@ -13,6 +13,8 @@ import Alamofire
 @objc protocol DataManagentDelegate {
     @objc optional func showConnectionError(emptyData : UIView)
     @objc optional func reloadVC()
+    @objc optional func reloadTV()
+    @objc optional func reloadContent()
 }
 
 class DataManagent: UIView {
@@ -71,6 +73,10 @@ class DataManagent: UIView {
             configureImageView(img: "hungry")
             configureTitle(title: "Connection Error")
             configureRefreshBtn(btn: "Reload again!")
+        case .emptyData:
+            configureImageView(img: "hungry")
+            configureTitle(title: "Nothing here!")
+            configureRefreshBtn(btn: "Reload again!")
         default:
             break
         }
@@ -81,8 +87,10 @@ class DataManagent: UIView {
         sender.transform = CGAffineTransform.init(scaleX: 0.7, y: 0.7)
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: .allowUserInteraction, animations: {
             sender.transform = .identity
-        }, completion: nil)
-//        delegate?.refreshBtnClicked()
+        }, completion: { _ in
+            self.removeFromSuperview()
+            self.delegate?.reloadContent!()
+        })
     }
     
     private func configureRefreshBtn(btn : String) {
@@ -165,6 +173,23 @@ extension UICollectionViewController : DataManagentDelegate{
     
 }
 
+extension UITableViewController : DataManagentDelegate {
+    
+    func showConnectionError(emptyData: UIView) {
+        view.addSubview(emptyData)
+    }
+    
+    func reloadTV(){
+        tableView.reloadData()
+        if(tableView.numberOfRows(inSection: 0) == 0){
+            view.addSubview(emptyData())
+        }else{
+            
+        }
+    }
+    
+}
+    
 extension DataManagentDelegate where Self : UITableViewDataSource {
     func configureAlamoFire(path : String,downloadComplete : @escaping DowloadContentComplete){
         Alamofire.request("\(_urlBase)\(path)").responseJSON { response in
@@ -176,5 +201,13 @@ extension DataManagentDelegate where Self : UITableViewDataSource {
             }
             downloadComplete(dict)
         }
+    }
+    
+    func emptyData() -> UIView {
+        let size = CGSize.init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        let origin = CGPoint.init(x: 0, y: 0)
+        let emptyData = DataManagent.init(frame: CGRect.init(origin: origin, size: size))
+        emptyData.emptyState(state: .emptyData)
+        return emptyData
     }
 }

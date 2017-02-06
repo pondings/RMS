@@ -24,6 +24,13 @@ class OrderList: UITableViewController,OrderListCellDelegate {
         return self.ref
     }()
     
+    lazy var emptyView: DataManagent = {
+        let size = CGSize.init(width: self.view.frame.width, height: self.view.frame.height)
+        let origin = CGPoint.init(x: 0, y: 0)
+        let vw = DataManagent.init(frame: CGRect.init(origin: origin, size: size))
+        return vw
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         customize()
@@ -33,6 +40,7 @@ class OrderList: UITableViewController,OrderListCellDelegate {
     func customize(){
         tableView.backgroundColor = Color.grey.lighten1
         tableView.contentInset.top = 8
+        tableView.contentInset.bottom = 28
         tableView.tableFooterView = UIView()
         self.view.backgroundColor = Color.grey.lighten1
     }

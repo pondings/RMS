@@ -38,6 +38,7 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate {
         navigationBar.isTranslucent = false
         view.backgroundColor = .white
         navigationBar.barTintColor = Color.lightBlue.base
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissSelf(_:)), name: Notification.Name("dsOrdNavBar"), object: nil)
     }
     
     func backButtonClicked() {
@@ -47,6 +48,11 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate {
     func moreBtnClicked() {}
     
     func searchBtnClicked() {}
+    
+    func dismissSelf(_ state : Notification){
+        let ds = state.object as! Bool
+        self.setNavigationBarHidden(ds, animated: true)
+    }
     
     func leftEdgeDismissal(_ sender : UIScreenEdgePanGestureRecognizer){
         let percentThreshold:CGFloat = 0.7
@@ -75,4 +81,6 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate {
             break
         }
     }
+    
+    
 }

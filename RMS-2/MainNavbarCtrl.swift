@@ -8,9 +8,10 @@
 
 import UIKit
 import Material
+import AFMActionSheet
 
 class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDelegate {
-
+    
     lazy var viewFrame : CGRect = self.view.frame
     lazy var bottomBarFrame : CGRect = (self.tabBarController?.tabBar.frame)!
     lazy var mainTabBar : MainTabBarCtrl = (self.tabBarController as? MainTabBarCtrl)!
@@ -44,10 +45,6 @@ class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDe
         self.setNavigationBarHidden(ds, animated: true)
     }
     
-    func moreBtnClicked() {
-
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "SearchDetail") {
             if let destination = segue.destination as? SearchDetail{
@@ -67,6 +64,10 @@ class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDe
         UIView.transition(from: commonNavBar, to: searchNavBar, duration: 0.5, options: .transitionCrossDissolve, completion: nil)
         performSegue(withIdentifier: "SearchDetail", sender: nil)
         mainTabBar.previousViewCntroller = nil
+    }
+    
+    func moreBtnClicked() {
+        NotificationCenter.default.post(name: Notification.Name("activeActionSheet"), object: nil)
     }
 }
 

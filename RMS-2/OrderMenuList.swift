@@ -215,6 +215,7 @@ class SubMenuTableViewCell: UITableViewCell {
         btn.setTitleColor(UIColor.white, for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         btn.addTarget(self, action: #selector(addMenu), for: .touchUpInside)
+        btn.pulseColor = .white
         return btn
     }()
     
