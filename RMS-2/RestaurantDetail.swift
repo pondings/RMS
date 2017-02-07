@@ -127,21 +127,8 @@ class RestaurantDetailCell: UICollectionViewCell {
     @IBOutlet weak var imageView : UIImageView!
     
     func configureCell(url : String) {
-        let urlString = url
-        guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { (data,response,error) in
-            if error != nil {
-                print("Failed fetching image:", error!)
-                return
-            }
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                print("Not a proper HTTPURLResponse or statusCode")
-                return
-            }
-            DispatchQueue.main.async {
-                self.imageView.image = UIImage(data: data!)
-            }
-        }.resume()
+        let urlPath = URL(string: url)
+        imageView.kf.setImage(with: urlPath)
     }
     
 }

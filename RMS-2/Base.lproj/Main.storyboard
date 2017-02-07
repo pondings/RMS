@@ -283,7 +283,7 @@
         <scene sceneID="fRY-ZL-mc3">
             <objects>
                 <collectionViewController storyboardIdentifier="MainRestaurant" title="MainRestaurant" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1DZ-Rg-MTN" customClass="MainRestaurant" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ku4-zC-7r5">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="ku4-zC-7r5">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -604,7 +604,7 @@
         <scene sceneID="UnA-iB-WMk">
             <objects>
                 <collectionViewController storyboardIdentifier="OrderPhoto" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Uqg-50-JAc" customClass="OrderPhoto" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="9Og-rD-NeJ">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="9Og-rD-NeJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -660,7 +660,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="8" translatesAutoresizingMaskIntoConstraints="NO" id="Uh5-LC-EkG">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="8" translatesAutoresizingMaskIntoConstraints="NO" id="Uh5-LC-EkG">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -920,7 +920,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="89K-im-Ecz" customClass="MainNavbarCtrl" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="ic_local_offer" id="DbZ-ZZ-AQK"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kWW-io-cwi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="kWW-io-cwi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -939,7 +939,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="q8w-tf-ZuR" customClass="OrderNavBarCtrl" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="IGd-dd-Kyi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="IGd-dd-Kyi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

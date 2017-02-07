@@ -106,6 +106,10 @@ class SearchDetail: UIViewController,SearchNavBarDelegate,UICollectionViewDelega
         suggestCollection.configureWhiteView(index: scrollIndex)
     }
     
+    func searchBarDidEnter(text: String) {
+        
+    }
+    
     func cancleBtnClicked() {
         mainNavBar.cancleBtnClicked()
     }

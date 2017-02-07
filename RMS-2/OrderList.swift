@@ -49,7 +49,7 @@ class OrderList: UITableViewController,OrderListCellDelegate {
         firPath.observe(.childAdded, with: { [weak self] snapshot -> Void in
             guard let strongSelf = self else {return}
             strongSelf.orderList.append(snapshot.value as! Dictionary<String,AnyObject>)
-            strongSelf.tableView.insertRows(at: [IndexPath.init(row: strongSelf.orderList.count - 1, section: 0)], with: .automatic)
+            strongSelf.tableView.insertRows(at: [IndexPath.init(row: strongSelf.orderList.count - 1, section: 0)], with: UITableViewRowAnimation.left)
         })
         firPath.observe(.childRemoved, with: { [weak self] snapshot -> Void in
             guard let strongSelf = self else {return}
@@ -57,7 +57,7 @@ class OrderList: UITableViewController,OrderListCellDelegate {
             for (index,element) in strongSelf.orderList.enumerated(){
                 if(element["ord_name"] as! String == removedOrd["ord_name"] as! String) {
                     strongSelf.orderList.remove(at: index)
-                    strongSelf.tableView.deleteRows(at: [IndexPath.init(row: index, section: 0)], with: .automatic)
+                    strongSelf.tableView.deleteRows(at: [IndexPath.init(row: index, section: 0)], with: UITableViewRowAnimation.left)
                     break
                 }
             }
@@ -127,6 +127,7 @@ class OrderListCell: UITableViewCell {
     
     func configureCell(ordDict : Menu){
         self.backgroundColor = Color.white
+        self.selectionStyle = .none
         price = Int.init(ordDict.price!)
         configureImageView(url: ordDict.img!)
         configureTitle(title: ordDict.title!)
@@ -156,13 +157,8 @@ class OrderListCell: UITableViewCell {
     }
     
     private func configureImageView(url : String){
-        let urlString = url
-        guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { (data,response,error) in
-            if error != nil {return}
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {return}
-            DispatchQueue.main.async {self.imageViewCell.image = UIImage(data: data!)}
-        }.resume()
+        let urlPath = URL(string: url)
+        imageViewCell.kf.setImage(with: urlPath)
     }
     
     @IBAction func stepperClicked(_ sender: UIStepper) {

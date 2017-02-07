@@ -45,9 +45,10 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
-  - Material (2.4.12):
-    - Material/Core (= 2.4.12)
-  - Material/Core (2.4.12)
+  - Kingfisher (3.3.4)
+  - Material (2.4.13):
+    - Material/Core (= 2.4.13)
+  - Material/Core (2.4.13)
   - SKPhotoBrowser (4.0.1)
 
 DEPENDENCIES:
@@ -58,6 +59,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Font-Awesome-Swift (~> 1.5.3)
+  - Kingfisher (~> 3.0)
   - Material (~> 2.0)
   - SKPhotoBrowser
 
@@ -78,9 +80,10 @@ SPEC CHECKSUMS:
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
-  Material: e9e6f09e2057309a52b9700f056be55b69d90af7
+  Kingfisher: 35f289f015d26e81ea6c85048718c6205f3933c6
+  Material: a056f69c8f9c65ace26bb5ef9cb0823d49b787d9
   SKPhotoBrowser: 3a7c6fc02aa1620ab17253a47a49fafda46536e8
 
-PODFILE CHECKSUM: 537d92d06d0b60b7d861295eeb28d2cc4c50ea89
+PODFILE CHECKSUM: 53f1fa82b63aabeb20da1be954012c99ff943ed7
 
 COCOAPODS: 1.1.1

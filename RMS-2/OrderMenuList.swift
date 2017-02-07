@@ -22,6 +22,9 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
     private var ref : FIRDatabaseReference!
     private var suggestMenu : [Dictionary<String,AnyObject>]! = []
     private var popularMenu : [Dictionary<String,AnyObject>]! = []
+    private var suggestMenuFiltered : [Dictionary<String,AnyObject>]! = []
+    private var popularMenuFiltered : [Dictionary<String,AnyObject>]! = []
+    private var isSearchMode : Bool = false
     private var currentIndexPath : Int?
     private var oldIndexPath : Int?
     private var initView : Bool = true
@@ -36,6 +39,7 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
             }
             self.tableView.reloadData()
         })
+        NotificationCenter.default.addObserver(self, selector: #selector(didSearch(notification:)), name: Notification.Name("orderListSearch"), object: nil)
     }
     
     private func customize(){
@@ -47,7 +51,7 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MenuTableViewCell
-        cell.configureCell(index:indexPath.row,menuDict: (indexPath.row == 0 ? suggestMenu : popularMenu))
+        cell.configureCell(index:indexPath.row,menuDict: (indexPath.row == 0 ? (isSearchMode ? suggestMenuFiltered : suggestMenu) : popularMenu))
         return cell
     }
     
@@ -57,7 +61,7 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let isHide = (UIScreen.main.bounds.height * 0)
-        let isShow = (UIScreen.main.bounds.height * 0.175) * CGFloat((indexPath.row == 0 ? suggestMenu.count : popularMenu.count))
+        let isShow = ((UIScreen.main.bounds.height * (isSearchMode ? 0.195 : 0.17)) * CGFloat((indexPath.row == 0 ? (isSearchMode ? suggestMenuFiltered.count : suggestMenu.count) : popularMenu.count)) - (isSearchMode ? (suggestMenuFiltered.count == 1 ? 0 : (UIScreen.main.bounds.height * 0.017) * CGFloat(suggestMenuFiltered.count)) : 0))
         if(oldIndexPath != nil && currentIndexPath != nil){
             //Clicked Cell
             if(currentIndexPath == indexPath.row){
@@ -106,6 +110,18 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
             refAdd.setValue(addValue)
         })
     }
+    
+    func didSearch(notification : Notification){
+        let text = notification.object as! String
+        suggestMenuFiltered = suggestMenu.filter({
+            if(text != ""){
+                let menuTitle = $0["menu_name"] as! String
+                self.isSearchMode = true
+                return (menuTitle.range(of: text) != nil)
+            }else{ self.isSearchMode = false ; return (suggestMenu != nil) }
+        })
+        tableView.reloadData()
+    }
 }
 
 class MenuTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource {
@@ -114,13 +130,13 @@ class MenuTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSour
     var menuList : [Dictionary<String,AnyObject>]! = []
     
     lazy var titleLb: UILabel = {
-        let yPosition = UIScreen.main.bounds.height * 0.01
+        let yPosition = UIScreen.main.bounds.height * 0.005
         let tt = UILabel.init(frame: CGRect.init(x: 10, y: yPosition, width: self.frame.width, height: (UIScreen.main.bounds.height * 0.05)))
         tt.textColor = .white
         return tt
     }()
     lazy var tableView: UITableView = {
-        let yPosition = (UIScreen.main.bounds.height * 0.07)
+        let yPosition = (UIScreen.main.bounds.height * 0.05)
         let tv = UITableView.init(frame: CGRect.init(x: 0, y: yPosition + 5 , width: self.frame.width, height: self.frame.height))
         tv.delegate = self
         tv.dataSource = self
@@ -240,22 +256,7 @@ class SubMenuTableViewCell: UITableViewCell {
     }
     
     private func configureCellImage(url : String){
-        let urlString = url
-        if(urlString != "") {
-            let url = URL(string: urlString)
-            URLSession.shared.dataTask(with: url!) { (data,response,error) in
-                if error != nil {
-                    print("Failed fetching image:", error!)
-                    return
-                }
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    print("Not a proper HTTPURLResponse or statusCode")
-                    return
-                }
-                DispatchQueue.main.async {
-                    self.cellImage.image = UIImage(data: data!)
-                }
-                }.resume()
-        }else { cellImage.image = UIImage() }
+        let urlPath = URL(string: url)
+        cellImage.kf.setImage(with: urlPath)
     }
 }

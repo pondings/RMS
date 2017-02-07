@@ -15,6 +15,7 @@ target 'RMS-2' do
 	pod 'FacebookCore'
 	pod 'FacebookLogin'
 	pod "AFMActionSheet"
+	pod 'Kingfisher', '~> 3.0'
   target 'RMS-2Tests' do
     inherit! :search_paths
     # Pods for testing

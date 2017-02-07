@@ -46,6 +46,10 @@ class SearchNavBar: UIView,UISearchBarDelegate {
         delegate?.searchBarDidEnter!(text: searchBar.text!)
     }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if(searchText == "") { delegate?.searchBarDidEnter!(text:searchText) }
+    }
+    
     private func customize(){
         if let textFieldInsideSearchBar = self.searchBox.value(forKey: "searchField") as? UITextField {
             textFieldInsideSearchBar.textColor = UIColor.white

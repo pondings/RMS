@@ -84,13 +84,8 @@ class Recommend_PTCollectionCell: UICollectionViewCell {
     }
     
     private func configureImageView(url : String){
-        let urlString = url
-        guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { (data,response,error) in
-            if error != nil {return}
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {return}
-            DispatchQueue.main.async {self.imageView.image = UIImage(data: data!)}
-        }.resume()
+        let urlPath = URL(string: url)
+        imageView.kf.setImage(with: urlPath)
         self.addSubview(imageView)
     }
 }

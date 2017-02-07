@@ -17,12 +17,12 @@ protocol QRButtonDelegate {
 
 extension QRButtonDelegate where Self : MainTabBarCtrl {
     func qrBtnClicked(sender : UIButton) {
-        performSegue(withIdentifier: "MainOrder", sender: nil)
+        performSegue(withIdentifier: "QRReader", sender: nil)
     }
 }
 
 class QRButton: UIButton {
-    
+
     var delegate : QRButtonDelegate?
     
     override init(frame: CGRect) {

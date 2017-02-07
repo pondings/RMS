@@ -98,7 +98,10 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
         let actionSheet = AFMActionSheetController.init(style: .actionSheet, transitioningDelegate: AFMActionSheetTransitioningDelegate())
         
         var authen : String! = "เข้าสู่ระบบ"
-        if(FBSDKAccessToken.current() != nil) { actionSheet.add(title: self.titleView) ; authen = "ออกจากระบบ" }
+        if(FBSDKAccessToken.current() != nil && titleView != nil) {
+            actionSheet.add(title: titleView)
+            authen = "ออกจากระบบ"
+        }
         let action1 = AFMAction.init(title: "ตั้งค่า", handler: nil)
         let action2 = AFMAction.init(title: "เกี่ยวกับ", handler: nil)
         let action3 = AFMAction.init(title: authen, handler: { _ in self.logout() })
@@ -127,6 +130,7 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
     }
     
     private func configureActionSheetImageView(url : String){
+        if(imageView == nil) {return}
         let urlString = url
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { (data,response,error) in
@@ -139,6 +143,7 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
     }
     
     private func configureActionSheetName(name : String){
+        if(nameLb == nil){ return }
         nameLb.text = name
         nameLb.sizeToFit()
     }

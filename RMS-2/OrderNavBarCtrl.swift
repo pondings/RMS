@@ -9,7 +9,7 @@
 import UIKit
 import Material
 
-class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate {
+class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDelegate {
 
     var interactor : Interactor? = nil
     
@@ -22,6 +22,7 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate {
     
     lazy var searchNavBar: SearchNavBar = {
         let vw = SearchNavBar.init(frame: CGRect.init(x: 0, y: 0, width: self.navigationBar.frame.width, height: self.navigationBar.frame.height))
+        vw.delegate = self
         return vw
     }()
     
@@ -44,10 +45,6 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate {
     func backButtonClicked() {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    func moreBtnClicked() {}
-    
-    func searchBtnClicked() {}
     
     func dismissSelf(_ state : Notification){
         let ds = state.object as! Bool
@@ -82,5 +79,18 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate {
         }
     }
     
+    func searchBarDidEnter(text: String) {
+        NotificationCenter.default.post(name: Notification.Name("orderListSearch"), object: text)
+    }
+    
+    func cancleBtnClicked() {
+        UIView.transition(from: searchNavBar, to: commonNavBar, duration: 0.5, options: .transitionCrossDissolve, completion: nil)
+        searchNavBar.searchBox.text = ""
+        self.popViewController(animated: true)
+    }
+    
+    func searchBtnClicked() {
+        UIView.transition(from: commonNavBar, to: searchNavBar, duration: 0.5, options: .transitionCrossDissolve, completion: nil)
+    }
     
 }

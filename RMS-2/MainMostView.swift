@@ -22,29 +22,11 @@ class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayou
         configureAlamoFire(path: urlPath, downloadComplete: { result in
             self.mostViewList = result
             self.reloadVC()
-            self.storeImageCache(mostViewList: self.mostViewList)
         })
     }
 
     override func viewDidAppear(_ animated: Bool) {
         NotificationCenter.default.post(name: NSNotification.Name("navTitle"), object: "Most View")
-    }
-    
-    private func storeImageCache(mostViewList : [Dictionary<String,AnyObject>]){
-        for item in mostViewList {
-            let mvDict = Restaurants.init(mvDict: item)
-            let urlString = mvDict.img!
-            guard let url = URL(string: urlString) else { return }
-            URLSession.shared.dataTask(with: url) { (data,response,error) in
-                if error != nil {return}
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {return}
-                DispatchQueue.main.async {
-                    let getImage = UIImage.init(data: data!)!
-                    let imageCache = [mvDict.title! : getImage]
-                    self.imageCache.append(imageCache)
-                }
-            }.resume()
-        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -55,15 +37,7 @@ class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayou
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! RestaurantListCell
         let mvDict = Restaurants.init(mvDict: mostViewList[indexPath.row])
         cell.configureCell(res: mvDict)
-        if(imageCache.count == collectionView.numberOfItems(inSection: 0)){
-            let targetDict = imageCache.filter({
-                let title = Array($0.keys)[0]
-                return (title.range(of: cell.title.text!) != nil)
-            })
-            cell.configreImage(image: Array(targetDict[0].values)[0])
-        }else{
-            cell.configureImage(url: mvDict.img!)
-        }
+        cell.configureImage(url: mvDict.img!)
         return cell
     }
     

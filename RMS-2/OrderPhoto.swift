@@ -56,14 +56,8 @@ class OrderPhotoCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     
     func configureCell(url : String){
-        let urlString = url
-        self.cornerRadius = 8
-        guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { (data,response,error) in
-            if error != nil {return}
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {return}
-            DispatchQueue.main.async { self.imageView.image = UIImage.init(data: data!) }
-        }.resume()
+        let urlPath = URL(string: url)
+        imageView.kf.setImage(with: urlPath)
     }
     
 }
