@@ -43,8 +43,6 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
         tableView.tableFooterView = UIView()
         tableView.backgroundColor = Color.grey.lighten1
         tableView.bounces = false
-        tableView.contentInset.bottom = 20
-        tableView.contentInset.top = 8
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,8 +56,8 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let isHide = (UIScreen.main.bounds.height * 0.07)
-        let isShow = (UIScreen.main.bounds.height * 0.18) * CGFloat((indexPath.row == 0 ? suggestMenu.count : popularMenu.count))
+        let isHide = (UIScreen.main.bounds.height * 0)
+        let isShow = (UIScreen.main.bounds.height * 0.175) * CGFloat((indexPath.row == 0 ? suggestMenu.count : popularMenu.count))
         if(oldIndexPath != nil && currentIndexPath != nil){
             //Clicked Cell
             if(currentIndexPath == indexPath.row){

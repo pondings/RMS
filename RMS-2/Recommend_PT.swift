@@ -40,10 +40,10 @@ class Recommend_PT: UIViewController,UICollectionViewDelegate,UICollectionViewDa
         collectionView.frame.size.height = self.view.frame.height
         collectionView.frame.size.width = self.view.frame.width - 10
         self.view.addSubview(collectionView)
-//        configureAlamoFire(path: "Restaurant", downloadComplete: { result in
-//            self.restaurantList = result
-//            self.collectionView.reloadData()
-//        })
+        configureAlamoFire(path: "Restaurant", downloadComplete: { result in
+            self.restaurantList = result
+            self.collectionView.reloadData()
+        })
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -87,17 +87,9 @@ class Recommend_PTCollectionCell: UICollectionViewCell {
         let urlString = url
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { (data,response,error) in
-            if error != nil {
-                print("Failed fetching image:", error!)
-                return
-            }
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                print("Not a proper HTTPURLResponse or statusCode")
-                return
-            }
-            DispatchQueue.main.async {
-                self.imageView.image = UIImage(data: data!)
-            }
+            if error != nil {return}
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {return}
+            DispatchQueue.main.async {self.imageView.image = UIImage(data: data!)}
         }.resume()
         self.addSubview(imageView)
     }

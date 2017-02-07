@@ -30,7 +30,6 @@ class SearchDetail: UIViewController,SearchNavBarDelegate,UICollectionViewDelega
         return sg
     }()
 
-    
     lazy var collectionView: UICollectionView = {
         let height = (self.view.frame.height - self.suggestCollection.frame.height) - ((self.navigationController?.navigationBar.frame.height)! + (self.navigationController?.tabBarController?.tabBar.frame.height)!)
         let size = CGSize.init(width: UIScreen.main.bounds.width, height: CGFloat(height - 40) )
@@ -53,7 +52,6 @@ class SearchDetail: UIViewController,SearchNavBarDelegate,UICollectionViewDelega
     
     lazy var mainNavBar : MainNavbarCtrl = self.navigationController as! MainNavbarCtrl
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
@@ -106,10 +104,6 @@ class SearchDetail: UIViewController,SearchNavBarDelegate,UICollectionViewDelega
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollIndex = Int(round(scrollView.contentOffset.x / self.view.bounds.width))
         suggestCollection.configureWhiteView(index: scrollIndex)
-    }
-    
-    
-    func searchBarDidEnter(text: String) {
     }
     
     func cancleBtnClicked() {

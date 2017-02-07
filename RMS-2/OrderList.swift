@@ -133,7 +133,14 @@ class OrderListCell: UITableViewCell {
         configureQuantity(quantity: ordDict.quantity!)
         configureTotalPrice()
         imageUrl = ordDict.img
+        configureStepper()
+    }
+    
+    private func configureStepper(){
         stepper.value = Double.init(quantity.text!)!
+        stepper.tintColor = .white
+        stepper.setBackgroundImage(UIImage(), for: .normal)
+        stepper.backgroundColor = Color.lightBlue.base
     }
     
     private func configureQuantity(quantity : String) {

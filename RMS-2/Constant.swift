@@ -13,6 +13,7 @@ import MapKit
 typealias DowloadContentComplete = ([Dictionary<String,AnyObject>]) -> ()
 typealias DowloadImgComplete = ([String]) -> ()
 let statusBar = UIApplication.shared.value(forKey: "statusBar") as! UIView
+
 var _urlBase = "http://35.165.196.27:3000/"
 
 func prepareToOpenMap(latitude : String,longtitude : String,title : String){

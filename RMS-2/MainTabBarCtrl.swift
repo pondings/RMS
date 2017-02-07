@@ -31,8 +31,6 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
         return vw
     }()
     
-    
-    
     lazy var qrBtn: QRButton = {
         let height : CGFloat = 60
         let width : CGFloat = 60
@@ -116,7 +114,7 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
     
     internal func configureActionSheetView(){
         let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, picture.type(large)"])
-        request?.start(completionHandler: { (connection, result, error) in
+        request?.start(completionHandler: { (_, result, _) in
             guard
                 let info = result as? NSDictionary,
                 let picture = info.value(forKey: "picture") as? NSDictionary,

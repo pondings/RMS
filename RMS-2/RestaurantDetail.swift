@@ -40,14 +40,13 @@ class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     private func customize(){
-        backBtn.setFAIcon(icon: FAType.FAChevronLeft, forState: .normal)
-        firstLineBtn.setFAIcon(icon: FAType.FAMapMarker, forState: .normal)
-        secondLineBtn.setFAIcon(icon: FAType.FAClockO, forState: .normal)
-        thirdLineBtn.setFAIcon(icon: FAType.FAPhone, forState: .normal)
+        backBtn.setFAIcon(icon: .FAChevronLeft, forState: .normal)
+        firstLineBtn.setFAIcon(icon: .FAMapMarker, forState: .normal)
+        secondLineBtn.setFAIcon(icon: .FAClockO, forState: .normal)
+        thirdLineBtn.setFAIcon(icon: .FAPhone, forState: .normal)
         firstLineBtn.setFATitleColor(color: .black, forState: .normal)
         secondLineBtn.setFATitleColor(color: .black, forState: .normal)
         thirdLineBtn.setFATitleColor(color: .black, forState: .normal)
-        
     }
 
     

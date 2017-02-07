@@ -12,8 +12,6 @@ import AFMActionSheet
 
 class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDelegate {
     
-    lazy var viewFrame : CGRect = self.view.frame
-    lazy var bottomBarFrame : CGRect = (self.tabBarController?.tabBar.frame)!
     lazy var mainTabBar : MainTabBarCtrl = (self.tabBarController as? MainTabBarCtrl)!
     
     var interactor = Interactor()
@@ -69,6 +67,7 @@ class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDe
     func moreBtnClicked() {
         NotificationCenter.default.post(name: Notification.Name("activeActionSheet"), object: nil)
     }
+
 }
 
 extension MainNavbarCtrl : UINavigationControllerDelegate {

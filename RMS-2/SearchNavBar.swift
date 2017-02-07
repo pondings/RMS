@@ -44,7 +44,6 @@ class SearchNavBar: UIView,UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         delegate?.searchBarDidEnter!(text: searchBar.text!)
-        
     }
     
     private func customize(){
