@@ -10,20 +10,23 @@ import UIKit
 import Material
 import Alamofire
 import FirebaseDatabase
+import Kingfisher
+import SnapKit
 
 protocol MenuAdded {
-    func getMenu(menu : SubMenuTableViewCell)
+    func getMenu(menu : OrderMenuListCell)
 }
 
-class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,MenuAdded,DataManagentDelegate {
+class OrderMenuList: UIViewController,DataManagentDelegate,UITableViewDataSource,UITableViewDelegate,MenuAdded {
     
-    @IBOutlet weak var tableView : UITableView!
+    @IBOutlet weak var tableView: UITableView!
     
     private var ref : FIRDatabaseReference!
+    private let titleHeader = ["Suggestion!","Poppular!"]
     private var suggestMenu : [Dictionary<String,AnyObject>]! = []
-    private var popularMenu : [Dictionary<String,AnyObject>]! = []
+    private var poppularMenu : [Dictionary<String,AnyObject>]! = []
     private var suggestMenuFiltered : [Dictionary<String,AnyObject>]! = []
-    private var popularMenuFiltered : [Dictionary<String,AnyObject>]! = []
+    private var poppularMenuFiltered : [Dictionary<String,AnyObject>]! = []
     private var isSearchMode : Bool = false
     private var currentIndexPath : Int?
     private var oldIndexPath : Int?
@@ -35,7 +38,7 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
         configureAlamoFire(path: "Menu", downloadComplete: { result in
             for item in result {
                 if((item["suggestion"] as? Bool) != nil && item["suggestion"] as! Bool) {self.suggestMenu.append(item)}
-                else {self.popularMenu.append(item)}
+                else {self.poppularMenu.append(item)}
             }
             self.tableView.reloadData()
         })
@@ -45,50 +48,10 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
         self.view.backgroundColor = Color.grey.lighten1
         tableView.tableFooterView = UIView()
         tableView.backgroundColor = Color.grey.lighten1
-        tableView.bounces = false
+        tableView.contentInset.bottom = 28
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MenuTableViewCell
-        cell.configureCell(index:indexPath.row,menuDict: (indexPath.row == 0 ? (isSearchMode ? suggestMenuFiltered : suggestMenu) : (isSearchMode ? popularMenuFiltered : popularMenu)))
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        let isShow = ((UIScreen.main.bounds.height * (isSearchMode ? 0.195 : 0.17)) * CGFloat((indexPath.row == 0 ? (isSearchMode ? suggestMenuFiltered.count : suggestMenu.count) : popularMenu.count)) - (isSearchMode ? (suggestMenuFiltered.count == 1 ? 0 : (UIScreen.main.bounds.height * 0.017) * CGFloat(suggestMenuFiltered.count)) : 0))
-        if(oldIndexPath != nil && currentIndexPath != nil){
-            //Clicked Cell
-            if(currentIndexPath == indexPath.row){
-                if(oldIndexPath == indexPath.row){
-                    oldIndexPath = indexPath.row
-                    oldIndexPath = 3
-                    return isShow
-                }else{
-                    oldIndexPath = indexPath.row
-                }
-                //Not Clicked Cell
-            }
-        }
-        return isShow
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? MenuTableViewCell
-        cell?.isExpanded = true
-        currentIndexPath = indexPath.row
-        updateTable()
-    }
-    
-    func updateTable(){
-        tableView.beginUpdates()
-        tableView.endUpdates()
-    }
-    func getMenu(menu: SubMenuTableViewCell) {
+
+    func getMenu(menu: OrderMenuListCell) {
         var addValue = [String:AnyObject]()
         addValue["ord_name"] = menu.title.text as AnyObject?
         addValue["ord_img"] = menu.menuImageUrl as AnyObject?
@@ -117,7 +80,7 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
                 return (menuTitle.range(of: text) != nil)
             }else{ self.isSearchMode = false ; return (suggestMenu != nil) }
         })
-        popularMenuFiltered = popularMenu.filter({
+        poppularMenuFiltered = poppularMenu.filter({
             if(text != ""){
                 let title = $0["menu_name"] as! String
                 self.isSearchMode = true
@@ -127,108 +90,73 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
                 return false
             }
         })
-            
-            
         tableView.reloadData()
     }
     
-    func test(){
-        print(suggestMenu)
-    }
-}
-
-class MenuTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource {
-    
-    var isExpanded : Bool  = false
-    var menuList : [Dictionary<String,AnyObject>]! = []
-    
-    lazy var titleLb: UILabel = {
-        let yPosition = UIScreen.main.bounds.height * 0.005
-        let tt = UILabel.init(frame: CGRect.init(x: 10, y: yPosition, width: self.frame.width, height: (UIScreen.main.bounds.height * 0.05)))
-        tt.textColor = .white
-        return tt
-    }()
-    lazy var tableView: UITableView = {
-        let yPosition = (UIScreen.main.bounds.height * 0.05)
-        let tv = UITableView.init(frame: CGRect.init(x: 0, y: yPosition + 5 , width: self.frame.width, height: self.frame.height))
-        tv.delegate = self
-        tv.dataSource = self
-        tv.backgroundColor = Color.grey.lighten1
-        tv.tableFooterView = UIView()
-        tv.isScrollEnabled = false
-        tv.register(SubMenuTableViewCell.self, forCellReuseIdentifier: "Cell")
-        return tv
-    }()
-    
-    func configureCell(index:Int,menuDict : [Dictionary<String,AnyObject>]){
-        if(index == 0) { titleLb.text = "Suggestion" } else { titleLb.text = "Poppular" }
-        self.addSubview(titleLb)
-        tableView.height = self.frame.height
-        self.addSubview(tableView)
-        self.backgroundColor = Color.lightBlue.base
-        self.selectionStyle = .none
-        self.menuList = menuDict
-        tableView.reloadData()
-    }
-    
-    func expandOrCollapse(_ sender : UIButton){
-        if(sender.tag == 1)  {
-            UIView.animate(withDuration: 0.5, animations: {
-                sender.transform = .identity
-            })
-            sender.tag = 2
-        }else {
-            UIView.animate(withDuration: 0.5, animations: {
-                sender.transform = CGAffineTransform.init(rotationAngle: 0.75)
-            })
-            sender.tag = 1
-        }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return menuList.count
+        let total = section == 0 ? (isSearchMode ? suggestMenuFiltered.count : suggestMenu.count) : (isSearchMode ? poppularMenuFiltered.count : poppularMenu.count)
+        return total
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SubMenuTableViewCell
-        cell.configureCell(menu:Menus.init(menuDict: menuList[indexPath.row]))
-        cell.delegate = OrderMenuList()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! OrderMenuListCell
+        let menuDict = indexPath.section == 0 ? (isSearchMode ? suggestMenuFiltered : suggestMenu) : (isSearchMode ? poppularMenuFiltered : poppularMenu)
+        let menu = Menus.init(menuDict: (menuDict?[indexPath.row])!)
+        cell.configureCell(menu: menu)
+        cell.delegate = self
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.height * 0.15
+        return tableView.frame.size.height * 0.15
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerSectionView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 30))
+        let title = UILabel.init(frame: CGRect.init(x: 8, y: (headerSectionView.frame.height / 2) - 11, width: tableView.frame.width / 2, height: 30))
+        title.text = titleHeader[section]
+        title.textColor = .white
+        headerSectionView.addSubview(title)
+        headerSectionView.backgroundColor = Color.lightBlue.base
+        return headerSectionView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return tableView.frame.height * 0.07
+    }
 }
 
-class SubMenuTableViewCell: UITableViewCell {
+class OrderMenuListCell: UITableViewCell {
     
     var delegate : MenuAdded?
     var menuImageUrl : String?
     
-    lazy var cellImage: UIImageView = {
-        let img = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: self.frame.width * 0.4, height: self.frame.height))
-        return img
+    lazy var imageViewCell: UIImageView = {
+        let size = CGSize.init(width: self.frame.width * 0.4, height: self.frame.height)
+        let origin = CGPoint.init(x: 0, y: 0)
+        let iv = UIImageView.init(frame: CGRect.init(origin: origin, size: size))
+        return iv
     }()
     
     lazy var title: UILabel = {
-        let lb = UILabel.init(frame: CGRect.init(x: self.cellImage.frame.width + 10, y: self.frame.height * 0.1, width: self.frame.width * 0.4, height: self.frame.height * 0.2))
+        let lb = UILabel.init(frame: CGRect.init(x: self.imageViewCell.frame.width + 10, y: self.frame.height * (1/3), width: self.frame.width * 0.4, height: self.frame.height * 0.2))
         lb.font = UIFont.systemFont(ofSize: 15)
         return lb
     }()
     
     lazy var desc: UILabel = {
-        let yPosition = self.frame.height * 0.4
-        let lb = UILabel.init(frame: CGRect.init(x: self.cellImage.frame.width + 10, y: yPosition, width: self.frame.width * 0.4, height: self.frame.height * 0.2))
+        let lb = UILabel.init(frame: CGRect.init(x: self.imageViewCell.frame.width + 10, y: self.frame.height * (2/3), width: self.frame.width * 0.4, height: self.frame.height * 0.25))
         lb.font = UIFont.systemFont(ofSize: 13)
         lb.alpha = 0.6
         return lb
     }()
     
     lazy var price: UILabel = {
-        let yPosition = self.frame.height * 0.7
-        let lb = UILabel.init(frame: CGRect.init(x: self.cellImage.frame.width + 10, y: yPosition, width: self.frame.width * 0.4, height: self.frame.height * 0.2))
+        let lb = UILabel.init(frame: CGRect.init(x: self.imageViewCell.frame.width + 10, y: self.frame.height * (3/3), width: self.frame.width * 0.4, height: self.frame.height * 0.25))
         lb.font = UIFont.systemFont(ofSize: 13)
         return lb
     }()
@@ -247,29 +175,72 @@ class SubMenuTableViewCell: UITableViewCell {
     }()
     
     func configureCell(menu : Menu){
-        self.backgroundColor = .white
         self.selectionStyle = .none
-        self.preservesSuperviewLayoutMargins = false
-        self.separatorInset = .zero
-        self.layoutMargins = .zero
-        configureCellImage(url: menu.img!)
-        self.addSubview(cellImage)
-        title.text = menu.title
-        self.addSubview(title)
-        desc.text = menu.desc
-        self.addSubview(desc)
-        price.text = ("\(menu.price!) ฿")
-        self.addSubview(price)
+        menuImageUrl = menu.img!
+        configureImageView(url: menu.img!)
+        configureTitle(title: menu.title!)
+        configureDesc(desc: menu.desc!)
+        configurePrice(price: menu.price!)
+        configureAddButton()
+        configureConstraints()
+    }
+    
+    private func configureAddButton(){
         self.addSubview(addBtn)
-        menuImageUrl = menu.img
+    }
+    
+    private func configurePrice(price : Int){
+        self.price.text = "\(price) ฿"
+        self.addSubview(self.price)
+    }
+    
+    private func configureDesc(desc : String){
+        self.desc.text = desc
+        self.addSubview(self.desc)
+    }
+    
+    private func configureTitle(title : String){
+        self.title.text = title
+        self.addSubview(self.title)
+    }
+    
+    private func configureImageView(url : String) {
+        let urlPath = URL.init(string: url)
+        imageViewCell.kf.setImage(with: urlPath)
+        self.addSubview(imageViewCell)
+    }
+    
+    private func configureConstraints(){
+        imageViewCell.snp.makeConstraints { (make) in
+            make.top.equalTo(self.snp.top)
+            make.leading.equalTo(self.snp.leading)
+            make.bottom.equalTo(self.snp.bottom)
+            make.width.equalTo(self.frame.width * 0.4)
+        }
+        title.snp.makeConstraints { (make) in
+            make.top.equalTo(self.snp.top).offset(8)
+            make.left.equalTo(self.imageViewCell.snp.right).offset(8)
+        }
+        desc.snp.makeConstraints { (make) in
+            make.top.equalTo(self.title.snp.bottom).offset(8)
+            make.left.equalTo(self.imageViewCell.snp.right).offset(8)
+            make.centerY.equalTo(self.imageViewCell.snp.centerY)
+        }
+        price.snp.makeConstraints { (make) in
+            make.top.equalTo(self.desc.snp.bottom).offset(8)
+            make.left.equalTo(self.imageViewCell.snp.right).offset(8)
+            make.centerY.equalTo(self.imageViewCell.snp.bottom).offset(-16)
+        }
+        addBtn.snp.makeConstraints { (make) in
+            make.centerY.equalTo(self.price.snp.centerY)
+            make.right.equalTo(self.snp.right).offset(-16)
+            make.width.equalTo(self.frame.width * 0.25)
+        }
     }
     
     func addMenu(){
         delegate?.getMenu(menu: self)
     }
     
-    private func configureCellImage(url : String){
-        let urlPath = URL(string: url)
-        cellImage.kf.setImage(with: urlPath)
-    }
 }
+
