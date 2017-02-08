@@ -17,7 +17,7 @@ protocol OrderMenuDelegate {
 class OrderMenu: UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
 
     private let menu = ["menu","order","album","ic_local_offer","feedback"]
-    private let title4Navbar = ["Menu List","Me Order","Photo"]
+    private let title4Navbar = ["Menu List","My Order","Photo","Promotion","Feedback"]
     var delegate : OrderMenuDelegate?
     
     lazy var collectionView: UICollectionView = {

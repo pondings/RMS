@@ -39,7 +39,6 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
             }
             self.tableView.reloadData()
         })
-        NotificationCenter.default.addObserver(self, selector: #selector(didSearch(notification:)), name: Notification.Name("orderListSearch"), object: nil)
     }
     
     private func customize(){
@@ -51,7 +50,7 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MenuTableViewCell
-        cell.configureCell(index:indexPath.row,menuDict: (indexPath.row == 0 ? (isSearchMode ? suggestMenuFiltered : suggestMenu) : popularMenu))
+        cell.configureCell(index:indexPath.row,menuDict: (indexPath.row == 0 ? (isSearchMode ? suggestMenuFiltered : suggestMenu) : (isSearchMode ? popularMenuFiltered : popularMenu)))
         return cell
     }
     
@@ -60,7 +59,7 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let isHide = (UIScreen.main.bounds.height * 0)
+        
         let isShow = ((UIScreen.main.bounds.height * (isSearchMode ? 0.195 : 0.17)) * CGFloat((indexPath.row == 0 ? (isSearchMode ? suggestMenuFiltered.count : suggestMenu.count) : popularMenu.count)) - (isSearchMode ? (suggestMenuFiltered.count == 1 ? 0 : (UIScreen.main.bounds.height * 0.017) * CGFloat(suggestMenuFiltered.count)) : 0))
         if(oldIndexPath != nil && currentIndexPath != nil){
             //Clicked Cell
@@ -71,7 +70,6 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
                     return isShow
                 }else{
                     oldIndexPath = indexPath.row
-                    return isHide
                 }
                 //Not Clicked Cell
             }
@@ -111,8 +109,7 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
         })
     }
     
-    func didSearch(notification : Notification){
-        let text = notification.object as! String
+    func searchMenuList(searchText text : String){
         suggestMenuFiltered = suggestMenu.filter({
             if(text != ""){
                 let menuTitle = $0["menu_name"] as! String
@@ -120,7 +117,23 @@ class OrderMenuList: UIViewController,UITableViewDelegate,UITableViewDataSource,
                 return (menuTitle.range(of: text) != nil)
             }else{ self.isSearchMode = false ; return (suggestMenu != nil) }
         })
+        popularMenuFiltered = popularMenu.filter({
+            if(text != ""){
+                let title = $0["menu_name"] as! String
+                self.isSearchMode = true
+                return (title.range(of: text) != nil)
+            }else{
+                self.isSearchMode = false
+                return false
+            }
+        })
+            
+            
         tableView.reloadData()
+    }
+    
+    func test(){
+        print(suggestMenu)
     }
 }
 

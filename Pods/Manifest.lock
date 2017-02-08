@@ -46,10 +46,11 @@ PODS:
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - Kingfisher (3.3.4)
-  - Material (2.4.13):
-    - Material/Core (= 2.4.13)
-  - Material/Core (2.4.13)
+  - Material (2.4.16):
+    - Material/Core (= 2.4.16)
+  - Material/Core (2.4.16)
   - SKPhotoBrowser (4.0.1)
+  - SnapKit (3.1.2)
 
 DEPENDENCIES:
   - AFMActionSheet
@@ -62,6 +63,7 @@ DEPENDENCIES:
   - Kingfisher (~> 3.0)
   - Material (~> 2.0)
   - SKPhotoBrowser
+  - SnapKit (~> 3.0)
 
 SPEC CHECKSUMS:
   AFMActionSheet: 516ed2aa70d8b38995c3f267e5dc844763cd1242
@@ -81,9 +83,10 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   Kingfisher: 35f289f015d26e81ea6c85048718c6205f3933c6
-  Material: a056f69c8f9c65ace26bb5ef9cb0823d49b787d9
+  Material: 84645fb4c9409c3db76bd7c8e1fd00dc4a76c144
   SKPhotoBrowser: 3a7c6fc02aa1620ab17253a47a49fafda46536e8
+  SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
 
-PODFILE CHECKSUM: 53f1fa82b63aabeb20da1be954012c99ff943ed7
+PODFILE CHECKSUM: 9336ada5f05d71e22d2b0cf0802856bde6ebe06e
 
 COCOAPODS: 1.1.1

@@ -12,6 +12,8 @@ import Alamofire
 class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayout,CollectionViewDelegate {
 
     private var mostViewList : [Dictionary<String,AnyObject>]! = []
+    private var mostViewListFiltered : [Dictionary<String,AnyObject>]! = []
+    private var isSearchMode : Bool = false
     private var imageCache : [Dictionary<String,UIImage>]! = []
     private let urlPath = "MostView"
     private var lastContentOffset : CGFloat = 0.0
@@ -30,12 +32,13 @@ class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayou
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mostViewList.count
+        return isSearchMode ? mostViewListFiltered.count : mostViewList.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! RestaurantListCell
-        let mvDict = Restaurants.init(mvDict: mostViewList[indexPath.row])
+        let mostView = isSearchMode ? mostViewListFiltered[indexPath.row] : mostViewList[indexPath.row]
+        let mvDict = Restaurants.init(mvDict: mostView)
         cell.configureCell(res: mvDict)
         cell.configureImage(url: mvDict.img!)
         return cell
@@ -67,6 +70,20 @@ class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayou
     
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         self.lastContentOffset = scrollView.contentOffset.y
+    }
+    
+    func searchMostView(searchText text: String){
+        mostViewListFiltered = mostViewList.filter({
+            if(text != "") {
+                let title = $0["mv_title"] as! String
+                self.isSearchMode = true
+                return (title.range(of: text) != nil)
+            }else {
+                self.isSearchMode = false
+                return false
+            }
+        })
+        self.reloadVC()
     }
 }
 

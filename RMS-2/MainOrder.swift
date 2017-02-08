@@ -11,8 +11,9 @@ import Material
 
 class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,OrderMenuDelegate {
     
-    let menuList = ["OrderMenuList","OrderList","OrderPhoto"]
-    var views = [UIView]()
+    private let menuList = ["OrderMenuList","OrderList","OrderPhoto","OrderPromotion","OrderFeedback"]
+    private var views = [UIView]()
+    private var currentIndex : Int = 0
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -82,7 +83,14 @@ class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollIndex = Int(round(scrollView.contentOffset.x / self.view.bounds.width))
+        currentIndex = scrollIndex
         mainMenu.didSelectedIndexPath(indexPath: IndexPath.init(row: scrollIndex, section: 0))
+    }
+    
+    func searchContent(searchText text : String){
+        if let vc = self.childViewControllers[currentIndex] as? OrderMenuList {
+            vc.searchMenuList(searchText: text)
+        }
     }
     
     @IBAction func test(_ sender: Any) {

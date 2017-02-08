@@ -69,7 +69,6 @@ class SearchNavBar: UIView,UISearchBarDelegate {
                 clearButton.alpha = 0.7
             }
         }
-
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -77,6 +76,7 @@ class SearchNavBar: UIView,UISearchBarDelegate {
     }
     
     func cancleBtnClicked(){
+        delegate?.searchBarDidEnter!(text: "")
         delegate?.cancleBtnClicked!()
     }
 

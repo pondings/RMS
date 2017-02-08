@@ -14,6 +14,8 @@ class MainPromotion: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     private let urlPath = "Promotion"
     private var promotionList : [Dictionary<String,AnyObject>]! = []
+    private var promotionListFiltered : [Dictionary<String,AnyObject>]! = []
+    private var isSearchMode : Bool = false
     private var imageCache : [Dictionary<String,UIImage>]! = []
     private var lastContentOffset : CGFloat = 0.0
     fileprivate let interactor = Interactor()
@@ -34,12 +36,13 @@ class MainPromotion: UICollectionViewController,UICollectionViewDelegateFlowLayo
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return promotionList.count
+        return isSearchMode ? promotionListFiltered.count : promotionList.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! RestaurantListCell
-        let proDict = Restaurants.init(proDict: promotionList[indexPath.row])
+        let promotion = isSearchMode ? promotionListFiltered[indexPath.row] : promotionList[indexPath.row]
+        let proDict = Restaurants.init(proDict: promotion)
         cell.configureCell(pro: proDict)
         cell.configureImage(url: proDict.img!)
         return cell
@@ -71,6 +74,21 @@ class MainPromotion: UICollectionViewController,UICollectionViewDelegateFlowLayo
     
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         self.lastContentOffset = scrollView.contentOffset.y
+    }
+    
+    func searchPromotion(searchText text : String){
+        
+        promotionListFiltered = promotionList.filter({
+            if(text != ""){
+                let title = $0["pro_title"] as! String
+                self.isSearchMode = true
+                return (title.range(of: text) != nil)
+            }else{
+                self.isSearchMode = false
+                return false
+            }
+        })
+        self.reloadVC()
     }
 }
 

@@ -80,7 +80,9 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarD
     }
     
     func searchBarDidEnter(text: String) {
-        NotificationCenter.default.post(name: Notification.Name("orderListSearch"), object: text)
+        if let vc = self.topViewController as? MainOrder {
+            vc.searchContent(searchText: text)
+        }
     }
     
     func cancleBtnClicked() {

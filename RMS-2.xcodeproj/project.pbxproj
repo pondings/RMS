@@ -10,14 +10,9 @@
 		2A642E4C4422C69A42C85AFD /* Pods_RMS_2UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 546F1FFC9A3BEF5BDAD64F46 /* Pods_RMS_2UITests.framework */; };
 		7A409DFB8B11550CAFEAD735 /* Pods_RMS_2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889923463F59D82A27116EBB /* Pods_RMS_2Tests.framework */; };
 		AA047B7FAC5647AAF9E54769 /* Pods_RMS_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B35ABF1D62086FCF63C5F3 /* Pods_RMS_2.framework */; };
-		EA14C3D71E373E280006734E /* SearchDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14C3D61E373E280006734E /* SearchDetail.swift */; };
+		EA3194081E4AB8B40001770B /* OrderPromotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3194071E4AB8B40001770B /* OrderPromotion.swift */; };
+		EA31940A1E4ABA680001770B /* OrderFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3194091E4ABA680001770B /* OrderFeedback.swift */; };
 		EA40A9431E4497D100EECC78 /* SideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40A9421E4497D100EECC78 /* SideMenuVC.swift */; };
-		EA5FEDDB1E39DD2500682C31 /* Recommend_PT.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5FEDDA1E39DD2500682C31 /* Recommend_PT.swift */; };
-		EA5FEDDD1E39DD3100682C31 /* Nearby_PT.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5FEDDC1E39DD3100682C31 /* Nearby_PT.swift */; };
-		EA5FEDDF1E39DD7A00682C31 /* Facebook_PT.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5FEDDE1E39DD7A00682C31 /* Facebook_PT.swift */; };
-		EA5FEDE21E39DDCC00682C31 /* SuggestCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5FEDE11E39DDCC00682C31 /* SuggestCollection.swift */; };
-		EA5FEDE41E39FC5400682C31 /* Twitter_PT.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5FEDE31E39FC5400682C31 /* Twitter_PT.swift */; };
-		EA5FEDE61E39FC6400682C31 /* Apple_PT.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5FEDE51E39FC6400682C31 /* Apple_PT.swift */; };
 		EA6B85FA1E44802500F538B9 /* AuthenicationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B85F91E44802500F538B9 /* AuthenicationVC.swift */; };
 		EA8150AE1E360609002CA64E /* PresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8150AD1E360609002CA64E /* PresentAnimator.swift */; };
 		EA8150B01E360614002CA64E /* DismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8150AF1E360614002CA64E /* DismissAnimator.swift */; };
@@ -78,14 +73,9 @@
 		889923463F59D82A27116EBB /* Pods_RMS_2Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RMS_2Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		946B5CDFAA9E140AB2DF8705 /* Pods-RMS-2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RMS-2Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RMS-2Tests/Pods-RMS-2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D3F59A5B99F49D2CD4255E28 /* Pods-RMS-2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RMS-2UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RMS-2UITests/Pods-RMS-2UITests.debug.xcconfig"; sourceTree = "<group>"; };
-		EA14C3D61E373E280006734E /* SearchDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchDetail.swift; sourceTree = "<group>"; };
+		EA3194071E4AB8B40001770B /* OrderPromotion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderPromotion.swift; sourceTree = "<group>"; };
+		EA3194091E4ABA680001770B /* OrderFeedback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderFeedback.swift; sourceTree = "<group>"; };
 		EA40A9421E4497D100EECC78 /* SideMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuVC.swift; sourceTree = "<group>"; };
-		EA5FEDDA1E39DD2500682C31 /* Recommend_PT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recommend_PT.swift; sourceTree = "<group>"; };
-		EA5FEDDC1E39DD3100682C31 /* Nearby_PT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nearby_PT.swift; sourceTree = "<group>"; };
-		EA5FEDDE1E39DD7A00682C31 /* Facebook_PT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Facebook_PT.swift; sourceTree = "<group>"; };
-		EA5FEDE11E39DDCC00682C31 /* SuggestCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestCollection.swift; sourceTree = "<group>"; };
-		EA5FEDE31E39FC5400682C31 /* Twitter_PT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Twitter_PT.swift; sourceTree = "<group>"; };
-		EA5FEDE51E39FC6400682C31 /* Apple_PT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Apple_PT.swift; sourceTree = "<group>"; };
 		EA6B85F91E44802500F538B9 /* AuthenicationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenicationVC.swift; sourceTree = "<group>"; };
 		EA8150AD1E360609002CA64E /* PresentAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentAnimator.swift; sourceTree = "<group>"; };
 		EA8150AF1E360614002CA64E /* DismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissAnimator.swift; sourceTree = "<group>"; };
@@ -178,24 +168,17 @@
 			name = SideMenu;
 			sourceTree = "<group>";
 		};
-		EA5FEDD91E39DC7D00682C31 /* Partials */ = {
+		EA5FEDE01E39DDBE00682C31 /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				EA5FEDDA1E39DD2500682C31 /* Recommend_PT.swift */,
-				EA5FEDDC1E39DD3100682C31 /* Nearby_PT.swift */,
-				EA5FEDDE1E39DD7A00682C31 /* Facebook_PT.swift */,
-				EA5FEDE31E39FC5400682C31 /* Twitter_PT.swift */,
-				EA5FEDE51E39FC6400682C31 /* Apple_PT.swift */,
+				EAA850861E30BF1400395858 /* MainNavbarCtrl.swift */,
+				EAA8508C1E30CE3700395858 /* CommonNavBar.swift */,
+				EAA8508E1E30D2B700395858 /* SearchNavBar.swift */,
+				EAAB3D321E35BC660073F44E /* QRButton.swift */,
+				EAD79B011E3B0D6D000063F3 /* QRReader.swift */,
+				EA8150B31E36066D002CA64E /* DataManagent.swift */,
 			);
-			name = Partials;
-			sourceTree = "<group>";
-		};
-		EA5FEDE01E39DDBE00682C31 /* SearchDetail */ = {
-			isa = PBXGroup;
-			children = (
-				EA5FEDE11E39DDCC00682C31 /* SuggestCollection.swift */,
-			);
-			name = SearchDetail;
+			name = Other;
 			sourceTree = "<group>";
 		};
 		EA8150AC1E3605D6002CA64E /* Animation */ = {
@@ -221,15 +204,9 @@
 			isa = PBXGroup;
 			children = (
 				EA2F92381E448B9D00BACE08 /* SideMenu */,
-				EAA850861E30BF1400395858 /* MainNavbarCtrl.swift */,
-				EAA8508C1E30CE3700395858 /* CommonNavBar.swift */,
-				EAA8508E1E30D2B700395858 /* SearchNavBar.swift */,
-				EAAB3D321E35BC660073F44E /* QRButton.swift */,
-				EAD79B011E3B0D6D000063F3 /* QRReader.swift */,
-				EA8150B31E36066D002CA64E /* DataManagent.swift */,
 				EA8150AC1E3605D6002CA64E /* Animation */,
 				EAD79B061E3B509D000063F3 /* Order */,
-				EA5FEDE01E39DDBE00682C31 /* SearchDetail */,
+				EA5FEDE01E39DDBE00682C31 /* Other */,
 			);
 			name = SupportUI;
 			sourceTree = "<group>";
@@ -264,9 +241,7 @@
 		EAAB3D341E35D2430073F44E /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				EA5FEDD91E39DC7D00682C31 /* Partials */,
 				EAAB3D351E35D2550073F44E /* RestaurantDetail.swift */,
-				EA14C3D61E373E280006734E /* SearchDetail.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -278,6 +253,8 @@
 				EAE525BB1E3F00D9001B06FA /* OrderMenuList.swift */,
 				EAE525BF1E3F5DA5001B06FA /* OrderList.swift */,
 				EADD52B91E4081C5005144B3 /* OrderPhoto.swift */,
+				EA3194071E4AB8B40001770B /* OrderPromotion.swift */,
+				EA3194091E4ABA680001770B /* OrderFeedback.swift */,
 			);
 			name = Order;
 			sourceTree = "<group>";
@@ -659,32 +636,27 @@
 				EAA8508D1E30CE3700395858 /* CommonNavBar.swift in Sources */,
 				EAF9F0991E30B5E20077FE4F /* RMS_2.xcdatamodeld in Sources */,
 				EAE525C01E3F5DA5001B06FA /* OrderList.swift in Sources */,
-				EA5FEDE41E39FC5400682C31 /* Twitter_PT.swift in Sources */,
 				EAD79B051E3B3BB5000063F3 /* MainOrder.swift in Sources */,
 				EAA8508F1E30D2B700395858 /* SearchNavBar.swift in Sources */,
-				EA5FEDDF1E39DD7A00682C31 /* Facebook_PT.swift in Sources */,
 				EAAB3D2D1E3351FD0073F44E /* MainMostView.swift in Sources */,
 				EA8150B41E36066D002CA64E /* DataManagent.swift in Sources */,
 				EAAB3D331E35BC660073F44E /* QRButton.swift in Sources */,
+				EA3194081E4AB8B40001770B /* OrderPromotion.swift in Sources */,
 				EAA850921E30DA1A00395858 /* Constant.swift in Sources */,
-				EA5FEDE21E39DDCC00682C31 /* SuggestCollection.swift in Sources */,
 				EAA8508B1E30C36A00395858 /* MainTabBarCtrl.swift in Sources */,
 				EAAB3D361E35D2550073F44E /* RestaurantDetail.swift in Sources */,
-				EA5FEDE61E39FC6400682C31 /* Apple_PT.swift in Sources */,
 				EAAB3D2F1E3352E40073F44E /* MainPromotion.swift in Sources */,
-				EA5FEDDD1E39DD3100682C31 /* Nearby_PT.swift in Sources */,
+				EA31940A1E4ABA680001770B /* OrderFeedback.swift in Sources */,
 				EAF9F0931E30B5E20077FE4F /* MainRestaurant.swift in Sources */,
 				EAAB3D311E35B6A60073F44E /* CollectionViewContentCell.swift in Sources */,
 				EAF9F0911E30B5E20077FE4F /* AppDelegate.swift in Sources */,
 				EA8150B21E36063D002CA64E /* Interactor.swift in Sources */,
 				EA6B85FA1E44802500F538B9 /* AuthenicationVC.swift in Sources */,
 				EAD79B021E3B0D6D000063F3 /* QRReader.swift in Sources */,
-				EA14C3D71E373E280006734E /* SearchDetail.swift in Sources */,
 				EA8150AE1E360609002CA64E /* PresentAnimator.swift in Sources */,
 				EA40A9431E4497D100EECC78 /* SideMenuVC.swift in Sources */,
 				EADD52BA1E4081C5005144B3 /* OrderPhoto.swift in Sources */,
 				EA8150B01E360614002CA64E /* DismissAnimator.swift in Sources */,
-				EA5FEDDB1E39DD2500682C31 /* Recommend_PT.swift in Sources */,
 				EAA850871E30BF1400395858 /* MainNavbarCtrl.swift in Sources */,
 				EAE525BC1E3F00D9001B06FA /* OrderMenuList.swift in Sources */,
 				EAA850951E30DC5500395858 /* Restaurant.swift in Sources */,

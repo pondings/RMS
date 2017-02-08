@@ -11,6 +11,7 @@ import Material
 import FBSDKLoginKit
 import AFMActionSheet
 import FacebookLogin
+import Kingfisher
 
 class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDelegate,QRReaderDelegate {
     
@@ -18,7 +19,6 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
     @IBOutlet weak var imageView : UIImageView!
     @IBOutlet weak var nameLb : UILabel!
     
-    var isSearch : Bool = false
     var previousViewCntroller : UIViewController? = nil
     var interactor = Interactor()
     
@@ -131,13 +131,8 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
     
     private func configureActionSheetImageView(url : String){
         if(imageView == nil) {return}
-        let urlString = url
-        guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { (data,response,error) in
-            if error != nil {return}
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {return}
-            DispatchQueue.main.async {self.imageView.image = UIImage(data: data!)}
-        }.resume()
+        let urlPath = URL.init(string: url)
+        imageView.kf.setImage(with: urlPath)
         imageView.layer.cornerRadius = imageView.frame.width / 2
         imageView.layer.masksToBounds = true
     }

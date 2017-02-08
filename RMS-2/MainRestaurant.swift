@@ -13,6 +13,7 @@ import Kingfisher
 class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLayout,CollectionViewDelegate {
     
     private let urlPath : String = "Restaurant"
+    private var isSearchMode : Bool = false
     private var restaurantList : [Dictionary<String,AnyObject>]! = []
     private var restaurantFiltered : [Dictionary<String,AnyObject>]! = []
     private var imageCache : [Dictionary<String,UIImage>]! = []
@@ -35,14 +36,15 @@ class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! RestaurantListCell
-        let resDict = Restaurants.init(restDict: restaurantList[indexPath.row])
+        let restaurant = isSearchMode ? restaurantFiltered[indexPath.row] : restaurantList[indexPath.row]
+        let resDict = Restaurants.init(restDict: restaurant)
         cell.configureCell(res: resDict)
         cell.configureImage(url: resDict.img!)
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return restaurantList.count
+        return isSearchMode ? restaurantFiltered.count : restaurantList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -71,6 +73,20 @@ class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         self.lastContentOffset = scrollView.contentOffset.y
+    }
+    
+    func searchRestaurant(text : String){
+        restaurantFiltered = restaurantList.filter({
+            if(text != "") {
+                let resName = $0["res_name"] as! String
+                self.isSearchMode = true
+                return (resName.range(of: text) != nil)
+            }else{
+                self.isSearchMode = false
+                return false
+            }
+        })
+        self.reloadVC()
     }
     
 }
