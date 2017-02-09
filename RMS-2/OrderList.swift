@@ -91,6 +91,11 @@ class OrderList: UITableViewController,OrderListCellDelegate {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.view.frame.height / 6
     }
+    
+    func removeAllContent(){
+        orderList.removeAll()
+        tableView.reloadData()
+    }
 
     func stepperClicked(cell: OrderListCell) {
         var addValue = [String:AnyObject]()

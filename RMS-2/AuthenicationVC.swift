@@ -12,20 +12,16 @@ import Material
 import FacebookLogin
 import FBSDKLoginKit
 
-class AuthenicationVC: UIViewController {
+class AuthenicationVC: UIViewController,LoginButtonDelegate {
     
     @IBOutlet weak var dismissBtn: UIButton!
-
-    lazy var fbLoginBtn: UIButton = {
+    
+    lazy var fbLoginBtn: LoginButton = {
         let size = CGSize.init(width: self.view.frame.width / 2, height: self.view.frame.height * 0.05)
         let origin = CGPoint.init(x: ((self.view.frame.width / 2) - (size.width / 2)), y: ((self.view.frame.height / 2) - (size.height / 2)))
-        let btn = UIButton.init(frame: CGRect.init(origin: origin, size: size))
-        btn.backgroundColor = .white
-        btn.setFAIcon(icon: .FAFacebook, forState: .normal)
-        btn.setFATitleColor(color: .white)
-        btn.addTarget(self, action: #selector(loginWithFB), for: .touchUpInside)
-        btn.setFATitleColor(color: Color.lightBlue.base)
-        return btn
+        let fb = LoginButton.init(frame: CGRect.init(origin: origin, size: size), readPermissions: [.publicProfile,.email])
+        fb.delegate = self
+        return fb
     }()
     
     override func viewDidLoad() {
@@ -36,29 +32,16 @@ class AuthenicationVC: UIViewController {
         dismissBtn.setFATitleColor(color: .white)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        if(FBSDKAccessToken.current() != nil) {
-            self.present(MainTabBarCtrl(), animated: true, completion: nil)
-        }
+    public func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
+        dismissSelf("")
     }
     
-    internal func loginWithFB(){
-        let loginManager = LoginManager()
-        loginManager.logIn( [.publicProfile,.email ], viewController: self) { loginResult in
-            switch loginResult {
-            case .failed(let error):
-                print(error)
-            case .cancelled:
-                print("User cancelled login.")
-            case .success( _, _, _):
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
-    }
+    public func loginButtonDidLogOut(_ loginButton: LoginButton) {}
+    
+    
     
     @IBAction func dismissSelf(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
-        MainTabBarCtrl().configureActionSheetView()
     }
     
 }

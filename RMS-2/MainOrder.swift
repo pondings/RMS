@@ -8,12 +8,36 @@
 
 import UIKit
 import Material
+import AFMActionSheet
+import FBSDKLoginKit
 
-class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,OrderMenuDelegate {
+class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,OrderMenuDelegate,ActionSheetTitleDelegate {
     
+    fileprivate var isViewInit : Bool = false
     private let menuList = ["OrderMenuList","OrderList","OrderPhoto","OrderPromotion","OrderFeedback"]
     private var views = [UIView]()
     private var currentIndex : Int = 0
+    internal var currestRestaurant : Restaurant? = nil
+    
+    var actionSheetTitle: ActionSheetTitle = {
+        let at = ActionSheetTitle.init(frame: CGRect.init(x: 0, y: 0, width: 500, height: 500))
+        return at
+    }()
+    
+    lazy var actionSheet: AFMActionSheetController = {
+        let sheet = AFMActionSheetController.init(style: .actionSheet, transitioningDelegate: AFMActionSheetTransitioningDelegate())
+        sheet.add(title: self.actionSheetTitle)
+        let action1 = AFMAction.init(title: "ตั้งค่า", handler: nil)
+        let action2 = AFMAction.init(title: "เกี่ยวกับ", handler: nil)
+        let action3 = AFMAction.init(title: "ตั้งค่าบัญชี", handler: { _ in self.AccountManagement() })
+        let close = AFMAction.init(title: "ยกเลิก", handler: nil)
+        
+        sheet.add(action1)
+        sheet.add(action2)
+        sheet.add(action3)
+        sheet.add(cancelling: close)
+        return sheet
+    }()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -40,6 +64,7 @@ class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        actionSheetTitle.delegate = self
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         self.view.addSubview(mainMenu)
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -57,6 +82,7 @@ class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
             vc.didMove(toParentViewController: self)
             views.append(vc.view)
         }
+        actionSheetTitle.configureActionSheet(SheetStyle: .MainOrder)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -95,5 +121,34 @@ class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
     
     @IBAction func test(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension MainOrder {
+    func openActionSheet(){
+        actionSheetTitle.snp.makeConstraints({ (make) in
+            make.height.equalTo(self.view.frame.height)
+            make.width.equalTo(self.view.frame.width)
+        })
+        actionSheetTitle.reloadAllContent()
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func confirmButtonClicked() {
+        print("Confirm order!")
+    }
+    
+    func cancelButtonClicked() {
+        self.actionSheet.dismiss(animated: true, completion: nil)
+        let alert = UIAlertController.init(title: "Cancel Order?", message: "All list will be remove", preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: "Confirm", style: .destructive, handler: { _ in
+            self.actionSheetTitle.removeAllContentInCollectionView()
+            if let vc = self.childViewControllers[1] as? OrderList {
+                
+            }
+            self.openActionSheet()
+        }))
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: { _ in self.openActionSheet() }))
+        self.present(alert, animated: true, completion: nil)
     }
 }

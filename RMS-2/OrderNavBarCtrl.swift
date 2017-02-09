@@ -85,6 +85,12 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarD
         }
     }
     
+    func moreBtnClicked() {
+        if let vc = self.topViewController as? MainOrder {
+            vc.openActionSheet()
+        }
+    }
+    
     func cancleBtnClicked() {
         UIView.transition(from: searchNavBar, to: commonNavBar, duration: 0.5, options: .transitionCrossDissolve, completion: nil)
         searchNavBar.searchBox.text = ""

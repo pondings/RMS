@@ -577,6 +577,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="gGi-l3-pv6"/>
+                    <connections>
+                        <segue destination="Dwq-rg-2JM" kind="showDetail" identifier="AuthenicationVC" id="DSV-s4-iUM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="88l-04-lD1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -990,6 +993,7 @@
         <image name="ic_thumb_up" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="X1h-dS-dtL"/>
         <segue reference="kPF-hQ-MUH"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -42,6 +42,24 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
         return btn
     }()
     
+    lazy var actionSheet: AFMActionSheetController = {
+        let sheet = AFMActionSheetController.init(style: .actionSheet, transitioningDelegate: AFMActionSheetTransitioningDelegate())
+        let action1 = AFMAction.init(title: "ตั้งค่า", handler: nil)
+        let action2 = AFMAction.init(title: "เกี่ยวกับ", handler: nil)
+        let action3 = AFMAction.init(title: "ตั้งค่า Account", handler: { _ in self.AccountManagement() })
+        let close = AFMAction.init(title: "ยกเลิก", handler: nil)
+        sheet.add(action1)
+        sheet.add(action2)
+        sheet.add(action3)
+        sheet.add(cancelling: close)
+        return sheet
+    }()
+    
+    lazy var actionSheetTitle: ActionSheetTitle = {
+        let at = ActionSheetTitle.init(frame: CGRect.init())
+        return at
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
@@ -94,59 +112,16 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
     }
     
     func moreBtnClicked() {
-        configureActionSheetView()
-        let actionSheet = AFMActionSheetController.init(style: .actionSheet, transitioningDelegate: AFMActionSheetTransitioningDelegate())
-        
-        var authen : String! = "เข้าสู่ระบบ"
-        if(FBSDKAccessToken.current() != nil && titleView != nil) {
-            actionSheet.add(title: titleView)
-            authen = "ออกจากระบบ"
+        if(FBSDKAccessToken.current() != nil){
+            actionSheetTitle.configureActionSheet(SheetStyle: .MainRestaurant)
+            actionSheetTitle.snp.makeConstraints { (make) in
+                make.height.equalTo(self.view.frame.height * 0.25)
+            }
+            actionSheet.add(title: actionSheetTitle)
+        }else {
+            actionSheet.add(title: UIView())
         }
-        let action1 = AFMAction.init(title: "ตั้งค่า", handler: nil)
-        let action2 = AFMAction.init(title: "เกี่ยวกับ", handler: nil)
-        let action3 = AFMAction.init(title: authen, handler: { _ in self.logout() })
-        let close = AFMAction.init(title: "ยกเลิก", handler: nil)
-        
-        actionSheet.add(action1)
-        actionSheet.add(action2)
-        actionSheet.add(action3)
-        actionSheet.add(cancelling: close)
-        
         self.present(actionSheet, animated: true, completion: nil)
-    }
-    
-    internal func configureActionSheetView(){
-        let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, picture.type(large)"])
-        request?.start(completionHandler: { (_, result, _) in
-            guard
-                let info = result as? NSDictionary,
-                let picture = info.value(forKey: "picture") as? NSDictionary,
-                let data = picture.value(forKey: "data") as? NSDictionary,
-                let url = data.value(forKey: "url") as? String
-            else {return}
-            self.configureActionSheetImageView(url: url)
-            self.configureActionSheetName(name: info.value(forKey: "name") as! String)
-        })
-    }
-    
-    private func configureActionSheetImageView(url : String){
-        if(imageView == nil) {return}
-        let urlPath = URL.init(string: url)
-        imageView.kf.setImage(with: urlPath)
-        imageView.layer.cornerRadius = imageView.frame.width / 2
-        imageView.layer.masksToBounds = true
-    }
-    
-    private func configureActionSheetName(name : String){
-        if(nameLb == nil){ return }
-        nameLb.text = name
-        nameLb.sizeToFit()
-    }
-    
-    private func logout() {
-        let logout = LoginManager()
-        logout.logOut()
-        self.performSegue(withIdentifier: "AuthenicationVC", sender: nil)
     }
     
 }

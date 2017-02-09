@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import FacebookLogin
 
 protocol CollectionViewDelegate {
     func didScroll(last : CGFloat,yPosition : CGFloat,contentHeight : CGFloat,cvHeight : CGFloat)
@@ -69,6 +70,14 @@ extension CollectionViewDelegate where Self : UICollectionViewController {
         NotificationCenter.default.post(name: Notification.Name("dsNavBar"), object: dismiss)
         NotificationCenter.default.post(name: Notification.Name("hideQR"), object: dismiss)
     }
+}
+
+extension UIViewController {
+
+    func AccountManagement() {
+        self.performSegue(withIdentifier: "AuthenicationVC", sender: nil)
+    }
+    
 }
 
 
