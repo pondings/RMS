@@ -45,10 +45,11 @@ class OrderList: UITableViewController,OrderListCellDelegate {
         self.view.backgroundColor = Color.grey.lighten1
     }
     
-    private func configureFirebase(){
+    func configureFirebase(){
         firPath.observe(.childAdded, with: { [weak self] snapshot -> Void in
             guard let strongSelf = self else {return}
-            strongSelf.orderList.append(snapshot.value as! Dictionary<String,AnyObject>)
+            let addedValue = snapshot.value as! Dictionary<String,AnyObject>
+            strongSelf.orderList.append(addedValue)
             strongSelf.tableView.insertRows(at: [IndexPath.init(row: strongSelf.orderList.count - 1, section: 0)], with: UITableViewRowAnimation.left)
         })
         firPath.observe(.childRemoved, with: { [weak self] snapshot -> Void in
@@ -65,10 +66,14 @@ class OrderList: UITableViewController,OrderListCellDelegate {
         firPath.observe(.childChanged, with: { [weak self] snapshot -> Void in
             guard let strongSelf = self else {return}
             let changedOrd = snapshot.value as! Dictionary<String,AnyObject>
-            if(changedOrd["ord_total"] as! Int == 0){ snapshot.ref.removeValue() }
+            let changeOrder = Menus.init(ordDict: changedOrd)
+            if(Int.init(changeOrder.quantity!) == 0){ snapshot.ref.removeValue() }
             for (index,element) in strongSelf.orderList.enumerated() {
-                if(element["ord_name"] as! String == changedOrd["ord_name"] as! String) {
-                    let cell = strongSelf.tableView.cellForRow(at: IndexPath.init(row: index, section: 0)) as? OrderListCell
+                let elementDict = Menus.init(ordDict: element)
+                if(elementDict.title! == changeOrder.title!) {
+                    let indexPath = IndexPath.init(row: index, section: 0)
+                    let cell = strongSelf.tableView.cellForRow(at: indexPath) as? OrderListCell
+                    strongSelf.orderList[index] = changedOrd
                     cell?.configureCell(ordDict: Menus.init(ordDict: changedOrd))
                     break
                 }
@@ -114,62 +119,5 @@ class OrderList: UITableViewController,OrderListCellDelegate {
             }
             refAdd.setValue(addValue)
         })
-    }
-}
-
-class OrderListCell: UITableViewCell {
-    
-    @IBOutlet weak var imageViewCell : UIImageView!
-    @IBOutlet weak var title : UILabel!
-    @IBOutlet weak var totalPrice : UILabel!
-    @IBOutlet weak var quantity : UILabel!
-    @IBOutlet weak var stepper: UIStepper!
-    
-    var delegate : OrderListCellDelegate?
-    var imageUrl : String? = nil
-    var price : Int? = nil
-    var total : Int? = nil
-    
-    func configureCell(ordDict : Menu){
-        self.backgroundColor = Color.white
-        self.selectionStyle = .none
-        price = Int.init(ordDict.price!)
-        configureImageView(url: ordDict.img!)
-        configureTitle(title: ordDict.title!)
-        configureQuantity(quantity: ordDict.quantity!)
-        configureTotalPrice()
-        imageUrl = ordDict.img
-        configureStepper()
-    }
-    
-    private func configureStepper(){
-        stepper.value = Double.init(quantity.text!)!
-        stepper.tintColor = .white
-        stepper.setBackgroundImage(UIImage(), for: .normal)
-        stepper.backgroundColor = Color.lightBlue.base
-    }
-    
-    private func configureQuantity(quantity : String) {
-        self.quantity.text = quantity
-    }
-    
-    private func configureTotalPrice(){
-        self.totalPrice.text = "\(Int(price! * Int.init(quantity.text!)!)) ฿"
-    }
-    
-    private func configureTitle(title : String){
-        self.title.text = title
-    }
-    
-    private func configureImageView(url : String){
-        let urlPath = URL(string: url)
-        imageViewCell.kf.setImage(with: urlPath)
-    }
-    
-    @IBAction func stepperClicked(_ sender: UIStepper) {
-        quantity.text = "\(Int.init(sender.value))"
-        self.total = (Int.init(quantity.text!)! * Int.init(price!))
-        self.totalPrice.text = "\(total!) ฿"
-        delegate?.stepperClicked(cell : self)
     }
 }

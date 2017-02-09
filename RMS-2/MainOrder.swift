@@ -85,10 +85,6 @@ class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
         actionSheetTitle.configureActionSheet(SheetStyle: .MainOrder)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        mainMenu.didSelectedIndexPath(indexPath: IndexPath.init(row: 0, section: 0))
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return views.count
     }
@@ -125,27 +121,29 @@ class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
 }
 
 extension MainOrder {
+    
     func openActionSheet(){
         actionSheetTitle.snp.makeConstraints({ (make) in
             make.height.equalTo(self.view.frame.height)
             make.width.equalTo(self.view.frame.width)
         })
-        actionSheetTitle.reloadAllContent()
+        actionSheetTitle.configureFirebase()
         self.present(actionSheet, animated: true, completion: nil)
     }
     
     func confirmButtonClicked() {
-        print("Confirm order!")
+        self.actionSheet.dismiss(animated: true, completion: nil)
+        let alert = UIAlertController.init(title: "Confirm Order", message: "", preferredStyle: .alert)
+        alert.addAction(.init(title: "Confirm", style: .default, handler: {_ in self.actionSheetTitle.userCancelOrder() ; print("Send order to somewhere!")}))
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: {_ in self.openActionSheet()}))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func cancelButtonClicked() {
         self.actionSheet.dismiss(animated: true, completion: nil)
         let alert = UIAlertController.init(title: "Cancel Order?", message: "All list will be remove", preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "Confirm", style: .destructive, handler: { _ in
-            self.actionSheetTitle.removeAllContentInCollectionView()
-            if let vc = self.childViewControllers[1] as? OrderList {
-                
-            }
+            self.actionSheetTitle.userCancelOrder()
             self.openActionSheet()
         }))
         alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: { _ in self.openActionSheet() }))

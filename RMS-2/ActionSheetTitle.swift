@@ -18,15 +18,16 @@ import FBSDKLoginKit
 }
 
 class ActionSheetTitle: UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-
-    private var style : sheetStyle? = nil
-    private var orderList : [Dictionary<String,AnyObject>]! = []
+    
+    internal var style : sheetStyle? = nil
+    var orderList : [Dictionary<String,AnyObject>]! = []
+    var isSelfInit : Bool = false
     
     var delegate : ActionSheetTitleDelegate?
     
     lazy var firPath: FIRDatabaseReference = {
-        let fp = FIRDatabase.database().reference().child("Order").child("first").child("qr001")
-        return fp
+        let ref = FIRDatabase.database().reference().child("Order").child("first").child("qr001")
+        return ref
     }()
     
     lazy var collectionView: UICollectionView = {
@@ -81,46 +82,6 @@ class ActionSheetTitle: UIView,UICollectionViewDelegate,UICollectionViewDataSour
         self.backgroundColor = .white
     }
     
-    private func configureFirebasae(){
-        firPath.observe(.childAdded, with: {[weak self] (snap) -> Void in
-            guard
-                let strongSelf = self,
-                let data = snap.value as? Dictionary<String,AnyObject>
-                else{return}
-            strongSelf.orderList.append(data)
-            strongSelf.collectionView.reloadData()
-        })
-        firPath.observe(.childChanged, with: { [weak self] (snap) -> Void in
-            guard let strongSelf = self else {return}
-            let changeValue = snap.value as! Dictionary<String,AnyObject>
-            let changeValueDict = Menus.init(ordDict: changeValue)
-            for (index,element) in strongSelf.orderList.enumerated() {
-                let orderDict = Menus.init(ordDict: element)
-                if(orderDict.title! == changeValueDict.title!){
-                    if let cell = strongSelf.collectionView.cellForItem(at: IndexPath.init(row: index, section: 0)) as? ActionSheetCollectionViewCell{
-                        cell.configureCell(Order: changeValueDict)
-                    }
-                }
-            }
-        })
-        firPath.observe(.childRemoved, with: { [weak self] (snap) -> Void in
-            guard let strongSelf = self else{return}
-            let removeValue = snap.value as! Dictionary<String,AnyObject>
-            let removeValueDict = Menus.init(ordDict: removeValue)
-            for (index,element) in strongSelf.orderList.enumerated() {
-                let orderDict = Menus.init(ordDict: element)
-                if(orderDict.title! == removeValueDict.title!) {
-                    print("Base Element \(element)")
-                    print("Index : \(index)")
-                    print("remove val :  \(removeValueDict)")
-                    print("orderList : \(strongSelf.orderList)")
-                    strongSelf.orderList.remove(at: index)
-                    strongSelf.collectionView.deleteItems(at: [IndexPath.init(row: index, section: 0)])
-                }
-            }
-        })
-    }
-    
     func configureActionSheet(SheetStyle style : sheetStyle){
         switch style {
         case .MainRestaurant:
@@ -169,67 +130,7 @@ class ActionSheetTitle: UIView,UICollectionViewDelegate,UICollectionViewDataSour
         imageView.kf.setImage(with: urlPath)
         self.addSubview(imageView)
     }
-    
-    private func configureMainOrder(){
-        if(style == .MainOrder){
-            configureFirebasae()
-            self.addSubview(collectionView)
-            collectionView.snp.makeConstraints({ (make) in
-                make.top.leading.trailing.equalToSuperview()
-                make.height.equalTo(self.snp.height).offset( -self.frame.height * 0.1)
-            })
-            self.addSubview(submitButton)
-            submitButton.snp.makeConstraints({ (make) in
-                make.top.equalTo(collectionView.snp.bottom)
-                make.leading.equalToSuperview()
-                make.trailing.equalToSuperview()
-                make.height.equalTo(self.frame.height * 0.05)
-            })
-            self.addSubview(cancelButton)
-            cancelButton.snp.makeConstraints({ (make) in
-                make.top.equalTo(submitButton.snp.bottom)
-                make.bottom.equalToSuperview()
-                make.leading.equalToSuperview()
-                make.trailing.equalToSuperview()
-            })
-        }
-    }
-    
-    func submitOrderClicked(){
-        self.delegate?.confirmButtonClicked!()
-    }
-    
-    func cancelOrderClicked(){
-        self.delegate?.cancelButtonClicked!()
-    }
-    
-    func removeAllContentInCollectionView(){
-        firPath.removeValue()
-        orderList.removeAll()
-        collectionView.reloadData()
-    }
-    
-    func reloadAllContent(){
-        orderList.removeAll()
-        collectionView.reloadData()
-        configureFirebasae()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ActionSheetCollectionViewCell
-        let order = orderList[indexPath.row]
-        cell.configureCell(Order: Menus.init(ordDict: order))
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return orderList.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize.init(width: collectionView.frame.width - 20, height: collectionView.frame.height * 0.25)
-    }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -10,13 +10,6 @@ import UIKit
 import Material
 import Alamofire
 
-@objc protocol DataManagentDelegate {
-    @objc optional func showConnectionError(emptyData : UIView)
-    @objc optional func reloadVC()
-    @objc optional func reloadTV()
-    @objc optional func reloadContent()
-}
-
 class DataManagent: UIView {
     
     var delegate : DataManagentDelegate?
@@ -113,6 +106,14 @@ class DataManagent: UIView {
     }
 
 }
+
+@objc protocol DataManagentDelegate {
+    @objc optional func showConnectionError(emptyData : UIView)
+    @objc optional func reloadVC()
+    @objc optional func reloadTV()
+    @objc optional func reloadContent()
+}
+
 
 extension DataManagentDelegate where Self : UICollectionViewDataSource {
     
