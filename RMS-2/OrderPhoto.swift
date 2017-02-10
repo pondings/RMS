@@ -50,14 +50,3 @@ class OrderPhoto: UICollectionViewController,UICollectionViewDelegateFlowLayout 
     }
     
 }
-
-class OrderPhotoCell: UICollectionViewCell {
-    
-    @IBOutlet weak var imageView: UIImageView!
-    
-    func configureCell(url : String){
-        let urlPath = URL(string: url)
-        imageView.kf.setImage(with: urlPath)
-    }
-    
-}

@@ -21,6 +21,8 @@
 		EA8150B41E36066D002CA64E /* DataManagent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8150B31E36066D002CA64E /* DataManagent.swift */; };
 		EA9DFFCB1E4C8202001BE56E /* OrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9DFFCA1E4C8202001BE56E /* OrderListCell.swift */; };
 		EA9DFFCD1E4C82E5001BE56E /* MainOrderActinSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9DFFCC1E4C82E5001BE56E /* MainOrderActinSheet.swift */; };
+		EAA810A11E4D5D2900EAF9E7 /* OrderPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA810A01E4D5D2900EAF9E7 /* OrderPhotoCell.swift */; };
+		EAA810A41E4D5D6700EAF9E7 /* OrderMenuListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA810A31E4D5D6700EAF9E7 /* OrderMenuListCell.swift */; };
 		EAA850871E30BF1400395858 /* MainNavbarCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA850861E30BF1400395858 /* MainNavbarCtrl.swift */; };
 		EAA8508B1E30C36A00395858 /* MainTabBarCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA8508A1E30C36A00395858 /* MainTabBarCtrl.swift */; };
 		EAA8508D1E30CE3700395858 /* CommonNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA8508C1E30CE3700395858 /* CommonNavBar.swift */; };
@@ -88,6 +90,8 @@
 		EA8150B31E36066D002CA64E /* DataManagent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManagent.swift; sourceTree = "<group>"; };
 		EA9DFFCA1E4C8202001BE56E /* OrderListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderListCell.swift; sourceTree = "<group>"; };
 		EA9DFFCC1E4C82E5001BE56E /* MainOrderActinSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainOrderActinSheet.swift; sourceTree = "<group>"; };
+		EAA810A01E4D5D2900EAF9E7 /* OrderPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderPhotoCell.swift; sourceTree = "<group>"; };
+		EAA810A31E4D5D6700EAF9E7 /* OrderMenuListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderMenuListCell.swift; sourceTree = "<group>"; };
 		EAA850861E30BF1400395858 /* MainNavbarCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavbarCtrl.swift; sourceTree = "<group>"; };
 		EAA8508A1E30C36A00395858 /* MainTabBarCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarCtrl.swift; sourceTree = "<group>"; };
 		EAA8508C1E30CE3700395858 /* CommonNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonNavBar.swift; sourceTree = "<group>"; };
@@ -209,6 +213,24 @@
 			name = OrderList;
 			sourceTree = "<group>";
 		};
+		EAA8109F1E4D5D0400EAF9E7 /* OrderPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				EADD52B91E4081C5005144B3 /* OrderPhoto.swift */,
+				EAA810A01E4D5D2900EAF9E7 /* OrderPhotoCell.swift */,
+			);
+			name = OrderPhoto;
+			sourceTree = "<group>";
+		};
+		EAA810A21E4D5D4800EAF9E7 /* OrderMenuList */ = {
+			isa = PBXGroup;
+			children = (
+				EAE525BB1E3F00D9001B06FA /* OrderMenuList.swift */,
+				EAA810A31E4D5D6700EAF9E7 /* OrderMenuListCell.swift */,
+			);
+			name = OrderMenuList;
+			sourceTree = "<group>";
+		};
 		EAA850851E30BC6B00395858 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -268,9 +290,9 @@
 			isa = PBXGroup;
 			children = (
 				EAD79B041E3B3BB5000063F3 /* MainOrder.swift */,
-				EAE525BB1E3F00D9001B06FA /* OrderMenuList.swift */,
+				EAA810A21E4D5D4800EAF9E7 /* OrderMenuList */,
 				EA9DFFC91E4C81E3001BE56E /* OrderList */,
-				EADD52B91E4081C5005144B3 /* OrderPhoto.swift */,
+				EAA8109F1E4D5D0400EAF9E7 /* OrderPhoto */,
 				EA3194071E4AB8B40001770B /* OrderPromotion.swift */,
 				EA3194091E4ABA680001770B /* OrderFeedback.swift */,
 			);
@@ -671,6 +693,7 @@
 				EA8150B41E36066D002CA64E /* DataManagent.swift in Sources */,
 				EAAB3D331E35BC660073F44E /* QRButton.swift in Sources */,
 				EA3194081E4AB8B40001770B /* OrderPromotion.swift in Sources */,
+				EAA810A11E4D5D2900EAF9E7 /* OrderPhotoCell.swift in Sources */,
 				EAA850921E30DA1A00395858 /* Constant.swift in Sources */,
 				EA9DFFCD1E4C82E5001BE56E /* MainOrderActinSheet.swift in Sources */,
 				EAA8508B1E30C36A00395858 /* MainTabBarCtrl.swift in Sources */,
@@ -687,6 +710,7 @@
 				EA40A9431E4497D100EECC78 /* SideMenuVC.swift in Sources */,
 				EA9DFFCB1E4C8202001BE56E /* OrderListCell.swift in Sources */,
 				EADD52BA1E4081C5005144B3 /* OrderPhoto.swift in Sources */,
+				EAA810A41E4D5D6700EAF9E7 /* OrderMenuListCell.swift in Sources */,
 				EA8150B01E360614002CA64E /* DismissAnimator.swift in Sources */,
 				EAA850871E30BF1400395858 /* MainNavbarCtrl.swift in Sources */,
 				EAE525BC1E3F00D9001B06FA /* OrderMenuList.swift in Sources */,

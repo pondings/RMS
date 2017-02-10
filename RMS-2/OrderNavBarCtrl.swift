@@ -99,6 +99,7 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarD
     
     func searchBtnClicked() {
         UIView.transition(from: commonNavBar, to: searchNavBar, duration: 0.5, options: .transitionCrossDissolve, completion: nil)
+        searchNavBar.searchBox.becomeFirstResponder()
     }
     
 }
