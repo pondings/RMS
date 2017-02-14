@@ -10,21 +10,17 @@ import UIKit
 import FirebaseDatabase
 import Material
 
-protocol OrderListCellDelegate {
-    func stepperClicked(cell : OrderListCell)
-}
-
 class OrderList: UITableViewController,OrderListCellDelegate {
 
     private var ref : FIRDatabaseReference!
     private var orderList : [Dictionary<String,AnyObject>]! = []
     
-    lazy var firPath: FIRDatabaseReference = {
+    private lazy var firPath: FIRDatabaseReference = {
         self.ref = FIRDatabase.database().reference().child("Order").child("first").child("qr001")
         return self.ref
     }()
     
-    lazy var emptyView: DataManagent = {
+    private lazy var emptyView: DataManagent = {
         let size = CGSize.init(width: self.view.frame.width, height: self.view.frame.height)
         let origin = CGPoint.init(x: 0, y: 0)
         let vw = DataManagent.init(frame: CGRect.init(origin: origin, size: size))
@@ -37,7 +33,7 @@ class OrderList: UITableViewController,OrderListCellDelegate {
         configureFirebase()
     }
     
-    func customize(){
+    private func customize(){
         tableView.backgroundColor = Color.grey.lighten1
         tableView.contentInset.top = 8
         tableView.contentInset.bottom = 28
@@ -45,7 +41,7 @@ class OrderList: UITableViewController,OrderListCellDelegate {
         self.view.backgroundColor = Color.grey.lighten1
     }
     
-    func configureFirebase(){
+    private func configureFirebase(){
         firPath.observe(.childAdded, with: { [weak self] snapshot -> Void in
             guard let strongSelf = self else {return}
             let addedValue = snapshot.value as! Dictionary<String,AnyObject>
@@ -94,15 +90,28 @@ class OrderList: UITableViewController,OrderListCellDelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.view.frame.height / 6
+        return self.view.frame.height / 7
     }
     
-    func removeAllContent(){
+    private func removeAllContent(){
         orderList.removeAll()
         tableView.reloadData()
     }
+    
+    internal func cancelButtonClicked(order : OrderListCell) {
+        let alertController = UIAlertController.init(title: "Confirm Remove!", message: "Content will be remove from list 😳", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction.init(title: "Confirm", style: .destructive, handler: {_ in
+            self.removeContent(orderTitle: order.title.text!)
+        }))
+        alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    private func removeContent(orderTitle : String){
+        firPath.child(orderTitle).removeValue()
+    }
 
-    func stepperClicked(cell: OrderListCell) {
+    internal func stepperClicked(cell: OrderListCell) {
         var addValue = [String:AnyObject]()
         addValue["ord_name"] = cell.title.text as AnyObject?
         addValue["ord_img"] = cell.imageUrl as AnyObject?
@@ -114,7 +123,7 @@ class OrderList: UITableViewController,OrderListCellDelegate {
         let refAdd = ref.child("Order").child("first").child("qr001").child(menuTitle)
         refAdd.observeSingleEvent(of: .value, with: {(snapshot) -> Void in
             if (snapshot.value as? Dictionary<String,AnyObject>) != nil {
-                addValue["ord_total"] = Int.init(cell.quantity.text!) as AnyObject
+                addValue["ord_total"] = Int.init(cell.stepper.value) as AnyObject
                 addValue["ord_totalPrice"] = cell.total as AnyObject
             }
             refAdd.setValue(addValue)

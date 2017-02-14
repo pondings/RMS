@@ -17,6 +17,7 @@ target 'RMS-2' do
 	pod "AFMActionSheet"
 	pod 'Kingfisher', '~> 3.0'
 	pod 'SnapKit', '~> 3.0'
+	pod "GMStepper"
   target 'RMS-2Tests' do
     inherit! :search_paths
     # Pods for testing

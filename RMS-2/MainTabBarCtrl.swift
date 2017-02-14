@@ -73,8 +73,6 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         item.selectedImage = item.image?.tint(with: Color.white)
-//        let NAV = self.selectedViewController as? MainNavbarCtrl
-//        let VC = NAV?.childViewControllers[0] as? UICollectionViewController
     }
     
     func isFoundQRCode(qrCode: String) {
@@ -86,7 +84,7 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
             let NAV = viewController as? MainNavbarCtrl
             let VC = NAV?.topViewController as? UICollectionViewController
             if((VC?.collectionView?.numberOfItems(inSection: 0))! < 1) {return}
-            VC?.collectionView?.scrollToItem(at: IndexPath.init(row: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: true)
+            VC?.collectionView?.setContentOffset(CGPoint.zero, animated: true)
         }
         previousViewCntroller = viewController
     }

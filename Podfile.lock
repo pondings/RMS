@@ -39,13 +39,14 @@ PODS:
     - FirebaseAnalytics (~> 3.5)
   - FirebaseInstanceID (1.0.8)
   - Font-Awesome-Swift (1.5.3)
+  - GMStepper (2.0.0)
   - GoogleInterchangeUtilities (1.2.2):
     - GoogleSymbolUtilities (~> 1.1)
   - GoogleSymbolUtilities (1.1.2)
   - GoogleToolboxForMac/Defines (2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
-  - Kingfisher (3.3.4)
+  - Kingfisher (3.4.0)
   - Material (2.4.16):
     - Material/Core (= 2.4.16)
   - Material/Core (2.4.16)
@@ -60,6 +61,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Font-Awesome-Swift (~> 1.5.3)
+  - GMStepper
   - Kingfisher (~> 3.0)
   - Material (~> 2.0)
   - SKPhotoBrowser
@@ -79,14 +81,15 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 6de92187481ff0e8e124064f21742e95ee883b02
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   Font-Awesome-Swift: 6615ee6b875d148f767ea60b5b4ff54e2ea3122e
+  GMStepper: 6aff0c881afac2f432e5c9b0df71e44e14110a06
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
-  Kingfisher: 35f289f015d26e81ea6c85048718c6205f3933c6
+  Kingfisher: 5690cfb3d1bddf3a98d679a3a34d0b7294974ed2
   Material: 84645fb4c9409c3db76bd7c8e1fd00dc4a76c144
   SKPhotoBrowser: 3a7c6fc02aa1620ab17253a47a49fafda46536e8
   SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
 
-PODFILE CHECKSUM: 9336ada5f05d71e22d2b0cf0802856bde6ebe06e
+PODFILE CHECKSUM: 630640439b34667ed2a6e7a33830fc43e094be12
 
 COCOAPODS: 1.1.1

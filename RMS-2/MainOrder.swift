@@ -11,7 +11,7 @@ import Material
 import AFMActionSheet
 import FBSDKLoginKit
 
-class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,OrderMenuDelegate,ActionSheetTitleDelegate {
+class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,OrderMenuDelegate {
     
     fileprivate var isViewInit : Bool = false
     private let menuList = ["OrderMenuList","OrderList","OrderPhoto","OrderPromotion","OrderFeedback"]
@@ -64,7 +64,7 @@ class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        actionSheetTitle.delegate = self
+//        actionSheetTitle.delegate = self
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         self.view.addSubview(mainMenu)
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -120,9 +120,9 @@ class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
     }
 }
 
-extension MainOrder {
-    
+extension MainOrder : ActionSheetTitleDelegate {
     func openActionSheet(){
+        actionSheetTitle.delegate = self
         actionSheetTitle.snp.makeConstraints({ (make) in
             make.height.equalTo(self.view.frame.height)
             make.width.equalTo(self.view.frame.width)
@@ -131,15 +131,7 @@ extension MainOrder {
         self.present(actionSheet, animated: true, completion: nil)
     }
     
-    func confirmButtonClicked() {
-        self.actionSheet.dismiss(animated: true, completion: nil)
-        let alert = UIAlertController.init(title: "Confirm Order", message: "", preferredStyle: .alert)
-        alert.addAction(.init(title: "Confirm", style: .default, handler: {_ in self.actionSheetTitle.userCancelOrder() ; print("Send order to somewhere!")}))
-        alert.addAction(.init(title: "Cancel", style: .cancel, handler: {_ in self.openActionSheet()}))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func cancelButtonClicked() {
+    func cancelOrderButtonClicked() {
         self.actionSheet.dismiss(animated: true, completion: nil)
         let alert = UIAlertController.init(title: "Cancel Order?", message: "All list will be remove", preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "Confirm", style: .destructive, handler: { _ in
@@ -147,6 +139,14 @@ extension MainOrder {
             self.openActionSheet()
         }))
         alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: { _ in self.openActionSheet() }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func confirmOrderButtonClicked() {
+        self.actionSheet.dismiss(animated: true, completion: nil)
+        let alert = UIAlertController.init(title: "Confirm Order", message: "", preferredStyle: .alert)
+        alert.addAction(.init(title: "Confirm", style: .default, handler: {_ in self.actionSheetTitle.userCancelOrder() ; print("Send order to somewhere!")}))
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: {_ in self.openActionSheet()}))
         self.present(alert, animated: true, completion: nil)
     }
 }

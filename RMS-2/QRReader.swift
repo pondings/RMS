@@ -26,7 +26,7 @@ class QRReader: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backBtn.setFAIcon(icon: FAType.FAChevronLeft, forState: .normal)
+        backBtn.setFAIcon(icon: .FATimes, forState: .normal)
         
         let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
         
@@ -44,6 +44,7 @@ class QRReader: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
                 qrCodeFrameView.layer.borderColor = UIColor.green.cgColor
                 qrCodeFrameView.layer.borderWidth = 4
             }
+            
             
         } catch  {
             print(error)
@@ -69,7 +70,6 @@ class QRReader: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
         if metadataObj.type == AVMetadataObjectTypeQRCode {
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
             qrCodeFrameView?.frame = (barCodeObject?.bounds)!
-            
             if metadataObj.stringValue != nil {
                 captureSession?.stopRunning()
                 self.dismiss(animated: true, completion: {_ in

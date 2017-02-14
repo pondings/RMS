@@ -18,9 +18,9 @@ class OrderMenu: UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICo
 
     private let menu = ["menu","order","album","ic_local_offer","feedback"]
     private let title4Navbar = ["Menu List","My Order","Photo","Promotion","Feedback"]
-    var delegate : OrderMenuDelegate?
+    internal var delegate : OrderMenuDelegate?
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
@@ -32,7 +32,7 @@ class OrderMenu: UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICo
         return cv
     }()
     
-    lazy var whiteView: UIView = {
+    private lazy var whiteView: UIView = {
         let origin = CGPoint.init(x: 0, y: self.collectionView.frame.maxY - 5)
         let size = CGSize.init(width: self.frame.width / 5, height: 5)
         let vw = UIView.init(frame: CGRect.init(origin: origin, size: size))
@@ -69,7 +69,7 @@ class OrderMenu: UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICo
         return CGSize.init(width: self.frame.width / 5, height: collectionView.frame.height)
     }
     
-    func didSelectedIndexPath(indexPath : IndexPath){
+    internal func didSelectedIndexPath(indexPath : IndexPath){
         for index in 0...menu.count - 1 {
             let cell = collectionView.cellForItem(at: IndexPath.init(row: index, section: 0)) as? OrderMenuCell
             cell?.imageView.image = cell?.imageView.image?.tint(with: Color.grey.lighten1)
@@ -85,13 +85,13 @@ class OrderMenu: UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICo
 
 class OrderMenuCell: UICollectionViewCell {
     
-    lazy var imageView: UIImageView = {
+    fileprivate lazy var imageView: UIImageView = {
         let size = CGSize.init(width: self.frame.width - 16, height: self.frame.height - 16)
         let iv = UIImageView.init(frame: CGRect.init(origin: CGPoint.init(x: 8, y: 8), size: size))
         return iv
     }()
     
-    func configureCell(menu : String){
+    fileprivate func configureCell(menu : String){
         self.backgroundColor = Color.lightBlue.base
         imageView.image = UIImage.init(named: menu)?.tint(with: Color.grey.lighten1)
         imageView.contentMode = .scaleAspectFit

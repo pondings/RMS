@@ -8,14 +8,30 @@
 
 import UIKit
 import Material
+import SnapKit
+import GMStepper
+import Font_Awesome_Swift
+
+protocol OrderListCellDelegate {
+    func stepperClicked(cell : OrderListCell)
+    func cancelButtonClicked(order : OrderListCell)
+}
 
 class OrderListCell: UITableViewCell {
     
     @IBOutlet weak var imageViewCell : UIImageView!
     @IBOutlet weak var title : UILabel!
     @IBOutlet weak var totalPrice : UILabel!
-    @IBOutlet weak var quantity : UILabel!
-    @IBOutlet weak var stepper: UIStepper!
+    @IBOutlet weak var stepper: GMStepper!
+    
+    lazy var cancelButton: IconButton = {
+        let ic = IconButton.init(frame: CGRect.init())
+        ic.pulseColor = .blue
+        ic.addTarget(self, action: #selector(cancelButtonClicked(_:)), for: .touchUpInside)
+        ic.setFAIcon(icon: .FATimes, forState: .normal)
+        ic.setFATitleColor(color: Color.red)
+        return ic
+    }()
     
     var delegate : OrderListCellDelegate?
     var imageUrl : String? = nil
@@ -25,28 +41,31 @@ class OrderListCell: UITableViewCell {
     func configureCell(ordDict : Menu){
         self.backgroundColor = Color.white
         self.selectionStyle = .none
+        self.addSubview(cancelButton)
         price = Int.init(ordDict.price!)
         configureImageView(url: ordDict.img!)
         configureTitle(title: ordDict.title!)
-        configureQuantity(quantity: ordDict.quantity!)
+        configureStepper(quantity: Double.init(ordDict.quantity!)!)
         configureTotalPrice()
+        configureLayout()
         imageUrl = ordDict.img
-        configureStepper()
     }
     
-    private func configureStepper(){
-        stepper.value = Double.init(quantity.text!)!
+    private func configureLayout(){
+        cancelButton.snp.makeConstraints { (make) in
+            make.top.right.equalToSuperview()
+            make.height.width.equalTo(24)
+        }
+        cancelButton.alpha = 0.5
+    }
+    
+    private func configureStepper(quantity : Double){
+        stepper.value = quantity
         stepper.tintColor = .white
-        stepper.setBackgroundImage(UIImage(), for: .normal)
-        stepper.backgroundColor = Color.lightBlue.base
-    }
-    
-    private func configureQuantity(quantity : String) {
-        self.quantity.text = quantity
     }
     
     private func configureTotalPrice(){
-        self.totalPrice.text = "\(Int(price! * Int.init(quantity.text!)!)) ฿"
+        self.totalPrice.text = "\(Int(price! * Int.init(stepper.value))) ฿"
     }
     
     private func configureTitle(title : String){
@@ -58,10 +77,14 @@ class OrderListCell: UITableViewCell {
         imageViewCell.kf.setImage(with: urlPath)
     }
     
-    @IBAction func stepperClicked(_ sender: UIStepper) {
-        quantity.text = "\(Int.init(sender.value))"
-        self.total = (Int.init(quantity.text!)! * Int.init(price!))
+    @IBAction func gmStepperClicked(_ sender: GMStepper) {
+        self.total = (Int.init(sender.value) * Int.init(price!))
         self.totalPrice.text = "\(total!) ฿"
+        if(sender.value <= 1) { return }
         delegate?.stepperClicked(cell : self)
+    }
+    
+    internal func cancelButtonClicked(_ sender : IconButton){
+        delegate?.cancelButtonClicked(order : self)
     }
 }

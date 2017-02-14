@@ -30,12 +30,16 @@ class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    private func configureNavBar(){
         self.delegate = self
         self.navigationBar.addSubview(commonNavBar)
         self.navigationBar.isTranslucent = false
         self.view.backgroundColor = .white
         self.navigationBar.barTintColor = Color.lightBlue.base
         NotificationCenter.default.addObserver(self, selector: #selector(dismissSelf(_:)), name: Notification.Name("dsNavBar"), object: nil)
+
     }
     
     func dismissSelf(_ state : Notification){

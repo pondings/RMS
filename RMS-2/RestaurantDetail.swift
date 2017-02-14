@@ -10,7 +10,6 @@ import UIKit
 import Font_Awesome_Swift
 import Alamofire
 
-
 class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DataManagentDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -40,7 +39,7 @@ class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     private func customize(){
-        backBtn.setFAIcon(icon: .FAChevronLeft, forState: .normal)
+        backBtn.setFAIcon(icon: .FATimes, forState: .normal)
         firstLineBtn.setFAIcon(icon: .FAMapMarker, forState: .normal)
         secondLineBtn.setFAIcon(icon: .FAClockO, forState: .normal)
         thirdLineBtn.setFAIcon(icon: .FAPhone, forState: .normal)

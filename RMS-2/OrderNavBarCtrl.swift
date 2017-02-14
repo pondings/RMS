@@ -13,20 +13,20 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarD
 
     var interactor : Interactor? = nil
     
-    lazy var commonNavBar: CommonNavBar = {
+    private lazy var commonNavBar: CommonNavBar = {
         let vw = CommonNavBar.init(frame: CGRect.init(x: 0, y: 0, width: self.navigationBar.frame.width, height: self.navigationBar.frame.height))
         vw.backBtn.isHidden = false
         vw.delegate = self
         return vw
     }()
     
-    lazy var searchNavBar: SearchNavBar = {
+    private lazy var searchNavBar: SearchNavBar = {
         let vw = SearchNavBar.init(frame: CGRect.init(x: 0, y: 0, width: self.navigationBar.frame.width, height: self.navigationBar.frame.height))
         vw.delegate = self
         return vw
     }()
     
-    lazy var leftEdgeDismissal: UIScreenEdgePanGestureRecognizer = {
+    private lazy var leftEdgeDismissal: UIScreenEdgePanGestureRecognizer = {
         let lf = UIScreenEdgePanGestureRecognizer.init(target: self, action: #selector(leftEdgeDismissal(_:)))
         lf.edges = .left
         return lf
@@ -42,16 +42,16 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarD
         NotificationCenter.default.addObserver(self, selector: #selector(dismissSelf(_:)), name: Notification.Name("dsOrdNavBar"), object: nil)
     }
     
-    func backButtonClicked() {
+    internal func backButtonClicked() {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func dismissSelf(_ state : Notification){
+    internal func dismissSelf(_ state : Notification){
         let ds = state.object as! Bool
         self.setNavigationBarHidden(ds, animated: true)
     }
     
-    func leftEdgeDismissal(_ sender : UIScreenEdgePanGestureRecognizer){
+    internal func leftEdgeDismissal(_ sender : UIScreenEdgePanGestureRecognizer){
         let percentThreshold:CGFloat = 0.7
         let translation = sender.translation(in: view)
         let horizontalMovement = translation.x / view.bounds.width
@@ -79,25 +79,25 @@ class OrderNavBarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarD
         }
     }
     
-    func searchBarDidEnter(text: String) {
+    internal func searchBarDidEnter(text: String) {
         if let vc = self.topViewController as? MainOrder {
             vc.searchContent(searchText: text)
         }
     }
     
-    func moreBtnClicked() {
+    internal func moreBtnClicked() {
         if let vc = self.topViewController as? MainOrder {
             vc.openActionSheet()
         }
     }
     
-    func cancleBtnClicked() {
+    internal func cancleBtnClicked() {
         UIView.transition(from: searchNavBar, to: commonNavBar, duration: 0.5, options: .transitionCrossDissolve, completion: nil)
         searchNavBar.searchBox.text = ""
         self.popViewController(animated: true)
     }
     
-    func searchBtnClicked() {
+    internal func searchBtnClicked() {
         UIView.transition(from: commonNavBar, to: searchNavBar, duration: 0.5, options: .transitionCrossDissolve, completion: nil)
         searchNavBar.searchBox.becomeFirstResponder()
     }
