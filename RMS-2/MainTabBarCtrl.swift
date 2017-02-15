@@ -25,12 +25,6 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRReaderDele
     lazy var bottomBarFrame : CGRect = self.tabBar.frame
     lazy var viewFrame : CGRect = self.view.frame
     
-    lazy var lightBlueView: UIView = {
-        let vw = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.viewFrame.width, height: 20))
-        vw.backgroundColor = Color.lightBlue.base
-        return vw
-    }()
-    
     lazy var qrBtn: QRButton = {
         let height : CGFloat = 60
         let width : CGFloat = 60
@@ -55,6 +49,12 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRReaderDele
         return sheet
     }()
     
+    lazy var lightBlueView: UIView = {
+        let vw = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.viewFrame.width, height: 20))
+        vw.backgroundColor = Color.lightBlue.base
+        return vw
+    }()
+    
     lazy var actionSheetTitle: ActionSheetTitle = {
         let at = ActionSheetTitle.init(frame: CGRect.init())
         return at
@@ -63,10 +63,10 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRReaderDele
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-        view.addSubview(lightBlueView)
         tabBar.barTintColor = Color.lightBlue.base
         view.backgroundColor = .white
         view.addSubview(qrBtn)
+        view.addSubview(lightBlueView)
         NotificationCenter.default.addObserver(self, selector: #selector(moreBtnClicked), name: Notification.Name("activeActionSheet"), object: nil)
     }
     
@@ -78,10 +78,6 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRReaderDele
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         item.selectedImage = item.image?.tint(with: Color.white)
-    }
-    
-    func isFoundQRCode(qrCode: String) {
-        performSegue(withIdentifier: "MainOrder", sender: nil)
     }
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {

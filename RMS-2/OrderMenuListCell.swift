@@ -110,7 +110,7 @@ class OrderMenuListCell: UITableViewCell {
         }
         addBtn.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(-4)
-            make.top.equalTo(price).offset(-4)
+            make.top.equalTo(price).offset(-8)
             make.width.equalToSuperview().multipliedBy(0.2)
         }
     }

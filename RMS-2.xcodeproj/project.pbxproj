@@ -41,7 +41,6 @@
 		EAE525BE1E3F08BB001B06FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAE525BD1E3F08BA001B06FA /* GoogleService-Info.plist */; };
 		EAE525C01E3F5DA5001B06FA /* OrderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE525BF1E3F5DA5001B06FA /* OrderList.swift */; };
 		EAE80D291E4C11EE00B9DBDF /* ActionSheetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE80D281E4C11EE00B9DBDF /* ActionSheetCollectionViewCell.swift */; };
-		EAE8941C1E3EDF500080A3A2 /* OrderMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE8941B1E3EDF500080A3A2 /* OrderMenu.swift */; };
 		EAF9F0911E30B5E20077FE4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF9F0901E30B5E20077FE4F /* AppDelegate.swift */; };
 		EAF9F0931E30B5E20077FE4F /* MainRestaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF9F0921E30B5E20077FE4F /* MainRestaurant.swift */; };
 		EAF9F0961E30B5E20077FE4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAF9F0941E30B5E20077FE4F /* Main.storyboard */; };
@@ -108,7 +107,6 @@
 		EAE525BD1E3F08BA001B06FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EAE525BF1E3F5DA5001B06FA /* OrderList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderList.swift; sourceTree = "<group>"; };
 		EAE80D281E4C11EE00B9DBDF /* ActionSheetCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetCollectionViewCell.swift; sourceTree = "<group>"; };
-		EAE8941B1E3EDF500080A3A2 /* OrderMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderMenu.swift; sourceTree = "<group>"; };
 		EAF9F08D1E30B5E20077FE4F /* RMS-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RMS-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAF9F0901E30B5E20077FE4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAF9F0921E30B5E20077FE4F /* MainRestaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRestaurant.swift; sourceTree = "<group>"; };
@@ -230,7 +228,6 @@
 			isa = PBXGroup;
 			children = (
 				EA8150AC1E3605D6002CA64E /* Animation */,
-				EAD79B061E3B509D000063F3 /* Order */,
 				EA5FEDE01E39DDBE00682C31 /* Other */,
 			);
 			name = SupportUI;
@@ -299,14 +296,6 @@
 				EAA8109F1E4D5D0400EAF9E7 /* OrderPhoto */,
 				EA3194071E4AB8B40001770B /* OrderPromotion.swift */,
 				EA3194091E4ABA680001770B /* OrderFeedback.swift */,
-			);
-			name = Order;
-			sourceTree = "<group>";
-		};
-		EAD79B061E3B509D000063F3 /* Order */ = {
-			isa = PBXGroup;
-			children = (
-				EAE8941B1E3EDF500080A3A2 /* OrderMenu.swift */,
 			);
 			name = Order;
 			sourceTree = "<group>";
@@ -718,7 +707,6 @@
 				EAA850951E30DC5500395858 /* Restaurant.swift in Sources */,
 				EAE80D291E4C11EE00B9DBDF /* ActionSheetCollectionViewCell.swift in Sources */,
 				EAA850971E30E5DA00395858 /* Extension.swift in Sources */,
-				EAE8941C1E3EDF500080A3A2 /* OrderMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

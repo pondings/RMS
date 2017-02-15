@@ -11,14 +11,11 @@ import Foundation
 
 protocol QRButtonDelegate {
     func qrBtnClicked(sender : UIButton)
-    func isHideQRButton(isHidden : Bool)
 }
 
 extension QRButtonDelegate where Self : UITabBarController {
     func qrBtnClicked(sender : UIButton) {
-        performSegue(withIdentifier: "MainOrder", sender: nil)
-    }
-    func isHideQRButton(isHidden : Bool){
+        performSegue(withIdentifier: "QRReader", sender: nil)
     }
 }
 

@@ -14,6 +14,12 @@ protocol QRReaderDelegate {
     func isFoundQRCode(qrCode : String)
 }
 
+extension QRReaderDelegate where Self : MainTabBarCtrl {
+    func isFoundQRCode(qrCode : String){
+        performSegue(withIdentifier: "MainOrder", sender: nil)
+    }
+}
+
 class QRReader: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
     
     @IBOutlet weak var backBtn: UIButton!
@@ -72,10 +78,12 @@ class QRReader: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = (barCodeObject?.bounds)!
             if metadataObj.stringValue != nil {
                 captureSession?.stopRunning()
-                self.dismiss(animated: true, completion: {_ in
-                    self.delegate?.isFoundQRCode(qrCode: metadataObj.stringValue)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { _ in
+                    self.dismiss(animated: true, completion: {_ in
+                        self.delegate?.isFoundQRCode(qrCode: metadataObj.stringValue)
+                    })
+                    return
                 })
-                return
             }
         }
     }

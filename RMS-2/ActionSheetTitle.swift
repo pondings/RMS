@@ -19,12 +19,9 @@ protocol ActionSheetTitleDelegate {
 
 extension ActionSheetTitleDelegate where Self : MainOrder {
     
-    func cancelOrderButtonClicked(){
-    }
+    func cancelOrderButtonClicked(){}
     
-    func confirmOrderButtonClicked(){
-        
-    }
+    func confirmOrderButtonClicked(){}
 }
 
 class ActionSheetTitle: UIView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {

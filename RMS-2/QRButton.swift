@@ -31,11 +31,11 @@ class QRButton: UIButton {
     func hideSelf(notification : Notification){
         let state = notification.object as! Bool
         if(state) {
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: 0.3, animations: {
                 self.transform = CGAffineTransform.init(scaleX: 0.0001, y: 0.0001)
             })
         }else{
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 6, options: [], animations: {
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [], animations: {
                 self.transform = .identity
             }, completion: nil)
         }

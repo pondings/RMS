@@ -44,11 +44,14 @@ class OrderMenuList: UIViewController,DataManagentDelegate,UITableViewDataSource
         })
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarItem.selectedImage = tabBarItem.selectedImage?.tint(with: .white)
+    }
+    
     private func customize(){
         self.view.backgroundColor = Color.grey.lighten1
         tableView.tableFooterView = UIView()
         tableView.backgroundColor = Color.grey.lighten1
-        tableView.contentInset.bottom = 28
     }
 
     func getMenu(menu: OrderMenuListCell) {

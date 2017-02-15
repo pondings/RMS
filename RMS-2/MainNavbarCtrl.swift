@@ -10,16 +10,6 @@ import UIKit
 import Material
 import AFMActionSheet
 
-protocol NavigationBarDelegate {
-    func isNavbarHidden()
-}
-
-extension NavigationBarDelegate where Self : UINavigationController {
-    func isNavbarHidden(isHide : Bool){
-        self.setNavigationBarHidden(isHide, animated: true)
-    }
-}
-
 class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDelegate {
     
     var interactor = Interactor()
@@ -28,6 +18,11 @@ class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDe
     var isBackButtonHidden : Bool {
         get { return self.commonNavBar.backBtn.isHidden }
         set { self.commonNavBar.backBtn.isHidden = newValue }
+    }
+    
+    var setNavbarTitle : String {
+        get { return commonNavBar.titleLB.text! }
+        set { self.commonNavBar.titleLB.text = newValue }
     }
     
     lazy var commonNavBar: CommonNavBar = {
