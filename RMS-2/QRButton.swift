@@ -11,16 +11,6 @@ import Material
 import FacebookLogin
 import FBSDKLoginKit
 
-protocol QRButtonDelegate {
-    func qrBtnClicked(sender : UIButton)
-}
-
-extension QRButtonDelegate where Self : MainTabBarCtrl {
-    func qrBtnClicked(sender : UIButton) {
-        performSegue(withIdentifier: "MainOrder", sender: nil)
-    }
-}
-
 class QRButton: UIButton {
 
     var delegate : QRButtonDelegate?
@@ -31,16 +21,24 @@ class QRButton: UIButton {
         self.setImage(UIImage.init(named: "QR Code")?.withRenderingMode(.alwaysTemplate), for: .normal)
         self.tintColor = .white
         self.backgroundColor = Color.lightBlue.base
+        NotificationCenter.default.addObserver(self, selector: #selector(hideSelf(notification:)), name: Notification.Name("hideQRButton"), object: nil)
     }
     
     func qrBtnClicked(_ sender : UIButton){
         delegate?.qrBtnClicked(sender: sender)
     }
     
-    func hideSelf(isHidden : Bool){
-        if(isHidden) {
-            UIView.animate(withDuration: 0.5, animations: { self.x = UIScreen.main.bounds.width }, completion: nil)
-        }else { UIView.animate(withDuration: 0.5, animations: { self.x = (UIScreen.main.bounds.width - self.width) - 8 }) }
+    func hideSelf(notification : Notification){
+        let state = notification.object as! Bool
+        if(state) {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.transform = CGAffineTransform.init(scaleX: 0.0001, y: 0.0001)
+            })
+        }else{
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 6, options: [], animations: {
+                self.transform = .identity
+            }, completion: nil)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

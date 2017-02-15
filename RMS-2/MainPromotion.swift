@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import Material
 
-class MainPromotion: UICollectionViewController,UICollectionViewDelegateFlowLayout,CollectionViewDelegate {
+class MainPromotion: UICollectionViewController,UICollectionViewDelegateFlowLayout {
     
     private let urlPath = "Promotion"
     private var promotionList : [Dictionary<String,AnyObject>]! = []

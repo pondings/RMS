@@ -97,12 +97,10 @@ class ActionSheetTitle: UIView,UICollectionViewDelegate,UICollectionViewDataSour
         case .MainRestaurant:
             self.style = .MainRestaurant
             configureMainRestaurant()
-            print("Main Restaurant Style!")
         case .MainOrder:
             self.style = .MainOrder
             collectionView.register(ActionSheetCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
             configureMainOrder()
-            print("Main Order Style!")
         }
     }
     
@@ -117,7 +115,6 @@ class ActionSheetTitle: UIView,UICollectionViewDelegate,UICollectionViewDataSour
                 else {return}
             self.configureImageView(url: url)
             self.configureTitleLabel(title: info.value(forKey: "name") as! String)
-            print("Success")
             self.imageView.snp.makeConstraints { (make) in
                 make.top.bottom.leading.equalToSuperview()
                 make.width.equalTo(self.frame.width * 0.5)

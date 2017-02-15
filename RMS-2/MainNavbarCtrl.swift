@@ -10,11 +10,25 @@ import UIKit
 import Material
 import AFMActionSheet
 
+protocol NavigationBarDelegate {
+    func isNavbarHidden()
+}
+
+extension NavigationBarDelegate where Self : UINavigationController {
+    func isNavbarHidden(isHide : Bool){
+        self.setNavigationBarHidden(isHide, animated: true)
+    }
+}
+
 class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDelegate {
     
-    lazy var mainTabBar : MainTabBarCtrl = (self.tabBarController as? MainTabBarCtrl)!
-    
     var interactor = Interactor()
+    var selfInteractor : Interactor? = nil
+    
+    var isBackButtonHidden : Bool {
+        get { return self.commonNavBar.backBtn.isHidden }
+        set { self.commonNavBar.backBtn.isHidden = newValue }
+    }
     
     lazy var commonNavBar: CommonNavBar = {
         let vw = CommonNavBar.init(frame: CGRect.init(x: 0, y: 0, width: self.navigationBar.frame.width, height: self.navigationBar.frame.height))
@@ -28,23 +42,27 @@ class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDe
         return vw
     }()
     
+    private lazy var leftEdgeDismissal: UIScreenEdgePanGestureRecognizer = {
+        let lf = UIScreenEdgePanGestureRecognizer.init(target: self, action: #selector(leftEdgeDismissal(_:)))
+        lf.edges = .left
+        return lf
+    }()
+    
+    lazy var mainTabBar : MainTabBarCtrl = (self.tabBarController as? MainTabBarCtrl)!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavBar()
     }
     
     private func configureNavBar(){
-        self.delegate = self
-        self.navigationBar.addSubview(commonNavBar)
-        self.navigationBar.isTranslucent = false
-        self.view.backgroundColor = .white
-        self.navigationBar.barTintColor = Color.lightBlue.base
-        NotificationCenter.default.addObserver(self, selector: #selector(dismissSelf(_:)), name: Notification.Name("dsNavBar"), object: nil)
-
-    }
-    
-    func dismissSelf(_ state : Notification){
-        let ds = state.object as! Bool
-        self.setNavigationBarHidden(ds, animated: true)
+        delegate = self
+        navigationBar.addSubview(commonNavBar)
+        navigationBar.isTranslucent = false
+        navigationBar.barTintColor = Color.lightBlue.base
+        view.backgroundColor = .white
+        view.addGestureRecognizer(leftEdgeDismissal)
+        hidesBarsOnSwipe = true
     }
     
     func cancleBtnClicked() {
@@ -70,6 +88,44 @@ class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDe
             vc.searchMostView(searchText: text)
         }else if let vc = self.topViewController as? MainPromotion {
             vc.searchPromotion(searchText: text )
+        }
+    }
+    
+    internal func backButtonClicked() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    internal func dismissSelf(_ state : Notification){
+        let ds = state.object as! Bool
+        self.setNavigationBarHidden(ds, animated: true)
+    }
+    
+    
+    internal func leftEdgeDismissal(_ sender : UIScreenEdgePanGestureRecognizer){
+        let percentThreshold:CGFloat = 0.7
+        let translation = sender.translation(in: view)
+        let horizontalMovement = translation.x / view.bounds.width
+        let leftMovement = fmaxf(Float(horizontalMovement), 0.0)
+        let leftMovementPercent = fminf(leftMovement, 1.0)
+        let progress = CGFloat(leftMovementPercent)
+        
+        guard  let interactor = selfInteractor else {return}
+        switch sender.state {
+        case .began:
+            interactor.hasStart = true
+            self.dismiss(animated: true, completion: nil)
+        case .changed:
+            interactor.shouldFinish = progress > percentThreshold
+            interactor.update(progress)
+        case .cancelled:
+            interactor.hasStart = false
+            interactor.cancel()
+        case .ended:
+            interactor.hasStart = false
+            if(interactor.shouldFinish) { interactor.finish()}
+            else { interactor.cancel() }
+        default:
+            break
         }
     }
     

@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import Kingfisher
 
-class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLayout,CollectionViewDelegate {
+class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLayout {
     
     private let urlPath : String = "Restaurant"
     private var isSearchMode : Bool = false

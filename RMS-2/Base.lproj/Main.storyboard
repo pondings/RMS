@@ -965,10 +965,10 @@
             </objects>
             <point key="canvasLocation" x="-868" y="-18"/>
         </scene>
-        <!--Order Nav Bar Ctrl-->
+        <!--Main Navbar Ctrl-->
         <scene sceneID="jfc-yu-jpB">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="q8w-tf-ZuR" customClass="OrderNavBarCtrl" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="q8w-tf-ZuR" customClass="MainNavbarCtrl" customModule="RMS_2" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IGd-dd-Kyi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

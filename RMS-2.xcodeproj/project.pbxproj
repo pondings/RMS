@@ -33,9 +33,9 @@
 		EAAB3D311E35B6A60073F44E /* CollectionViewContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB3D301E35B6A60073F44E /* CollectionViewContentCell.swift */; };
 		EAAB3D331E35BC660073F44E /* QRButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB3D321E35BC660073F44E /* QRButton.swift */; };
 		EAAB3D361E35D2550073F44E /* RestaurantDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAB3D351E35D2550073F44E /* RestaurantDetail.swift */; };
+		EAB633A71E543E7100E198C9 /* QRButtonSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB633A61E543E7100E198C9 /* QRButtonSupport.swift */; };
 		EAD79B021E3B0D6D000063F3 /* QRReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD79B011E3B0D6D000063F3 /* QRReader.swift */; };
 		EAD79B051E3B3BB5000063F3 /* MainOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD79B041E3B3BB5000063F3 /* MainOrder.swift */; };
-		EAD79B081E3B50C8000063F3 /* OrderNavBarCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD79B071E3B50C8000063F3 /* OrderNavBarCtrl.swift */; };
 		EADD52BA1E4081C5005144B3 /* OrderPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADD52B91E4081C5005144B3 /* OrderPhoto.swift */; };
 		EAE525BC1E3F00D9001B06FA /* OrderMenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE525BB1E3F00D9001B06FA /* OrderMenuList.swift */; };
 		EAE525BE1E3F08BB001B06FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAE525BD1E3F08BA001B06FA /* GoogleService-Info.plist */; };
@@ -100,9 +100,9 @@
 		EAAB3D301E35B6A60073F44E /* CollectionViewContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewContentCell.swift; sourceTree = "<group>"; };
 		EAAB3D321E35BC660073F44E /* QRButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRButton.swift; sourceTree = "<group>"; };
 		EAAB3D351E35D2550073F44E /* RestaurantDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantDetail.swift; sourceTree = "<group>"; };
+		EAB633A61E543E7100E198C9 /* QRButtonSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRButtonSupport.swift; sourceTree = "<group>"; };
 		EAD79B011E3B0D6D000063F3 /* QRReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRReader.swift; sourceTree = "<group>"; };
 		EAD79B041E3B3BB5000063F3 /* MainOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainOrder.swift; sourceTree = "<group>"; };
-		EAD79B071E3B50C8000063F3 /* OrderNavBarCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderNavBarCtrl.swift; sourceTree = "<group>"; };
 		EADD52B91E4081C5005144B3 /* OrderPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderPhoto.swift; sourceTree = "<group>"; };
 		EAE525BB1E3F00D9001B06FA /* OrderMenuList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderMenuList.swift; sourceTree = "<group>"; };
 		EAE525BD1E3F08BA001B06FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -171,11 +171,9 @@
 		EA5FEDE01E39DDBE00682C31 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				EAB633A81E543F2600E198C9 /* NavigationController */,
+				EAB633A51E543E6000E198C9 /* QRButton */,
 				EAE80D271E4C11D100B9DBDF /* ActionSheet */,
-				EAA850861E30BF1400395858 /* MainNavbarCtrl.swift */,
-				EAA8508C1E30CE3700395858 /* CommonNavBar.swift */,
-				EAA8508E1E30D2B700395858 /* SearchNavBar.swift */,
-				EAAB3D321E35BC660073F44E /* QRButton.swift */,
 				EAD79B011E3B0D6D000063F3 /* QRReader.swift */,
 				EA8150B31E36066D002CA64E /* DataManagent.swift */,
 			);
@@ -273,6 +271,25 @@
 			name = Detail;
 			sourceTree = "<group>";
 		};
+		EAB633A51E543E6000E198C9 /* QRButton */ = {
+			isa = PBXGroup;
+			children = (
+				EAAB3D321E35BC660073F44E /* QRButton.swift */,
+				EAB633A61E543E7100E198C9 /* QRButtonSupport.swift */,
+			);
+			name = QRButton;
+			sourceTree = "<group>";
+		};
+		EAB633A81E543F2600E198C9 /* NavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				EAA850861E30BF1400395858 /* MainNavbarCtrl.swift */,
+				EAA8508C1E30CE3700395858 /* CommonNavBar.swift */,
+				EAA8508E1E30D2B700395858 /* SearchNavBar.swift */,
+			);
+			name = NavigationController;
+			sourceTree = "<group>";
+		};
 		EAD79B031E3B3BA7000063F3 /* Order */ = {
 			isa = PBXGroup;
 			children = (
@@ -289,7 +306,6 @@
 		EAD79B061E3B509D000063F3 /* Order */ = {
 			isa = PBXGroup;
 			children = (
-				EAD79B071E3B50C8000063F3 /* OrderNavBarCtrl.swift */,
 				EAE8941B1E3EDF500080A3A2 /* OrderMenu.swift */,
 			);
 			name = Order;
@@ -693,6 +709,7 @@
 				EAD79B021E3B0D6D000063F3 /* QRReader.swift in Sources */,
 				EA8150AE1E360609002CA64E /* PresentAnimator.swift in Sources */,
 				EA9DFFCB1E4C8202001BE56E /* OrderListCell.swift in Sources */,
+				EAB633A71E543E7100E198C9 /* QRButtonSupport.swift in Sources */,
 				EADD52BA1E4081C5005144B3 /* OrderPhoto.swift in Sources */,
 				EAA810A41E4D5D6700EAF9E7 /* OrderMenuListCell.swift in Sources */,
 				EA8150B01E360614002CA64E /* DismissAnimator.swift in Sources */,
@@ -700,7 +717,6 @@
 				EAE525BC1E3F00D9001B06FA /* OrderMenuList.swift in Sources */,
 				EAA850951E30DC5500395858 /* Restaurant.swift in Sources */,
 				EAE80D291E4C11EE00B9DBDF /* ActionSheetCollectionViewCell.swift in Sources */,
-				EAD79B081E3B50C8000063F3 /* OrderNavBarCtrl.swift in Sources */,
 				EAA850971E30E5DA00395858 /* Extension.swift in Sources */,
 				EAE8941C1E3EDF500080A3A2 /* OrderMenu.swift in Sources */,
 			);

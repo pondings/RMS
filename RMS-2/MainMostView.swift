@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayout,CollectionViewDelegate {
+class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayout {
 
     private var mostViewList : [Dictionary<String,AnyObject>]! = []
     private var mostViewListFiltered : [Dictionary<String,AnyObject>]! = []
@@ -66,6 +66,7 @@ class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayou
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         didScroll(last: self.lastContentOffset,yPosition: (collectionView?.contentOffset.y)!,contentHeight: (collectionView?.contentSize.height)!,cvHeight: (collectionView?.frame.height)!)
+
     }
     
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {

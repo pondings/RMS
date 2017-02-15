@@ -64,7 +64,6 @@ class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        actionSheetTitle.delegate = self
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         self.view.addSubview(mainMenu)
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -83,6 +82,12 @@ class MainOrder: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
             views.append(vc.view)
         }
         actionSheetTitle.configureActionSheet(SheetStyle: .MainOrder)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if let nav = self.navigationController as? MainNavbarCtrl {
+            nav.isBackButtonHidden = false
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

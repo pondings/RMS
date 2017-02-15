@@ -13,7 +13,7 @@ import AFMActionSheet
 import FacebookLogin
 import Kingfisher
 
-class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDelegate,QRReaderDelegate {
+class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRReaderDelegate {
     
     @IBOutlet weak var titleView : UIView!
     @IBOutlet weak var imageView : UIImageView!
@@ -67,8 +67,13 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
         tabBar.barTintColor = Color.lightBlue.base
         view.backgroundColor = .white
         view.addSubview(qrBtn)
-        NotificationCenter.default.addObserver(self, selector: #selector(hideQRBtn(notification:)), name: Notification.Name("hideQR"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(moreBtnClicked), name: Notification.Name("activeActionSheet"), object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if let nav = self.selectedViewController as? MainNavbarCtrl {
+            nav.isBackButtonHidden = true
+        }
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -81,17 +86,12 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if(viewController == previousViewCntroller){
-            let NAV = viewController as? MainNavbarCtrl
-            let VC = NAV?.topViewController as? UICollectionViewController
-            if((VC?.collectionView?.numberOfItems(inSection: 0))! < 1) {return}
-            VC?.collectionView?.setContentOffset(CGPoint.zero, animated: true)
+            let nav = viewController as? MainNavbarCtrl
+            let vc = nav?.topViewController as? UICollectionViewController
+            if((vc?.collectionView?.numberOfItems(inSection: 0))! < 1) {return}
+            vc?.collectionView?.setContentOffset(CGPoint.zero, animated: true)
         }
         previousViewCntroller = viewController
-    }
-    
-    func hideQRBtn(notification : Notification){
-        let state = notification.object as! Bool
-        qrBtn.hideSelf(isHidden: state)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -102,9 +102,9 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
                 destination.delegate = self
             }
         }else if(segue.identifier == "MainOrder") {
-            if let destination = segue.destination as? OrderNavBarCtrl{
+            if let destination = segue.destination as? MainNavbarCtrl{
                 destination.transitioningDelegate = self
-                destination.interactor = interactor
+                destination.selfInteractor = interactor
             }
         }
     }
@@ -127,14 +127,14 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRButtonDele
 extension MainTabBarCtrl : UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if presented is OrderNavBarCtrl {
+        if presented is MainNavbarCtrl {
             return PushToLeft()
         }
         return QRReaderPresent()
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if dismissed is OrderNavBarCtrl {
+        if dismissed is MainNavbarCtrl {
             return PullToRight()
         }
         return QRReaderDismiss()
