@@ -52,7 +52,7 @@ class OrderList: UITableViewController,OrderListCellDelegate {
             guard let strongSelf = self else {return}
             let removedOrd = snapshot.value as! Dictionary<String,AnyObject>
             for (index,element) in strongSelf.orderList.enumerated(){
-                if(element["ord_name"] as! String == removedOrd["ord_name"] as! String) {
+                if(element["menu_title"] as! String == removedOrd["menu_title"] as! String) {
                     strongSelf.orderList.remove(at: index)
                     strongSelf.tableView.deleteRows(at: [IndexPath.init(row: index, section: 0)], with: UITableViewRowAnimation.left)
                     break
@@ -62,15 +62,15 @@ class OrderList: UITableViewController,OrderListCellDelegate {
         firPath.observe(.childChanged, with: { [weak self] snapshot -> Void in
             guard let strongSelf = self else {return}
             let changedOrd = snapshot.value as! Dictionary<String,AnyObject>
-            let changeOrder = Menus.init(ordDict: changedOrd)
-            if(Int.init(changeOrder.quantity!) == 0){ snapshot.ref.removeValue() }
+            let changeOrder = Order.init(orderDict: changedOrd)
+            if(Int.init(changeOrder.orderQuantity!) == 0){ snapshot.ref.removeValue() }
             for (index,element) in strongSelf.orderList.enumerated() {
-                let elementDict = Menus.init(ordDict: element)
-                if(elementDict.title! == changeOrder.title!) {
+                let elementDict = Order.init(orderDict: element)
+                if(elementDict.menuTitle! == changeOrder.menuTitle!) {
                     let indexPath = IndexPath.init(row: index, section: 0)
                     let cell = strongSelf.tableView.cellForRow(at: indexPath) as? OrderListCell
                     strongSelf.orderList[index] = changedOrd
-                    cell?.configureCell(ordDict: Menus.init(ordDict: changedOrd))
+                    cell?.configureCell(ordDict: Order.init(orderDict: changedOrd))
                     break
                 }
             }
@@ -84,7 +84,7 @@ class OrderList: UITableViewController,OrderListCellDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! OrderListCell
         let ordDict = orderList[indexPath.row]
-        cell.configureCell(ordDict: Menus.init(ordDict: ordDict))
+        cell.configureCell(ordDict: Order.init(orderDict: ordDict))
         cell.delegate = self
         return cell
     }
@@ -113,18 +113,18 @@ class OrderList: UITableViewController,OrderListCellDelegate {
 
     internal func stepperClicked(cell: OrderListCell) {
         var addValue = [String:AnyObject]()
-        addValue["ord_name"] = cell.title.text as AnyObject?
-        addValue["ord_img"] = cell.imageUrl as AnyObject?
-        addValue["ord_total"] = 1 as AnyObject?
-        addValue["ord_totalPrice"] = cell.price! as AnyObject?
-        addValue["ord_price"] = cell.price! as AnyObject?
-        let menuTitle = addValue["ord_name"] as! String
+        addValue["menu_title"] = cell.title.text as AnyObject?
+        addValue["menu_img"] = cell.imageUrl as AnyObject?
+        addValue["ord_quantity"] = 1 as AnyObject?
+        addValue["ord_net"] = cell.price! as AnyObject?
+        addValue["menu_price"] = cell.price! as AnyObject?
+        let menuTitle = addValue["menu_title"] as! String
         ref = FIRDatabase.database().reference()
         let refAdd = ref.child("Order").child("first").child("qr001").child(menuTitle)
         refAdd.observeSingleEvent(of: .value, with: {(snapshot) -> Void in
             if (snapshot.value as? Dictionary<String,AnyObject>) != nil {
-                addValue["ord_total"] = Int.init(cell.stepper.value) as AnyObject
-                addValue["ord_totalPrice"] = cell.total as AnyObject
+                addValue["ord_quantity"] = Int.init(cell.stepper.value) as AnyObject
+                addValue["ord_net"] = cell.total as AnyObject
             }
             refAdd.setValue(addValue)
         })

@@ -14,6 +14,7 @@ class OrderMenuListCell: UITableViewCell {
     
     var delegate : MenuAdded?
     var menuImageUrl : String?
+    var menuPrice : Double?
     
     lazy var imageViewCell: UIImageView = {
         let iv = UIImageView.init(frame: CGRect.init())
@@ -53,11 +54,12 @@ class OrderMenuListCell: UITableViewCell {
     
     func configureCell(menu : Menu){
         self.selectionStyle = .none
-        menuImageUrl = menu.img!
-        configureImageView(url: menu.img!)
-        configureTitle(title: menu.title!)
-        configureDesc(desc: menu.desc!)
-        configurePrice(price: menu.price!)
+        menuImageUrl = menu.menuImageUrl!
+        menuPrice = menu.menuPrice!
+        configureImageView(url: menu.menuImageUrl!)
+        configureTitle(title: menu.menuTitle!)
+        configureDesc(desc: menu.menuDetail!)
+        configurePrice(price: menu.menuPrice!)
         configureAddButton()
         configureConstraints()
     }
@@ -66,7 +68,7 @@ class OrderMenuListCell: UITableViewCell {
         self.addSubview(addBtn)
     }
     
-    private func configurePrice(price : Int){
+    private func configurePrice(price : Double){
         self.price.text = "\(price) ฿"
         self.addSubview(self.price)
     }

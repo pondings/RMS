@@ -42,21 +42,21 @@ class ActionSheetCollectionViewCell: UICollectionViewCell {
         return lb
     }()
     
-    func configureCell(Order order : Menu){
+    func configureCell(Order order : Order){
         self.backgroundColor = .white
-        configureImageView(url: order.img!)
-        configureTitleLabel(title: order.title!)
-        configureQuantityLabel(quantity: order.quantity!)
-        configureTotalLabel(quantity: order.quantity!, price: order.price!)
+        configureImageView(url: order.menuImageUrl!)
+        configureTitleLabel(title: order.menuTitle!)
+        configureQuantityLabel(quantity: order.orderQuantity!)
+        configureTotalLabel(net: order.calculateNet())
         configureConstraints()
     }
     
-    private func configureTotalLabel(quantity : String ,price : Int){
-        orderTotal.text = "Total Price: \(price * Int(quantity)!) ฿"
+    private func configureTotalLabel(net : Double){
+        orderTotal.text = "Total Price: \(net) ฿"
         self.addSubview(orderTotal)
     }
     
-    private func configureQuantityLabel(quantity : String){
+    private func configureQuantityLabel(quantity : Double){
         orderQuantity.text = "Total : \(quantity)"
         self.addSubview(orderQuantity)
     }

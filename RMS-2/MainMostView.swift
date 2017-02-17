@@ -38,9 +38,9 @@ class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayou
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! RestaurantListCell
         let mostView = isSearchMode ? mostViewListFiltered[indexPath.row] : mostViewList[indexPath.row]
-        let mvDict = Restaurants.init(mvDict: mostView)
-        cell.configureCell(res: mvDict)
-        cell.configureImage(url: mvDict.img!)
+        let mvDict = MostView.init(mostViewDict: mostView)
+        cell.configureCell(mostView: mvDict)
+        cell.configureImage(url: mvDict.mostViewImageUrl!)
         return cell
     }
     
@@ -49,16 +49,17 @@ class MainMostView: UICollectionViewController,UICollectionViewDelegateFlowLayou
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let mvDict = Restaurants.init(mvDict: mostViewList[indexPath.row])
-        performSegue(withIdentifier: "Detail", sender: mvDict)
+        let mvDict = Restaurant.init(restaurantDict: mostViewList[indexPath.row])
+        configureAlamofire(path: "MostView/\(mvDict.id!)", downloadComplete: { result in
+            self.performSegue(withIdentifier: "Detail", sender: result)
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "Detail") {
             if let destination = segue.destination as? RestaurantDetail {
-                let mostView = sender as! Restaurants
+                destination.contentDetail = ContentDetail.init(Dictinary: sender as! Dictionary<String,AnyObject> , contentStyle: .mostView)
                 destination.interactor = interactor
-                destination.restaurant = mostView
                 destination.transitioningDelegate = self
             }
         }

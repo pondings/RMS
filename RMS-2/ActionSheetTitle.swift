@@ -184,7 +184,7 @@ extension ActionSheetTitle {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ActionSheetCollectionViewCell
         let order = orderList[indexPath.row]
-        cell.configureCell(Order: Menus.init(ordDict: order))
+        cell.configureCell(Order: Order.init(orderDict: order))
         return cell
     }
     
@@ -211,10 +211,10 @@ extension ActionSheetTitle {
                 let strongSelf = self,
                 let data = snap.value as? Dictionary<String,AnyObject>
                 else {return}
-            let changeData = Menus.init(ordDict: data)
+            let changeData = Order.init(orderDict: data)
             for (index,element) in strongSelf.orderList.enumerated() {
-                let currentElement = Menus.init(ordDict: element)
-                if(changeData.title! == currentElement.title!){
+                let currentElement = Order.init(orderDict: element)
+                if(changeData.menuTitle! == currentElement.menuTitle!){
                     strongSelf.orderList[index] = data
                     strongSelf.collectionView.reloadData()
                 }
@@ -225,10 +225,10 @@ extension ActionSheetTitle {
                 let strongSelf = self ,
                 let data = snap.value as? Dictionary<String,AnyObject>
                 else {return}
-            let removeData = Menus.init(ordDict: data)
+            let removeData = Order.init(orderDict: data)
             for (index,element) in strongSelf.orderList.enumerated(){
-                let currentElement = Menus.init(ordDict: element)
-                if(removeData.title! == currentElement.title!){
+                let currentElement = Order.init(orderDict: element)
+                if(removeData.menuTitle! == currentElement.menuTitle!){
                     strongSelf.orderList.remove(at: index)
                     strongSelf.collectionView.reloadData()
                 }

@@ -11,7 +11,7 @@ import Material
 import FacebookLogin
 import FBSDKLoginKit
 
-class QRButton: UIButton {
+class QRButton: UIButton{
 
     var delegate : QRButtonDelegate?
     

@@ -15,7 +15,7 @@ protocol QRButtonDelegate {
 
 extension QRButtonDelegate where Self : UITabBarController {
     func qrBtnClicked(sender : UIButton) {
-        performSegue(withIdentifier: "QRReader", sender: nil)
+        performSegue(withIdentifier: "MainOrder", sender: nil)
     }
 }
 

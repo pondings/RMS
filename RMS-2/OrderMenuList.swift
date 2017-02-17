@@ -56,20 +56,20 @@ class OrderMenuList: UIViewController,DataManagentDelegate,UITableViewDataSource
 
     func getMenu(menu: OrderMenuListCell) {
         var addValue = [String:AnyObject]()
-        addValue["ord_name"] = menu.title.text as AnyObject?
-        addValue["ord_img"] = menu.menuImageUrl as AnyObject?
-        addValue["ord_total"] = 1 as AnyObject?
-        addValue["ord_totalPrice"] = Int.init(menu.price.text!.digits) as AnyObject?
-        addValue["ord_price"] = Int.init(menu.price.text!.digits) as AnyObject?
-        let menuTitle = addValue["ord_name"] as! String
+        addValue["menu_title"] = menu.title.text as AnyObject?
+        addValue["menu_img"] = menu.menuImageUrl as AnyObject?
+        addValue["ord_quantity"] = 1 as AnyObject?
+        addValue["ord_net"] = menu.menuPrice! as AnyObject?
+        addValue["menu_price"] = menu.menuPrice! as AnyObject?
+        let menuTitle = addValue["menu_title"] as! String
         ref = FIRDatabase.database().reference()
         let refAdd = ref.child("Order").child("first").child("qr001").child(menuTitle)
         refAdd.observeSingleEvent(of: .value, with: {(snapshot) -> Void in
             if let snapDict = snapshot.value as? Dictionary<String,AnyObject> {
-                let orderTotal = ((snapDict["ord_total"] as! Int) + 1) as AnyObject?
-                let orderTatalPrice = ((snapDict["ord_totalPrice"] as! Int) + (snapDict["ord_price"] as! Int)) as AnyObject?
-                addValue["ord_total"] = orderTotal
-                addValue["ord_totalPrice"] = orderTatalPrice
+                let orderQuantity = ((snapDict["ord_quantity"] as! Int) + 1)
+                let orderNet = Double.init(orderQuantity) * menu.menuPrice!
+                addValue["ord_quantity"] = orderQuantity as AnyObject?
+                addValue["ord_net"] = orderNet as AnyObject?
             }
             refAdd.setValue(addValue)
         })
@@ -108,7 +108,7 @@ class OrderMenuList: UIViewController,DataManagentDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! OrderMenuListCell
         let menuDict = indexPath.section == 0 ? (isSearchMode ? suggestMenuFiltered : suggestMenu) : (isSearchMode ? poppularMenuFiltered : poppularMenu)
-        let menu = Menus.init(menuDict: (menuDict?[indexPath.row])!)
+        let menu = Menu.init(menuDict: (menuDict?[indexPath.row])!)
         cell.configureCell(menu: menu)
         cell.delegate = self
         return cell

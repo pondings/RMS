@@ -121,11 +121,19 @@ extension DataManagentDelegate where Self : UICollectionViewDataSource {
         Alamofire.request("\(_urlBase)\(path)").responseJSON { response in
             if(response.result.isFailure) { self.connectionError() ; return }
             var dict : [Dictionary<String,AnyObject>]! = []
-            let data = response.result.value as! [String:AnyObject]
-            for item in data.values{
-                dict.append(item as! Dictionary<String,AnyObject>)
+            let data = response.result.value as! [[String:AnyObject]]
+            for item in data{
+                dict.append(item)
             }
             downloadComplete(dict)
+        }
+    }
+    
+    func configureAlamofire(path : String,downloadComplete : @escaping DowloadContentDetailComplete){
+        Alamofire.request("\(_urlBase)\(path)").responseJSON{ response in
+            if(response.result.isFailure) { print(response.error!) ; return }
+            let data = response.result.value as! [String:AnyObject]
+            downloadComplete(data)
         }
     }
     
@@ -133,8 +141,8 @@ extension DataManagentDelegate where Self : UICollectionViewDataSource {
         Alamofire.request("\(_urlBase)\(path)").responseJSON{ response in
             if(response.result.isFailure) {return}
             var urlArr : [String]! = []
-            let data = response.result.value as! [String:AnyObject]
-            for item in data.values {
+            let data = response.result.value as! [[String:AnyObject]]
+            for item in data {
                 urlArr.append(item["menu_img"] as! String)
             }
             
@@ -196,9 +204,9 @@ extension DataManagentDelegate where Self : UITableViewDataSource {
         Alamofire.request("\(_urlBase)\(path)").responseJSON { response in
             if(response.result.isFailure) {return}
             var dict : [Dictionary<String,AnyObject>]! = []
-            let data = response.result.value as! [String:AnyObject]
-            for item in data.values{
-                dict.append(item as! Dictionary<String,AnyObject>)
+            let data = response.result.value as! [[String:AnyObject]]
+            for item in data{
+                dict.append(item)
             }
             downloadComplete(dict)
         }

@@ -35,20 +35,20 @@ class OrderListCell: UITableViewCell {
     
     var delegate : OrderListCellDelegate?
     var imageUrl : String? = nil
-    var price : Int? = nil
-    var total : Int? = nil
+    var price : Double? = nil
+    var total : Double? = nil
     
-    func configureCell(ordDict : Menu){
+    func configureCell(ordDict : Order){
         self.backgroundColor = Color.white
         self.selectionStyle = .none
         self.addSubview(cancelButton)
-        price = Int.init(ordDict.price!)
-        configureImageView(url: ordDict.img!)
-        configureTitle(title: ordDict.title!)
-        configureStepper(quantity: Double.init(ordDict.quantity!)!)
-        configureTotalPrice()
+        price = ordDict.menuPrice!
+        configureImageView(url: ordDict.menuImageUrl!)
+        configureTitle(title: ordDict.menuTitle!)
+        configureStepper(quantity: ordDict.orderQuantity!)
+        configureTotalPrice(net : ordDict.calculateNet())
         configureLayout()
-        imageUrl = ordDict.img
+        imageUrl = ordDict.menuImageUrl!
     }
     
     private func configureLayout(){
@@ -64,8 +64,9 @@ class OrderListCell: UITableViewCell {
         stepper.tintColor = .white
     }
     
-    private func configureTotalPrice(){
-        self.totalPrice.text = "\(Int(price! * Int.init(stepper.value))) ฿"
+    private func configureTotalPrice(net : Double){
+        print(net)
+        self.totalPrice.text = "\(net) ฿"
     }
     
     private func configureTitle(title : String){
@@ -78,7 +79,7 @@ class OrderListCell: UITableViewCell {
     }
     
     @IBAction func gmStepperClicked(_ sender: GMStepper) {
-        self.total = (Int.init(sender.value) * Int.init(price!))
+        self.total = sender.value * price!
         self.totalPrice.text = "\(total!) ฿"
         if(sender.value <= 1) { return }
         delegate?.stepperClicked(cell : self)

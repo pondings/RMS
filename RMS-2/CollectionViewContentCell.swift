@@ -67,24 +67,34 @@ class RestaurantListCell: UICollectionViewCell {
         return btn
     }()
     
-    func configureCell(res : Restaurants){
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 8
-        configureTitle(title: res.title!)
-        configureBookmark()
-        configureDesc(desc: res.desc!)
+    func configureCell(restaurant : Restaurant){
+        configureTitle(title: restaurant.restaurantTitle!)
+        configureDesc(desc: restaurant.restaurantDetail!)
         configureSubBtn(image: "location")
-        configureSubTitle(st: res.subTitle!)
+        configureSubTitle(st: restaurant.locationTitle!)
+        configureLayout()
     }
     
-    func configureCell(pro : Restaurants){
+    func configureCell(mostView : MostView){
+        configureTitle(title: mostView.mostViewTitle!)
+        configureDesc(desc: mostView.mostViewDetail!)
+        configureSubBtn(image: "period")
+        configureSubTitle(st: mostView.locationTitle!)
+        configureLayout()
+    }
+    
+    func configureCell(promotion : Promotion){
+        configureTitle(title: promotion.promotionTitle!)
+        configureDesc(desc: promotion.promotionDetail!)
+        configureSubBtn(image: "period")
+        configureSubTitle(st: promotion.promotionPeriod!)
+        configureLayout()
+    }
+    
+    private func configureLayout(){
         self.backgroundColor = .white
         self.layer.cornerRadius = 8
-        configureTitle(title: pro.title!)
         configureBookmark()
-        configureDesc(desc: pro.desc!)
-        configureSubBtn(image: "period")
-        configureSubTitle(st: pro.subTitle!)
     }
     
     private func configureBookmark(){

@@ -13,7 +13,7 @@ import Alamofire
 class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DataManagentDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    var restaurant : Restaurants!
+    var contentDetail : ContentDetail!
     var interactor : Interactor? = nil
     private var imgList : [String]! = []
     
@@ -27,6 +27,12 @@ class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionVi
     @IBOutlet weak var thirdLineBtn: UIButton!
     @IBOutlet weak var thirdLineLb: UILabel!
     
+    lazy var alertController: UIAlertController = {
+        let ac = UIAlertController.init(title: "Can't Locate this location", message: "...", preferredStyle: .alert)
+        ac.addAction(UIAlertAction.init(title: "Ok", style: .default, handler: nil))
+        return ac
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAlamofire(path: "Menu", dowloadComlete: { result in
@@ -34,8 +40,9 @@ class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionVi
             self.collectionView.reloadData()
         })
         customize()
-        configureTitleLb(title: restaurant.title!)
-        configureDescLb(desc: restaurant.desc!)
+        configureTitleLb(title: contentDetail.contentTitle!)
+        configureDescLb(desc: contentDetail.contentDetail!)
+        configureLocationLb(location: contentDetail.locationTitle!)
     }
     
     private func customize(){
@@ -48,6 +55,10 @@ class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionVi
         thirdLineBtn.setFATitleColor(color: .black, forState: .normal)
     }
 
+    private func configureLocationLb(location : String){
+        firstLineLb.text = location
+        firstLineLb.sizeToFit()
+    }
     
     private func configureDescLb(desc : String){
         descLb.text = desc
@@ -64,7 +75,7 @@ class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! RestaurantDetailCell
-        cell.configureCell(url: (indexPath.row == 0 ? restaurant.img! : imgList[indexPath.row - 1]))
+        cell.configureCell(url: (indexPath.row == 0 ? contentDetail.contentImageUrl! : imgList[indexPath.row - 1]))
         return cell
     }
     
@@ -77,7 +88,9 @@ class RestaurantDetail: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     @IBAction func openMap(_ sender: UIButton) {
-        prepareToOpenMap(latitude: "13.6188287", longtitude: "100.6734406",title: "ซอยอัมพร")
+        if(!contentDetail.openMap()) {
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     @IBAction func openTime(_ sender: UIButton) {

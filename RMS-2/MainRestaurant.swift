@@ -37,9 +37,9 @@ class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLay
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! RestaurantListCell
         let restaurant = isSearchMode ? restaurantFiltered[indexPath.row] : restaurantList[indexPath.row]
-        let resDict = Restaurants.init(restDict: restaurant)
-        cell.configureCell(res: resDict)
-        cell.configureImage(url: resDict.img!)
+        let resDict = Restaurant.init(restaurantDict: restaurant)
+        cell.configureCell(restaurant: resDict)
+        cell.configureImage(url: resDict.restaurantImageUrl!)
         return cell
     }
     
@@ -52,15 +52,16 @@ class MainRestaurant: UICollectionViewController,UICollectionViewDelegateFlowLay
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let restaurant = Restaurants.init(restDict: restaurantList[indexPath.row])
-        performSegue(withIdentifier: "Detail", sender: restaurant)
+        let restaurant = Restaurant.init(restaurantDict: restaurantList[indexPath.row])
+        configureAlamofire(path: "Restaurant/\(restaurant.id!)", downloadComplete: { result in
+            self.performSegue(withIdentifier: "Detail", sender: result)
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
             if let detail = segue.destination as? RestaurantDetail{
-                let restaurant = sender as! Restaurants
-                detail.restaurant = restaurant
+                detail.contentDetail = ContentDetail.init(Dictinary: sender as! Dictionary<String,AnyObject>, contentStyle: .restaurant)
                 detail.transitioningDelegate = self
                 detail.interactor = interactor
             }

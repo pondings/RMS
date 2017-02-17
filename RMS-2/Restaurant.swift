@@ -7,110 +7,55 @@
 //
 
 import Foundation
+import MapKit
 
-protocol Restaurant {
-    var title : String? {get set}
-    var desc : String? {get set}
-    var img : String? {get set}
-    var subTitle : String? {get set}
+
+
+protocol RestaurantProtocol {
+    var id : Int? {get set}
+    var restaurantTitle : String? {get set}
+    var restaurantDetail : String? {get set}
+    var restaurantImageUrl : String? {get set}
 }
 
-struct Restaurants : Restaurant {
-    var subTitle: String?
-    var img: String?
-    var desc: String?
-    var title: String?
-
-    init(restDict : Dictionary<String,AnyObject>) {
-        if let title = restDict["res_name"] as? String {
-            self.title = title
-        }
-        if let desc = restDict["res_desc"] as? String {
-            self.desc = desc
-        }
-        if let img = restDict["res_img"] as? String {
-            self.img = img
-        }
-        if let location = restDict["res_location"] as? String {
-            self.subTitle = location
-        }
-    }
-    
-    init(proDict : Dictionary<String,AnyObject>) {
-        if let title = proDict["pro_title"] as? String {
-            self.title = title
-        }
-        if let desc = proDict["pro_desc"] as? String {
-            self.desc = desc
-        }
-        if let img = proDict["pro_img"] as? String {
-            self.img = img
-        }
-        if let period = proDict["pro_period"] as? String {
-            self.subTitle = period
-        }
-    }
-    
-    init(mvDict : Dictionary<String,AnyObject>) {
-        if let title = mvDict["mv_title"] as? String {
-            self.title = title
-        }
-        if let desc = mvDict["mv_desc"] as? String {
-            self.desc = desc
-        }
-        if let img = mvDict["mv_img"] as? String {
-            self.img = img
-        }
-        if let location = mvDict["mv_location"] as? String {
-            self.subTitle = location
-        }
-    }
+protocol RestaurantContactProtocol {
+    var restaurantPhone : String? {get set}
 }
 
-protocol Menu {
-    var title : String? {get set}
-    var img : String? {get set}
-    var desc : String? {get set}
-    var price : Int? {get set}
-    var totalPrice : String? {get set}
-    var quantity : String? {get set}
-}
-
-struct Menus : Menu{
-    var price: Int?
-    var desc: String?
-    var img: String?
-    var title: String?
-    var totalPrice: String?
-    var quantity : String?
+struct Restaurant : RestaurantProtocol,LocationProtocol {
+    var id: Int?
+    var restaurantImageUrl: String?
+    var restaurantDetail: String?
+    var restaurantTitle: String?
+    var locationTitle: String?
     
-    init(ordDict : Dictionary<String,AnyObject>) {
-        if let title = ordDict["ord_name"] as? String {
-            self.title = title
+    init(restaurantDict : Dictionary<String,AnyObject>) {
+        if let id = restaurantDict["id"] as? Int {
+            self.id = id
+        }else { self.id = 0 }
+        
+        if let title = restaurantDict["res_name"] as? String {
+            self.restaurantTitle = title
         }
-        if let img = ordDict["ord_img"] as? String {
-            self.img = img
+        if let detail = restaurantDict["res_desc"] as? String {
+            self.restaurantDetail = detail
         }
-        if let price = ordDict["ord_price"] as? Int  {
-            self.price = price
+        if let imageUrl = restaurantDict["res_img"] as? String {
+            self.restaurantImageUrl = imageUrl
         }
-        if let quantity = ordDict["ord_total"] as? Int {
-            self.quantity = "\(quantity)"
+        if let locationTitle = restaurantDict["res_location"] as? String {
+            self.locationTitle = locationTitle
         }
     }
-    
-    init(menuDict : Dictionary<String,AnyObject>) {
-        if let title = menuDict["menu_name"] as? String {
-            self.title = title
-        }
-        if let desc = menuDict["menu_desc"] as? String {
-            self.desc = desc
-        }
-        if let img = menuDict["menu_img"] as? String {
-            self.img = img
-        }
-        if let price = menuDict["menu_price"] as? Int {
-            self.price = price
-        }
-    }
+//    func openMap() {
+//        let regionDistance : CLLocationDistance = 1000
+//        let coordinate = CLLocationCoordinate2DMake(locationLatitude!, locationLongtitude!)
+//        let locationSpan = MKCoordinateRegionMakeWithDistance(coordinate, regionDistance, regionDistance)
+//        let options = [ MKLaunchOptionsMapCenterKey : NSValue.init(mkCoordinate: locationSpan.center),
+//                        MKLaunchOptionsMapSpanKey : NSValue.init(mkCoordinateSpan: locationSpan.span) ]
+//        let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+//        let mapItem = MKMapItem(placemark: placemark)
+//        mapItem.name = "\(locationTitle!)"
+//        mapItem.openInMaps(launchOptions: options)
+//    }
 }
