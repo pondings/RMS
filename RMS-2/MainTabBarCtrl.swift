@@ -8,9 +8,7 @@
 
 import UIKit
 import Material
-import FBSDKLoginKit
 import AFMActionSheet
-import FacebookLogin
 import Kingfisher
 
 class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRReaderDelegate {
@@ -36,28 +34,10 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRReaderDele
         return btn
     }()
     
-    lazy var actionSheet: AFMActionSheetController = {
-        let sheet = AFMActionSheetController.init(style: .actionSheet, transitioningDelegate: AFMActionSheetTransitioningDelegate())
-        let action1 = AFMAction.init(title: "ตั้งค่า", handler: nil)
-        let action2 = AFMAction.init(title: "เกี่ยวกับ", handler: nil)
-        let action3 = AFMAction.init(title: "ตั้งค่า Account", handler: { _ in self.AccountManagement() })
-        let close = AFMAction.init(title: "ยกเลิก", handler: nil)
-        sheet.add(action1)
-        sheet.add(action2)
-        sheet.add(action3)
-        sheet.add(cancelling: close)
-        return sheet
-    }()
-    
     lazy var lightBlueView: UIView = {
         let vw = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.viewFrame.width, height: 20))
         vw.backgroundColor = Color.lightBlue.base
         return vw
-    }()
-    
-    lazy var actionSheetTitle: ActionSheetTitle = {
-        let at = ActionSheetTitle.init(frame: CGRect.init())
-        return at
     }()
     
     override func viewDidLoad() {
@@ -106,16 +86,7 @@ class MainTabBarCtrl: UITabBarController,UITabBarControllerDelegate,QRReaderDele
     }
     
     func moreBtnClicked() {
-        if(FBSDKAccessToken.current() != nil){
-            actionSheetTitle.configureActionSheet(SheetStyle: .MainRestaurant)
-            actionSheetTitle.snp.makeConstraints { (make) in
-                make.height.equalTo(self.view.frame.height * 0.25)
-            }
-            actionSheet.add(title: actionSheetTitle)
-        }else {
-            actionSheet.add(title: UIView())
-        }
-        self.present(actionSheet, animated: true, completion: nil)
+        
     }
     
 }

@@ -9,6 +9,7 @@
 import UIKit
 import Material
 import AFMActionSheet
+import FBSDKLoginKit
 
 class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDelegate {
     
@@ -43,6 +44,24 @@ class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDe
         return lf
     }()
     
+    lazy var actionSheetControl: AFMActionSheetController = {
+        let sheet = AFMActionSheetController.init(style: .actionSheet, transitioningDelegate: AFMActionSheetTransitioningDelegate())
+        let action1 = AFMAction.init(title: "ตั้งค่า", handler: nil)
+        let action2 = AFMAction.init(title: "เกี่ยวกับ", handler: nil)
+        let action3 = AFMAction.init(title: "ตั้งค่า Account", handler: { _ in self.openLoginVC() })
+        let close = AFMAction.init(title: "ยกเลิก", handler: nil)
+        sheet.add(action1)
+        sheet.add(action2)
+        sheet.add(action3)
+        sheet.add(cancelling: close)
+        return sheet
+    }()
+    
+    lazy var actionSheetTitle: ActionSheetTitle = {
+        let at = ActionSheetTitle.init(frame: CGRect.init())
+        return at
+    }()
+    
     lazy var mainTabBar : MainTabBarCtrl = (self.tabBarController as? MainTabBarCtrl)!
     
     override func viewDidLoad() {
@@ -73,7 +92,31 @@ class MainNavbarCtrl: UINavigationController,CommonNavBarDelegate,SearchNavBarDe
     }
     
     func moreBtnClicked() {
-        NotificationCenter.default.post(name: Notification.Name("activeActionSheet"), object: nil)
+        if(FBSDKAccessToken.current() != nil){
+            actionSheetTitle.configureActionSheet(SheetStyle: .MainRestaurant)
+            actionSheetTitle.snp.makeConstraints { (make) in
+                make.height.equalTo(self.view.frame.height * 0.25)
+            }
+            actionSheetControl.add(title: actionSheetTitle)
+        }else {
+            actionSheetControl.add(title: UIView())
+        }
+        let tabbarCtrl = getCurrentTabbarController()
+        tabbarCtrl.present(actionSheetControl, animated: true, completion: nil)
+    }
+    
+    func openLoginVC(){
+        let tabbarCtrl = getCurrentTabbarController()
+        tabbarCtrl.AccountManagement()
+    }
+    
+    private func getCurrentTabbarController() -> UITabBarController {
+        if let vc = self.topViewController as? UITabBarController {
+            return vc
+        }else if let vc = self.tabBarController {
+            return vc
+        }
+        return UITabBarController()
     }
 
     func searchBarDidEnter(text: String) {

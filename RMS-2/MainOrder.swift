@@ -40,7 +40,7 @@ class MainOrder: UITabBarController,UITabBarControllerDelegate{
         delegate = self
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
-        actionSheetTitle.configureActionSheet(SheetStyle: .MainOrder)
+        actionSheetTitle.configureActionSheet(SheetStyle: .MainRestaurant)
         tabBar.barTintColor = Color.lightBlue.base
         statusBar.backgroundColor = Color.lightBlue.base
     }
@@ -74,6 +74,8 @@ class MainOrder: UITabBarController,UITabBarControllerDelegate{
     @IBAction func test(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+
 }
 
 extension MainOrder : ActionSheetTitleDelegate {

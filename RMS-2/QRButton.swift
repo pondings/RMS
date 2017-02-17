@@ -11,6 +11,16 @@ import Material
 import FacebookLogin
 import FBSDKLoginKit
 
+protocol QRButtonDelegate {
+    func qrBtnClicked(sender : UIButton)
+}
+
+extension QRButtonDelegate where Self : UITabBarController {
+    func qrBtnClicked(sender : UIButton) {
+        performSegue(withIdentifier: "MainOrder", sender: nil)
+    }
+}
+
 class QRButton: UIButton{
 
     var delegate : QRButtonDelegate?

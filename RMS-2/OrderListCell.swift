@@ -65,7 +65,6 @@ class OrderListCell: UITableViewCell {
     }
     
     private func configureTotalPrice(net : Double){
-        print(net)
         self.totalPrice.text = "\(net) ฿"
     }
     
